@@ -37,7 +37,7 @@ const sty = {
 	style3:
 		"w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-sans font-thin text-center text-xl tracking-wider sm:text-2xl xl:text-4xl transition-all duration-500 *:border-none *:transition-all *:duration-1000 *:animate-fade",
 	style4:
-		"w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-sans font-thin text-center text-xl tracking-wider sm:text-2xl xl:text-4xl transition-all duration-500 *:border-none *:transition-all *:duration-1000 *:animate-fade",
+		"w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-sans font-thin text-center text-xl tracking-wider sm:text-2xl xl:text-4xl transition-all duration-500 *:border-none *:transition-all *:duration-1000 *:animate-fade"
 };
 
 export default function Intro() {
@@ -63,7 +63,7 @@ export default function Intro() {
 
 	return (
 		<div className="w-screen h-screen" onClick={handleClick}>
-			<Cursor />
+			{index >= 5 && <Cursor />}
 			<motion.main className={style}>
 				<p>{text[index]}</p>
 			</motion.main>

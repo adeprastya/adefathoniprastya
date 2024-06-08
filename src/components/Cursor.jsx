@@ -4,28 +4,27 @@ import { motion } from "framer-motion";
 export default function Cursor() {
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-	useEffect(() => {
-		const handleMouseMove = (event) => setMousePosition({ x: event.clientX, y: event.clientY });
+	const handleMouseMove = (event) => setMousePosition({ x: event.clientX, y: event.clientY });
 
+	useEffect(() => {
 		window.addEventListener("mousemove", handleMouseMove);
 
-		return () => {
-			window.removeEventListener("mousemove", handleMouseMove);
-		};
+		return () => window.removeEventListener("mousemove", handleMouseMove);
 	}, []);
 
 	const cursorStyle = {
-		position: "fixed",
-		top: mousePosition.y - 12.5,
-		left: mousePosition.x - 12.5,
-		width: "25px",
-		height: "25px",
-		backgroundColor: "rgba(0, 0, 0, 0.7)",
-		borderRadius: "50%",
-		pointerEvents: "none",
-		zIndex: 9999,
-		mixBlendMode: "difference"
+		top: mousePosition.y,
+		left: mousePosition.x,
+		width: "calc(5vw + 40px)",
+		height: "calc(5vw + 40px)",
+		transform:
+			mousePosition.x > 0 && mousePosition.y > 0 ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(0)"
 	};
 
-	return <motion.div style={cursorStyle} />;
+	return (
+		<motion.div
+			style={cursorStyle}
+			className="z-50 fixed rounded-full backdrop-invert pointer-events-none transition-transform duration-1000"
+		/>
+	);
 }
