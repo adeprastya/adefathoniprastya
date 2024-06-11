@@ -3,6 +3,10 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				cormorant: ["Cormorant", "serif"],
+				epilogue: ["Epilogue", "sans"]
+			},
 			keyframes: {
 				fade: {
 					"0%": {
