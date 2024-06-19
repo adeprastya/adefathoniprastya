@@ -95,7 +95,8 @@ export default function Intro() {
 
 	return (
 		<div onClick={handleClick} className={sty.container}>
-			{index >= 6 && <Cursor />}
+			<Cursor />
+			{/* {index >= 6 && <Cursor />} */}
 
 			{index < 7 && (
 				<main key={index} className={style}>
