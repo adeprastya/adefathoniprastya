@@ -1,6 +1,7 @@
 import Cursor from "../components/Cursor";
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { Container } from "postcss";
 
 // alert("Click to next");
 
@@ -37,13 +38,23 @@ const text = [
 ];
 
 const sty = {
+	container: "w-screen h-screen overflow-hidden",
+
 	base: "font-serif",
+
+	// text 2
 	style1:
-		"font-serif p-10 sm:p-20 xl:p-40 bg-green-300 border-2 border-dashed border-black transition-all duration-1000     *:p-4 *:bg-blue-300 *:border-2 *:border-black *:transition-all *:duration-200",
+		"font-serif p-10 sm:p-20 xl:p-40 m-4 sm:m-8 xl:m-16 bg-green-300 border-2 border-dashed border-black transition-all duration-1000     *:before:bg-orange-200 *:before:absolute *:before:top-0 *:before:left-0 *:before:w-full *:before:h-full *:before:-z-10 *:before:transition-all *:before:duration-1000     *:p-2 *:sm:p-4 *:xl:p-8 *:bg-blue-300 *:border-2 *:border-black *:transition-all *:duration-200",
+
+	// text 3
 	style2:
 		"box-border w-screen h-screen p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:mt-[calc(50vh-1rem-8.5vw)] *:-translate-y-[50%] *:border-none *:bg-slate-950 *:transition-all *:duration-1000",
+
+	// text 4
 	style3:
 		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:inline *:border-none *:transition-all *:duration-1000 *:animate-fade     *:after:content-['...'] *:after:absolute *:after:inline *:after:animate-pulse",
+
+	// text 5
 	style4:
 		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade      *:first-letter:font-extrabold *:first-letter:text-5xl sm:*:first-letter:text-6xl xl:*:first-letter:text-7xl *:first-letter:text-transparent *:first-letter:bg-clip-text *:first-letter:bg-gradient-to-bl from-yellow-200 to-amber-500"
 };
@@ -83,7 +94,7 @@ export default function Intro() {
 	}, [index]);
 
 	return (
-		<div onClick={handleClick} className="w-screen h-screen overflow-hidden">
+		<div onClick={handleClick} className={sty.container}>
 			{index >= 6 && <Cursor />}
 
 			{index < 7 && (
