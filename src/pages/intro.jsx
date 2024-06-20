@@ -1,7 +1,6 @@
 import Cursor from "../components/Cursor";
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Container } from "postcss";
 
 // alert("Click to next");
 
@@ -56,7 +55,7 @@ const sty = {
 
 	// text 5
 	style4:
-		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade      *:first-letter:font-extrabold *:first-letter:text-5xl sm:*:first-letter:text-6xl xl:*:first-letter:text-7xl *:first-letter:text-transparent *:first-letter:bg-clip-text *:first-letter:bg-gradient-to-bl from-yellow-200 to-amber-500"
+		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade      *:first-letter:font-extrabold *:first-letter:text-5xl sm:*:first-letter:text-6xl xl:*:first-letter:text-7xl *:first-letter:text-transparent *:first-letter:bg-clip-text *:first-letter:bg-gradient-to-bl from-yellow-200 to-amber-500 cursor-none"
 };
 
 export default function Intro() {
@@ -64,6 +63,7 @@ export default function Intro() {
 	const [style, setStyle] = useState(sty.base);
 	const [waiting, setWaiting] = useState(false);
 	const constraintRef = useRef(null);
+	const textRef = useRef(null);
 
 	const handleClick = () => {
 		if (!waiting) {
@@ -95,19 +95,18 @@ export default function Intro() {
 
 	return (
 		<div onClick={handleClick} className={sty.container}>
-			<Cursor />
-			{/* {index >= 6 && <Cursor />} */}
+			{index >= 6 && <Cursor element={textRef} />}
 
 			{index < 7 && (
 				<main key={index} className={style}>
-					<p>{text[index]}</p>
+					<p ref={textRef}>{text[index]}</p>
 				</main>
 			)}
 
 			{index >= 7 && (
 				<motion.main key={index} className={style}>
 					<motion.div ref={constraintRef} className="w-12/12 h-12/12">
-						<motion.p drag dragConstraints={constraintRef}>
+						<motion.p ref={textRef} drag dragConstraints={constraintRef}>
 							{text[index]}
 						</motion.p>
 					</motion.div>
