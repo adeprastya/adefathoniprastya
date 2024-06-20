@@ -99,14 +99,14 @@ export default function Intro() {
 
 			{index < 7 && (
 				<main key={index} className={style}>
-					<p ref={textRef}>{text[index]}</p>
+					<p ref={(node) => (textRef.current = node)}>{text[index]}</p>
 				</main>
 			)}
 
 			{index >= 7 && (
 				<motion.main key={index} className={style}>
 					<motion.div ref={constraintRef} className="w-12/12 h-12/12">
-						<motion.p ref={textRef} drag dragConstraints={constraintRef}>
+						<motion.p ref={(node) => (textRef.current = node)} drag dragConstraints={constraintRef}>
 							{text[index]}
 						</motion.p>
 					</motion.div>

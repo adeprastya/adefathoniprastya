@@ -40,20 +40,24 @@ export default function Cursor({ element }) {
 	useEffect(() => {
 		window.addEventListener("mousemove", handleMouseMove);
 
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMove);
+		};
+	}, []);
+
+	useEffect(() => {
 		if (element.current) {
 			element.current.addEventListener("mouseenter", handleMouseEnter);
 			element.current.addEventListener("mouseleave", handleMouseLeave);
+
+			return () => {
+				if (element.current) {
+					element.current.removeEventListener("mouseenter", handleMouseEnter);
+					element.current.removeEventListener("mouseleave", handleMouseLeave);
+				}
+			};
 		}
-
-		return () => {
-			window.removeEventListener("mousemove", handleMouseMove);
-
-			if (element.current) {
-				element.current.removeEventListener("mouseenter", handleMouseEnter);
-				element.current.removeEventListener("mouseleave", handleMouseLeave);
-			}
-		};
-	}, []);
+	}, [element.current]);
 
 	const sty = {
 		base: `after:rounded-full after:backdrop-invert ${mouse.isInWindow ? "after:scale-1" : "after:scale-0"}`,
