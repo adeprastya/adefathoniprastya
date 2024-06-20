@@ -57,7 +57,7 @@ const sty = {
 
 	// text 11
 	style5:
-		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade *:text-transparent *:bg-clip-text *:bg-gradient-to-tl from-yellow-200 to-amber-400 cursor-none"
+		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl transition-all duration-500     *:leading-relaxed *:border-none *:transition-all *:duration-1000 *:animate-fade *:text-transparent *:bg-clip-text *:bg-gradient-to-tl from-yellow-200 to-amber-400 cursor-none"
 };
 
 const fonts = [
