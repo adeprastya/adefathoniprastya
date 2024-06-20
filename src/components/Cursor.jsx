@@ -61,9 +61,9 @@ export default function Cursor({ element }) {
 
 	const sty = {
 		base: `after:rounded-full after:backdrop-invert ${mouse.isInWindow ? "after:scale-1" : "after:scale-0"}`,
-		hover: `after:rounded-full after:box-border after:border-[1px] after:border-x-blue-600 after:border-y-sky-600 ${
+		hover: `after:rounded-full after:box-border after:border-[1px] after:border-x-yellow-400 after:border-y-orange-300 ${
 			mouse.isInWindow ? "after:scale-1" : "after:scale-0"
-		} before:absolute before:top-[50%] before:left-[50%] before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:bg-blue-100 before:min-w-[3px] before:min-h-[3px] ${
+		} before:absolute before:top-[50%] before:left-[50%] before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:bg-yellow-100 before:min-w-[3px] before:min-h-[3px] ${
 			mouse.isInWindow ? "before:scale-1" : "before:scale-0"
 		}`
 	};

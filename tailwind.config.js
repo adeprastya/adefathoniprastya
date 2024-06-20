@@ -5,7 +5,12 @@ export default {
 		extend: {
 			fontFamily: {
 				cormorant: ["Cormorant", "serif"],
-				epilogue: ["Epilogue", "sans"]
+				epilogue: ["Epilogue", "sans"],
+				caesarDressing: ["Caesar Dressing", "system-ui", "sans"],
+				monsieurLaDoulaise: ["Monsieur La Doulaise", "system-ui", "sans"],
+				jacquard12: ["Jacquard 12", "system-ui", "sans"],
+				notoSansJP: ["Noto Sans JP", "system-ui", "sans"],
+				reenieBeanie: ["Reenie Beanie", "system-ui", "sans"]
 			},
 			keyframes: {
 				fade: {

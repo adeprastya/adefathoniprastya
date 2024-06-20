@@ -1,7 +1,8 @@
 import Cursor from "../components/Cursor";
 import IntroToast from "../components/IntroToast";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import { throttle } from "lodash";
 
 const text = [
 	// HTML
@@ -12,27 +13,25 @@ const text = [
 	// CSS
 	"Then, CSS entered the scene. I wielded it like a magic wand, conjuring layouts and positioning elements with precision", // 2
 
-	"A canvas of possibilities, where colors paint emotions and typography shapes the message", // 3
+	"Like a canvas of possibilities, where colors paint emotions and typography shapes the message", // 3
 
 	"Like a scene-shifter in a play, transitions and animations bring it to life", // 4
 
-	"JavaScript, the superhero, Buckle up and prepare to witness its power!", // 5
+	"JavaScript, the superhero. Buckle up and prepare to witness its power!", // 5
 
 	// JS
 	"See that cursor? That's just a taste of JavaScript's magic in action", // 6
 
 	// Framer Motion
-	"Even you can drag this sentence around the screen", // 7
+	"You can even drag this sentence around the screen, JavaScript works its magic without limits", // 7
 
 	"My hunger for knowledge is insatiable, and it fuels me to keep pushing forward", // 8
 
-	"However, my passion for mastering this skill has motivated me to keep learning", // 9
+	"Thanks for lending your eyes to this odyssey", // 9
 
-	"Thank you for lending me your eyes on this odyssey", // 10
+	"Ooopsss, almost forgot to introduce myself! My name's...", // 10
 
-	"Ooopsss, almost forgot to introduce myself! My name's...", // 11
-
-	"Ade Fathoni Prastya" // 12
+	"Ade Fathoni Prastya" // 11
 ];
 
 const sty = {
@@ -54,13 +53,31 @@ const sty = {
 
 	// text 5
 	style4:
-		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade      *:first-letter:font-extrabold *:first-letter:text-5xl sm:*:first-letter:text-6xl xl:*:first-letter:text-7xl *:first-letter:text-transparent *:first-letter:bg-clip-text *:first-letter:bg-gradient-to-bl from-yellow-200 to-amber-500 cursor-none"
+		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade      *:first-letter:font-extrabold *:first-letter:text-5xl sm:*:first-letter:text-6xl xl:*:first-letter:text-7xl *:first-letter:text-transparent *:first-letter:bg-clip-text *:first-letter:bg-gradient-to-bl from-yellow-200 to-amber-500 cursor-none",
+
+	// text 11
+	style5:
+		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade *:text-transparent *:bg-clip-text *:bg-gradient-to-tl from-yellow-200 to-amber-400 cursor-none"
 };
+
+const fonts = [
+	"font-serif",
+	"font-sans",
+	"font-mono",
+	"font-cormorant",
+	"font-epilogue",
+	"font-jacquard12",
+	"font-monsieurLaDoulaise",
+	"font-notoSansJP",
+	"font-reenieBeanie",
+	"font-caesarDressing"
+];
 
 export default function Intro() {
 	const [index, setIndex] = useState(0);
-	const [style, setStyle] = useState(sty.base);
 	const [waiting, setWaiting] = useState(false);
+	const [style, setStyle] = useState(sty.base);
+	const [font, setFont] = useState("font-cormorant");
 	const constraintRef = useRef(null);
 	const textRef = useRef(null);
 
@@ -69,11 +86,20 @@ export default function Intro() {
 			setIndex((prevIndex) => prevIndex + 1);
 			setWaiting(true);
 
-			setTimeout(() => {
-				setWaiting(false);
-			}, 1500);
+			if (index == 10) {
+				setTimeout(() => {
+					setWaiting(false);
+				}, 4000);
+			} else {
+				setTimeout(() => {
+					setWaiting(false);
+				}, 2000);
+			}
 		}
 	};
+
+	const randomizeFont = () => setFont(fonts[Math.floor(Math.random() * fonts.length)]);
+	const throttledRandomizeFont = useCallback(throttle(randomizeFont, 300), []);
 
 	useEffect(() => {
 		if (index == 2) {
@@ -90,6 +116,17 @@ export default function Intro() {
 		if (index >= 5) {
 			setStyle(sty.style4);
 		}
+		if (index >= 11) {
+			setStyle(sty.style5);
+		}
+	}, [index]);
+
+	useEffect(() => {
+		if (index === 11) {
+			window.addEventListener("mousemove", () => throttledRandomizeFont());
+		}
+
+		return window.removeEventListener("mousemove", () => throttledRandomizeFont());
 	}, [index]);
 
 	return (
@@ -105,13 +142,13 @@ export default function Intro() {
 			)}
 
 			{index >= 7 && (
-				<motion.main key={index} className={style}>
+				<main key={index} className={style + " " + font}>
 					<motion.div ref={constraintRef} className="w-12/12 h-12/12">
 						<motion.p ref={(node) => (textRef.current = node)} drag dragConstraints={constraintRef}>
 							{text[index]}
 						</motion.p>
 					</motion.div>
-				</motion.main>
+				</main>
 			)}
 		</div>
 	);
