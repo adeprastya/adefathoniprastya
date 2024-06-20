@@ -1,8 +1,7 @@
 import Cursor from "../components/Cursor";
+import IntroToast from "../components/IntroToast";
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-
-// alert("Click to next");
 
 const text = [
 	// HTML
@@ -31,7 +30,7 @@ const text = [
 
 	"Thank you for lending me your eyes on this odyssey", // 10
 
-	"Ooopsss, almost forgot to introduce myself! The name's...", // 11
+	"Ooopsss, almost forgot to introduce myself! My name's...", // 11
 
 	"Ade Fathoni Prastya" // 12
 ];
@@ -95,6 +94,8 @@ export default function Intro() {
 
 	return (
 		<div onClick={handleClick} className={sty.container}>
+			{waiting == false && <IntroToast index={index} />}
+
 			{index >= 6 && <Cursor element={textRef} />}
 
 			{index < 7 && (
