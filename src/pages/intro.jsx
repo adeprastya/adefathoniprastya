@@ -3,6 +3,7 @@ import IntroToast from "@/components/IntroToast";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { throttle } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const text = [
 	// HTML
@@ -79,6 +80,7 @@ export default function Intro() {
 	const [font, setFont] = useState("font-cormorant");
 	const constraintRef = useRef(null);
 	const textRef = useRef(null);
+	const navigate = useNavigate();
 
 	const handleClick = () => {
 		if (!waiting) {
@@ -126,6 +128,12 @@ export default function Intro() {
 		}
 
 		return window.removeEventListener("mousemove", () => throttledRandomizeFont());
+	}, [index]);
+
+	useEffect(() => {
+		if (index > 11) {
+			navigate("/adefathoniprastya/home");
+		}
 	}, [index]);
 
 	return (
