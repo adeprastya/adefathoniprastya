@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { appStateContext } from "../context/AppStateContext";
+import { appStateContext } from "@/context/AppStateContext";
 
 export default function Cursor({ element }) {
 	const { appState } = useContext(appStateContext);

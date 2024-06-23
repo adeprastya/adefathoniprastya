@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { appStateContext } from "../context/AppStateContext";
+import { appStateContext } from "@/context/AppStateContext";
 import { motion } from "framer-motion";
 import { DiscIcon } from "@radix-ui/react-icons";
 

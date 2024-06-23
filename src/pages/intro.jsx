@@ -1,5 +1,5 @@
-import Cursor from "../components/Cursor";
-import IntroToast from "../components/IntroToast";
+import Cursor from "@/components/Cursor";
+import IntroToast from "@/components/IntroToast";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { throttle } from "lodash";
@@ -127,10 +127,6 @@ export default function Intro() {
 
 		return window.removeEventListener("mousemove", () => throttledRandomizeFont());
 	}, [index]);
-
-	useEffect(() => {
-		console.log(font);
-	}, [font]);
 
 	return (
 		<div onClick={handleClick} className={sty.container}>
