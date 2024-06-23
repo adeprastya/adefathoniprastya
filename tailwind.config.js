@@ -4,13 +4,13 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				cormorant: ["Cormorant", "serif"],
-				epilogue: ["Epilogue", "sans"],
 				caesarDressing: ["Caesar Dressing", "system-ui", "sans"],
+				cormorant: ["Cormorant", "serif"],
+				greatVibes: ["Great Vibes", "cursive"],
 				monsieurLaDoulaise: ["Monsieur La Doulaise", "system-ui", "sans"],
-				jacquard12: ["Jacquard 12", "system-ui", "sans"],
-				notoSansJP: ["Noto Sans JP", "system-ui", "sans"],
-				reenieBeanie: ["Reenie Beanie", "system-ui", "sans"]
+				mysteryQuest: ["Mystery Quest", "system-ui", "sans"],
+				tiny5: ["Tiny5", "system-ui", "sans"],
+				vt323: ["VT323", "system-ui", "sans"]
 			},
 			keyframes: {
 				fade: {
