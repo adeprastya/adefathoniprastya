@@ -100,7 +100,7 @@ export default function Intro() {
 	};
 
 	const randomizeFont = () => setFont(fonts[Math.floor(Math.random() * fonts.length)]);
-	const throttledRandomizeFont = useCallback(throttle(randomizeFont, 300), []);
+	const throttledRandomizeFont = useCallback(throttle(randomizeFont, 200), []);
 
 	useEffect(() => {
 		if (index == 2) {
@@ -124,6 +124,10 @@ export default function Intro() {
 
 	useEffect(() => {
 		if (index === 11) {
+			setInterval(() => {
+				throttledRandomizeFont();
+			}, 3000);
+
 			window.addEventListener("mousemove", () => throttledRandomizeFont());
 		}
 
