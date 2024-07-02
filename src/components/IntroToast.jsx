@@ -5,8 +5,8 @@ import { DiscIcon } from "@radix-ui/react-icons";
 
 const sty = {
 	container:
-		"fixed z-50 bottom-10 left-[50%] translate-x-[-50%] flex flex-col items-center gap-2 sm:gap-3 xl:gap-4 cursor-pointer",
-	text: "font-light text-base sm:text-lg xl:text-xl",
+		"fixed z-50 bottom-10 left-[50%] translate-x-[-50%] flex flex-col items-center gap-2 sm:gap-3 xl:gap-4 cursor-default",
+	text: "font-light text-center text-base sm:text-lg xl:text-xl",
 	icon: "w-4 h-4 sm:w-5 sm:h-5 xl:w-6 xl:h-6 animate-ping"
 };
 
@@ -25,7 +25,7 @@ export default function IntroToast({ index }) {
 			className={sty.container}
 		>
 			<p className={`${sty.text} ${index < 3 ? "text-slate-600" : "text-slate-400"}`}>
-				{appState.isMobile ? "Tap to continue" : "Click or press Any Key to continue"}
+				{appState.isMobile ? "Tap to continue" : "Click or press Key to continue"}
 			</p>
 			<DiscIcon className={`${sty.icon} ${index < 3 ? "text-slate-800" : "text-slate-300"}`} />
 		</motion.div>

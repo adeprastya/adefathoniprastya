@@ -15,7 +15,7 @@ export default {
 			keyframes: {
 				fade: {
 					"0%": {
-						transform: "translateY(100%)",
+						transform: "translateY(50px)",
 						opacity: "0"
 					},
 					"100%": {

@@ -1,7 +1,7 @@
 import Cursor from "@/components/Cursor";
 import IntroToast from "@/components/IntroToast";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { throttle } from "lodash";
 import { useNavigate } from "react-router-dom";
 
@@ -34,8 +34,6 @@ const text = [
 ];
 
 const sty = {
-	container: "w-screen h-screen overflow-hidden",
-
 	base: "font-serif",
 
 	// text 2
@@ -44,20 +42,20 @@ const sty = {
 
 	// text 3
 	style2:
-		"box-border w-screen h-screen p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500 flex justify-center items-center     *:border-none *:bg-slate-950 *:transition-all *:duration-1000",
+		"overflow-hidden box-border w-screen h-screen p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-100 flex justify-center items-center     *:border-none *:bg-slate-950 *:transition-all *:duration-300",
 
 	// text 4 - 5
 	style3:
-		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:inline border-none *:transition-all *:duration-1000 *:animate-fade",
+		"overflow-hidden box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl     *:inline border-none *:transition-all *:duration-500 *:animate-fade",
 	text3: "after:content-['...'] after:absolute after:inline after:animate-pulse",
 
 	// text 6 - 9
 	style4:
-		"box-border w-screen h-screen p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500 flex flex-wrap justify-center content-center items-center gap-2     *:transition-all *:duration-1000 *:animate-fade cursor-none",
+		"overflow-hidden box-border w-screen h-screen flex flex-wrap justify-center content-center items-center gap-2 p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl *:animate-fade cursor-none",
 
 	// text 10
 	style5:
-		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl transition-all duration-500     *:p-5 *:leading-relaxed *:border-none *:transition-all *:duration-1000 *:animate-fade *:text-transparent *:bg-clip-text *:bg-gradient-to-tl from-yellow-200 to-amber-400 cursor-none"
+		"overflow-hidden box-border w-screen h-screen flex flex-wrap justify-center content-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl     *:px-5 *:leading-relaxed *:text-transparent *:bg-clip-text *:bg-gradient-to-tl from-yellow-200 to-amber-400 cursor-none"
 };
 
 const fonts = [
@@ -83,7 +81,7 @@ const vars = {
 		}
 	},
 	item: {
-		hidden: { y: 10, opacity: 0 },
+		hidden: { y: 50, opacity: 0 },
 		show: { y: 0, opacity: 1 },
 		transition: { duration: 0.2 }
 	}
@@ -97,7 +95,9 @@ export default function Intro() {
 	const textRefs = [];
 	const navigate = useNavigate();
 
-	const handleIncrementIndex = () => {
+	const handleIncrementIndex = (e) => {
+		if (e instanceof KeyboardEvent && e.code !== "Enter" && e.code !== "Space") return;
+
 		if (!waiting.current) {
 			setIndex((prevIndex) => prevIndex + 1);
 			waiting.current = true;
@@ -115,12 +115,12 @@ export default function Intro() {
 	};
 
 	const randomizeFont = () => setFont(fonts[Math.floor(Math.random() * fonts.length)]);
-	const throttledRandomizeFont = useCallback(throttle(randomizeFont, 200), []);
+	const throttledRandomizeFont = useCallback(throttle(randomizeFont, 300), []);
 
-	// event click and keyup
+	// event increment index
 	useEffect(() => {
-		document.addEventListener("click", handleIncrementIndex);
-		document.addEventListener("keyup", handleIncrementIndex);
+		document.addEventListener("click", (e) => handleIncrementIndex(e));
+		document.addEventListener("keyup", (e) => handleIncrementIndex(e));
 
 		return () => {
 			document.removeEventListener("click", handleIncrementIndex);
@@ -149,12 +149,12 @@ export default function Intro() {
 		}
 	}, [index]);
 
-	// event mousemove
+	// event randomize font
 	useEffect(() => {
 		if (index === text.length - 1) {
 			setInterval(() => {
 				throttledRandomizeFont();
-			}, 3000);
+			}, 2000);
 
 			window.addEventListener("mousemove", () => throttledRandomizeFont());
 		}
@@ -164,7 +164,7 @@ export default function Intro() {
 
 	// navigate
 	useEffect(() => {
-		if (index > text.length - 1) {
+		if (index === 11) {
 			navigate("/adefathoniprastya/home");
 		}
 	}, [index]);
@@ -186,20 +186,20 @@ export default function Intro() {
 				</main>
 			)}
 
-			{index >= 7 && index <= 9 && (
-				<motion.main key={index} className={style} variants={vars.container} initial="hidden" animate="show">
+			{index >= 7 && index <= 10 && (
+				<motion.main
+					key={index + font}
+					className={`${style} ${index == 10 ? font : ""}`}
+					variants={vars.container}
+					initial="hidden"
+					animate="show"
+				>
 					{text[index].split(" ").map((char, i) => (
 						<motion.p key={i} ref={(node) => textRefs.push(node)} variants={vars.item}>
 							{char}
 						</motion.p>
 					))}
 				</motion.main>
-			)}
-
-			{index >= 10 && (
-				<main key={index} className={style + " " + font}>
-					<motion.p ref={(node) => textRefs.push(node)}>{text[index]}</motion.p>
-				</main>
 			)}
 		</>
 	);
