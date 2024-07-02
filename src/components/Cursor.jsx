@@ -37,6 +37,7 @@ export default function Cursor({ element }) {
 		}));
 	};
 
+	// event position
 	useEffect(() => {
 		window.addEventListener("mousemove", handleMouseMove);
 
@@ -45,19 +46,13 @@ export default function Cursor({ element }) {
 		};
 	}, []);
 
+	// event hovering
 	useEffect(() => {
-		if (element.current) {
-			element.current.addEventListener("mouseenter", handleMouseEnter);
-			element.current.addEventListener("mouseleave", handleMouseLeave);
-
-			return () => {
-				if (element.current) {
-					element.current.removeEventListener("mouseenter", handleMouseEnter);
-					element.current.removeEventListener("mouseleave", handleMouseLeave);
-				}
-			};
+		if (element.length > 0) {
+			element.map((el) => el.addEventListener("mouseenter", handleMouseEnter));
+			element.map((el) => el.addEventListener("mouseleave", handleMouseLeave));
 		}
-	}, [element.current]);
+	}, [element]);
 
 	const sty = {
 		base: `after:rounded-full after:backdrop-invert ${mouse.isInWindow ? "after:scale-1" : "after:scale-0"}`,

@@ -20,12 +20,12 @@ export default function IntroToast({ index }) {
 			transition={{
 				ease: "easeInOut",
 				duration: 1,
-				delay: 2
+				delay: 4
 			}}
 			className={sty.container}
 		>
 			<p className={`${sty.text} ${index < 3 ? "text-slate-600" : "text-slate-400"}`}>
-				{appState.isMobile ? "Tap to continue" : "Click to continue"}
+				{appState.isMobile ? "Tap to continue" : "Click or press Any Key to continue"}
 			</p>
 			<DiscIcon className={`${sty.icon} ${index < 3 ? "text-slate-800" : "text-slate-300"}`} />
 		</motion.div>

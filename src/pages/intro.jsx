@@ -1,6 +1,6 @@
 import Cursor from "@/components/Cursor";
 import IntroToast from "@/components/IntroToast";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import { throttle } from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -24,15 +24,13 @@ const text = [
 	"See that cursor? That's just a taste of JavaScript's magic in action", // 6
 
 	// Framer Motion
-	"You can even drag this sentence around the screen, JavaScript works its magic without limits", // 7
+	"My hunger for knowledge is insatiable, and it fuels me to keep pushing forward", // 7
 
-	"My hunger for knowledge is insatiable, and it fuels me to keep pushing forward", // 8
+	"Thanks for lending your eyes to this odyssey", // 8
 
-	"Thanks for lending your eyes to this odyssey", // 9
+	"Ooopsss, almost forgot to introduce myself! My name's...", // 9
 
-	"Ooopsss, almost forgot to introduce myself! My name's...", // 10
-
-	"Ade Fathoni Prastya" // 11
+	"Ade Fathoni Prastya" // 10
 ];
 
 const sty = {
@@ -46,17 +44,18 @@ const sty = {
 
 	// text 3
 	style2:
-		"box-border w-screen h-screen p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:mt-[calc(50vh-1rem-8.5vw)] *:-translate-y-[50%] *:border-none *:bg-slate-950 *:transition-all *:duration-1000",
+		"box-border w-screen h-screen p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500 flex justify-center items-center     *:border-none *:bg-slate-950 *:transition-all *:duration-1000",
 
-	// text 4
+	// text 4 - 5
 	style3:
-		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:inline *:border-none *:transition-all *:duration-1000 *:animate-fade     *:after:content-['...'] *:after:absolute *:after:inline *:after:animate-pulse",
+		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:inline border-none *:transition-all *:duration-1000 *:animate-fade",
+	text3: "after:content-['...'] after:absolute after:inline after:animate-pulse",
 
-	// text 5
+	// text 6 - 9
 	style4:
-		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500     *:border-none *:transition-all *:duration-1000 *:animate-fade      *:first-letter:font-extrabold *:first-letter:text-5xl sm:*:first-letter:text-6xl xl:*:first-letter:text-7xl *:first-letter:text-transparent *:first-letter:bg-clip-text *:first-letter:bg-gradient-to-bl from-yellow-200 to-amber-500 cursor-none",
+		"box-border w-screen h-screen p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl transition-all duration-500 flex flex-wrap justify-center content-center items-center gap-2     *:transition-all *:duration-1000 *:animate-fade cursor-none",
 
-	// text 11
+	// text 10
 	style5:
 		"box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl transition-all duration-500     *:p-5 *:leading-relaxed *:border-none *:transition-all *:duration-1000 *:animate-fade *:text-transparent *:bg-clip-text *:bg-gradient-to-tl from-yellow-200 to-amber-400 cursor-none"
 };
@@ -73,27 +72,43 @@ const fonts = [
 	"font-vt323"
 ];
 
+const vars = {
+	container: {
+		hidden: {},
+		show: {
+			transition: {
+				delayChildren: 0,
+				staggerChildren: 0.1
+			}
+		}
+	},
+	item: {
+		hidden: { y: 10, opacity: 0 },
+		show: { y: 0, opacity: 1 },
+		transition: { duration: 0.2 }
+	}
+};
+
 export default function Intro() {
 	const [index, setIndex] = useState(0);
-	const [waiting, setWaiting] = useState(false);
+	const waiting = useRef(false);
 	const [style, setStyle] = useState(sty.base);
 	const [font, setFont] = useState("font-cormorant");
-	const constraintRef = useRef(null);
-	const textRef = useRef(null);
+	const textRefs = [];
 	const navigate = useNavigate();
 
-	const handleClick = () => {
-		if (!waiting) {
+	const handleIncrementIndex = () => {
+		if (!waiting.current) {
 			setIndex((prevIndex) => prevIndex + 1);
-			setWaiting(true);
+			waiting.current = true;
 
 			if (index == 10) {
 				setTimeout(() => {
-					setWaiting(false);
+					waiting.current = false;
 				}, 4000);
 			} else {
 				setTimeout(() => {
-					setWaiting(false);
+					waiting.current = false;
 				}, 2000);
 			}
 		}
@@ -102,6 +117,18 @@ export default function Intro() {
 	const randomizeFont = () => setFont(fonts[Math.floor(Math.random() * fonts.length)]);
 	const throttledRandomizeFont = useCallback(throttle(randomizeFont, 200), []);
 
+	// event click and keyup
+	useEffect(() => {
+		document.addEventListener("click", handleIncrementIndex);
+		document.addEventListener("keyup", handleIncrementIndex);
+
+		return () => {
+			document.removeEventListener("click", handleIncrementIndex);
+			document.removeEventListener("keyup", handleIncrementIndex);
+		};
+	}, []);
+
+	// styles
 	useEffect(() => {
 		if (index == 2) {
 			setTimeout(() => {
@@ -111,19 +138,20 @@ export default function Intro() {
 		if (index == 3) {
 			setStyle(sty.style2);
 		}
-		if (index == 4) {
+		if (index >= 4 && index <= 5) {
 			setStyle(sty.style3);
 		}
-		if (index >= 5) {
+		if (index >= 6 && index <= 9) {
 			setStyle(sty.style4);
 		}
-		if (index >= 11) {
+		if (index >= text.length - 1) {
 			setStyle(sty.style5);
 		}
 	}, [index]);
 
+	// event mousemove
 	useEffect(() => {
-		if (index === 11) {
+		if (index === text.length - 1) {
 			setInterval(() => {
 				throttledRandomizeFont();
 			}, 3000);
@@ -134,33 +162,45 @@ export default function Intro() {
 		return window.removeEventListener("mousemove", () => throttledRandomizeFont());
 	}, [index]);
 
+	// navigate
 	useEffect(() => {
-		if (index > 11) {
+		if (index > text.length - 1) {
 			navigate("/adefathoniprastya/home");
 		}
 	}, [index]);
 
 	return (
-		<div onClick={handleClick} className={sty.container}>
-			{waiting == false && <IntroToast index={index} />}
+		<>
+			{/* Toast */}
+			<IntroToast key={index + "toast"} index={index} />
 
-			{index >= 6 && <Cursor element={textRef} />}
+			{/* Cursor */}
+			{index >= 6 && <Cursor element={textRefs} />}
 
-			{index < 7 && (
+			{/* Main */}
+			{index <= 6 && (
 				<main key={index} className={style}>
-					<p ref={(node) => (textRef.current = node)}>{text[index]}</p>
+					<p ref={(node) => textRefs.push(node)} className={index == 4 ? sty.text3 : ""}>
+						{text[index]}
+					</p>
 				</main>
 			)}
 
-			{index >= 7 && (
-				<main key={index} className={style + " " + font}>
-					<motion.div ref={constraintRef} className="w-12/12 h-12/12">
-						<motion.p ref={(node) => (textRef.current = node)} drag dragConstraints={constraintRef}>
-							{text[index]}
+			{index >= 7 && index <= 9 && (
+				<motion.main key={index} className={style} variants={vars.container} initial="hidden" animate="show">
+					{text[index].split(" ").map((char, i) => (
+						<motion.p key={i} ref={(node) => textRefs.push(node)} variants={vars.item}>
+							{char}
 						</motion.p>
-					</motion.div>
+					))}
+				</motion.main>
+			)}
+
+			{index >= 10 && (
+				<main key={index} className={style + " " + font}>
+					<motion.p ref={(node) => textRefs.push(node)}>{text[index]}</motion.p>
 				</main>
 			)}
-		</div>
+		</>
 	);
 }
