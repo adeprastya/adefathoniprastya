@@ -2,12 +2,17 @@ import { createContext, useEffect, useState } from "react";
 
 export const appStateContext = createContext();
 
+const init = {
+	width: window.innerWidth,
+	height: window.innerHeight,
+	isMobile: "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.userAgent.includes("Mobi"),
+	content: {
+		intro: true
+	}
+};
+
 export default function AppStateProvider({ children }) {
-	const [appState, setAppState] = useState({
-		width: window.innerWidth,
-		height: window.innerHeight,
-		isMobile: 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.userAgent.includes("Mobi")
-	});
+	const [appState, setAppState] = useState(init);
 
 	const handleResize = () => {
 		setAppState((prev) => ({

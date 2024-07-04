@@ -1,21 +1,24 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, isValidElement } from "react";
 import { appStateContext } from "@/context/AppStateContext";
 
-export default function Cursor({ element }) {
+const mouseInit = {
+	x: 0,
+	y: 0,
+	inWindow: false,
+	isHovering: false,
+	customEl: "DEFAULT"
+};
+
+export default function Cursor({ hovers }) {
 	const { appState } = useContext(appStateContext);
-	const [mouse, setMouse] = useState({
-		x: 0,
-		y: 0,
-		isInWindow: false,
-		isHovering: false
-	});
+	const [mouse, setMouse] = useState(mouseInit);
 
 	const handleMouseMove = (event) => {
 		setMouse((prev) => ({
 			...prev,
 			x: event.clientX,
 			y: event.clientY,
-			isInWindow:
+			inWindow:
 				event.clientX > 20 &&
 				event.clientY > 20 &&
 				event.clientX < appState.width - 20 &&
@@ -23,52 +26,94 @@ export default function Cursor({ element }) {
 		}));
 	};
 
-	const handleMouseEnter = () => {
+	const handleMouseEnter = (customEl) => () => {
 		setMouse((prev) => ({
 			...prev,
-			isHovering: true
+			isHovering: true,
+			customEl: customEl
 		}));
 	};
 
 	const handleMouseLeave = () => {
 		setMouse((prev) => ({
 			...prev,
-			isHovering: false
+			isHovering: false,
+			customEl: "DEFAULT"
 		}));
 	};
 
-	// event position
+	// mousemove event
 	useEffect(() => {
 		window.addEventListener("mousemove", handleMouseMove);
-
 		return () => {
 			window.removeEventListener("mousemove", handleMouseMove);
 		};
 	}, []);
 
-	// event hovering
+	// mouseenter/mouseleave events
 	useEffect(() => {
-		if (element.length > 0) {
-			element.map((el) => el.addEventListener("mouseenter", handleMouseEnter));
-			element.map((el) => el.addEventListener("mouseleave", handleMouseLeave));
+		if (Array.isArray(hovers) && hovers.length > 0) {
+			hovers.forEach(([element, customEl]) => {
+				if (element) {
+					element.addEventListener("mouseenter", handleMouseEnter(customEl));
+					element.addEventListener("mouseleave", handleMouseLeave);
+				}
+			});
 		}
-	}, [element]);
 
-	const sty = {
-		base: `after:rounded-full after:backdrop-invert ${mouse.isInWindow ? "after:scale-1" : "after:scale-0"}`,
-		hover: `after:rounded-full after:box-border after:border-[1px] after:border-x-yellow-400 after:border-y-orange-300 ${
-			mouse.isInWindow ? "after:scale-1" : "after:scale-0"
-		} before:absolute before:top-[50%] before:left-[50%] before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full before:bg-yellow-100 before:min-w-[3px] before:min-h-[3px] ${
-			mouse.isInWindow ? "before:scale-1" : "before:scale-0"
-		}`
+		return () => {
+			if (Array.isArray(hovers) && hovers.length > 0) {
+				hovers.forEach(([element, customEl]) => {
+					if (element) {
+						element.removeEventListener("mouseenter", handleMouseEnter(customEl));
+						element.removeEventListener("mouseleave", handleMouseLeave);
+					}
+				});
+			}
+		};
+	}, [hovers]);
+
+	const renderElement = () => {
+		switch (mouse.customEl) {
+			case "DEFAULT":
+				return <CursorDefault />;
+			case "HIDDEN":
+				return <CursorHidden />;
+			case "HOVER":
+				return <CursorHover />;
+			default:
+				if (isValidElement(mouse.customEl)) return mouse.customEl;
+				throw new Error("Invalid cursor element");
+		}
 	};
 
 	return (
 		<div
-			style={{ top: mouse.y, left: mouse.x }}
-			className={`w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 z-50 fixed -translate-x-[50%] -translate-y-[50%] pointer-events-none after:absolute after:top-0 after:left-0 after:w-full after:h-full after:transition-all after:duration-500 ${
-				mouse.isHovering ? sty.hover : sty.base
-			}`}
-		/>
+			style={{
+				pointerEvents: "none",
+				zIndex: 999,
+				position: "fixed",
+				top: mouse.y,
+				left: mouse.x,
+				transform: `translate(-50%, -50%) ${mouse.inWindow ? "scale(1)" : "scale(0)"}`,
+				transition: "transform 0.5s ease"
+			}}
+		>
+			{renderElement()}
+		</div>
+	);
+}
+
+function CursorHidden() {
+	return <></>;
+}
+
+function CursorDefault() {
+	return <div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 rounded-full backdrop-invert"></div>;
+}
+
+function CursorHover() {
+	return (
+		<div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 box-border rounded-full border-[1px] border-x-yellow-400 border-y-orange-300 after:absolute after:top-[50%] after:left-[50%] after:translate-x-[-50%] after:translate-y-[-50%] after:rounded-full after:bg-yellow-200 after:min-w-[3px] after:min-h-[3px]"></div>
 	);
 }
