@@ -16,7 +16,7 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div className="w-screen h-screen bg-slate-600 flex justify-center items-center gap-8">
+		<div className="w-screen h-screen bg-slate-600 flex justify-center items-center gap-8 cursor-none">
 			<h1 id="hover1">Home</h1>
 			<h1 id="hover2">Home</h1>
 			<h1 id="hover3">Home</h1>
