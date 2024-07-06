@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, isValidElement } from "react";
 import { appStateContext } from "@/context/AppStateContext";
-import { motion, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useSpring } from "framer-motion";
 
 const mouseInit = {
 	x: 0,
@@ -95,8 +95,8 @@ export default function Cursor({ hovers }) {
 				return <CursorDefault />;
 			case "HIDDEN":
 				return <CursorHidden />;
-			case "HOVER":
-				return <CursorHover />;
+			case "OUTLINE":
+				return <CursorOutline />;
 			default:
 				if (isValidElement(mouse.customEl)) return mouse.customEl;
 				throw new Error("Invalid cursor element");
@@ -122,22 +122,26 @@ export default function Cursor({ hovers }) {
 			scale: 1
 		},
 		transition: {
-			duration: 0.3,
+			duration: 0.2,
 			ease: "easeInOut"
 		}
 	};
 
 	return (
 		<>
-			<motion.div
-				style={vars.sty}
-				variants={vars}
-				initial="hidden"
-				animate={mouse.inWindow ? "visible" : "hidden"}
-				transition={vars.transition}
-			>
-				{renderElement()}
-			</motion.div>
+			<AnimatePresence>
+				<motion.div
+					key={mouse.customEl}
+					style={vars.sty}
+					variants={vars}
+					initial="hidden"
+					animate={mouse.inWindow ? "visible" : "hidden"}
+					exit="hidden"
+					transition={vars.transition}
+				>
+					{renderElement()}
+				</motion.div>
+			</AnimatePresence>
 			<motion.div
 				style={{ ...vars.sty, top: mouse.y, left: mouse.x }}
 				variants={vars}
@@ -158,7 +162,7 @@ function CursorDefault() {
 	return <div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 rounded-full backdrop-invert"></div>;
 }
 
-function CursorHover() {
+function CursorOutline() {
 	return (
 		<div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 box-border rounded-full border-[1px] border-x-yellow-400 border-y-orange-300"></div>
 	);
