@@ -1,7 +1,7 @@
 import Cursor from "@/components/Cursor";
 import IntroToast from "@/components/IntroToast";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { throttle } from "lodash";
 import { useNavigate } from "react-router-dom";
 
@@ -51,11 +51,11 @@ const sty = {
 
 	// text 6 - 9
 	style4:
-		"overflow-hidden box-border w-screen h-screen flex flex-wrap justify-center content-center items-center gap-2 p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl *:animate-fade cursor-none",
+		"cursor-none overflow-hidden box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl     *:flex *:flex-wrap *:justify-center *:content-center *:items-center *:gap-2 *:animate-fade",
 
 	// text 10
 	style5:
-		"overflow-hidden box-border w-screen h-screen flex flex-wrap justify-center content-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl     *:px-5 *:leading-relaxed *:text-transparent *:bg-clip-text *:bg-gradient-to-tl from-yellow-200 to-amber-400 cursor-none"
+		"cursor-none overflow-hidden box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl     *:flex *:flex-wrap *:justify-center *:content-center *:items-center *:gap-2     *:*:px-5 *:*:leading-relaxed *:*:text-transparent *:*:bg-clip-text *:*:bg-gradient-to-tl from-yellow-200 to-amber-400"
 };
 
 const fonts = [
@@ -71,19 +71,25 @@ const fonts = [
 ];
 
 const vars = {
-	container: {
+	parent: {
 		hidden: {},
-		show: {
+		visible: {
 			transition: {
 				delayChildren: 0,
 				staggerChildren: 0.1
 			}
 		}
 	},
-	item: {
+	child: {
 		hidden: { y: 50, opacity: 0 },
-		show: { y: 0, opacity: 1 },
-		transition: { duration: 0.2 }
+		visible: {
+			y: 0,
+			opacity: 1,
+			transition: {
+				type: "smooth",
+				duration: 0.2
+			}
+		}
 	}
 };
 
@@ -92,33 +98,33 @@ export default function Intro() {
 	const waiting = useRef(false);
 	const [style, setStyle] = useState(sty.base);
 	const [font, setFont] = useState("font-cormorant");
-	const textRefs = [];
+	const hovers = useRef([]);
 	const navigate = useNavigate();
-
-	const handleIncrementIndex = (e) => {
-		if (e instanceof KeyboardEvent && e.code !== "Enter" && e.code !== "Space") return;
-
-		if (!waiting.current) {
-			setIndex((prevIndex) => prevIndex + 1);
-			waiting.current = true;
-
-			if (index == 10) {
-				setTimeout(() => {
-					waiting.current = false;
-				}, 4000);
-			} else {
-				setTimeout(() => {
-					waiting.current = false;
-				}, 2000);
-			}
-		}
-	};
 
 	const randomizeFont = () => setFont(fonts[Math.floor(Math.random() * fonts.length)]);
 	const throttledRandomizeFont = useCallback(throttle(randomizeFont, 300), []);
 
-	// event increment index
+	// event index increment
 	useEffect(() => {
+		const handleIncrementIndex = (e) => {
+			if (e instanceof KeyboardEvent && e.code !== "Enter" && e.code !== "Space") return;
+
+			if (!waiting.current) {
+				setIndex((prevIndex) => prevIndex + 1);
+				waiting.current = true;
+
+				if (index == 10) {
+					setTimeout(() => {
+						waiting.current = false;
+					}, 4000);
+				} else {
+					setTimeout(() => {
+						waiting.current = false;
+					}, 2000);
+				}
+			}
+		};
+
 		document.addEventListener("click", (e) => handleIncrementIndex(e));
 		document.addEventListener("keyup", (e) => handleIncrementIndex(e));
 
@@ -128,7 +134,7 @@ export default function Intro() {
 		};
 	}, []);
 
-	// styles
+	// styles update
 	useEffect(() => {
 		if (index == 2) {
 			setTimeout(() => {
@@ -149,7 +155,7 @@ export default function Intro() {
 		}
 	}, [index]);
 
-	// event randomize font
+	// randomize font event
 	useEffect(() => {
 		if (index === text.length - 1) {
 			setInterval(() => {
@@ -162,7 +168,7 @@ export default function Intro() {
 		return window.removeEventListener("mousemove", () => throttledRandomizeFont());
 	}, [index]);
 
-	// navigate
+	// navigate to home
 	useEffect(() => {
 		if (index === 11) {
 			navigate("/adefathoniprastya/home");
@@ -172,15 +178,15 @@ export default function Intro() {
 	return (
 		<>
 			{/* Toast */}
-			<IntroToast key={index + "toast"} index={index} />
+			<IntroToast key={index + "toast"} index={index} ref={(node) => hovers.current.push([node, "OUTLINE"])} />
 
 			{/* Cursor */}
-			{index >= 6 && <Cursor element={textRefs} />}
+			{index >= 6 && <Cursor key={index + "cursor"} hovers={hovers.current} />}
 
 			{/* Main */}
 			{index <= 6 && (
 				<main key={index} className={style}>
-					<p ref={(node) => textRefs.push(node)} className={index == 4 ? sty.text3 : ""}>
+					<p ref={(node) => hovers.current.push([node, "OUTLINE"])} className={index == 4 ? sty.text3 : ""}>
 						{text[index]}
 					</p>
 				</main>
@@ -190,15 +196,17 @@ export default function Intro() {
 				<motion.main
 					key={index + font}
 					className={`${style} ${index == 10 ? font : ""}`}
-					variants={vars.container}
+					variants={vars.parent}
 					initial="hidden"
-					animate="show"
+					animate="visible"
 				>
-					{text[index].split(" ").map((char, i) => (
-						<motion.p key={i} ref={(node) => textRefs.push(node)} variants={vars.item}>
-							{char}
-						</motion.p>
-					))}
+					<div ref={(node) => hovers.current.push([node, "OUTLINE"])}>
+						{text[index].split(" ").map((char, i) => (
+							<motion.p key={i} variants={vars.child}>
+								{char}
+							</motion.p>
+						))}
+					</div>
 				</motion.main>
 			)}
 		</>

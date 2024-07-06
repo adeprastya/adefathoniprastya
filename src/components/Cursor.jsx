@@ -148,7 +148,7 @@ export default function Cursor({ hovers }) {
 				initial="hidden"
 				animate={mouse.inWindow ? "visible" : "hidden"}
 				transition={vars.transition}
-				className="translate-x-[-50%] translate-y-[-50%] w-2 h-2 rounded-full backdrop-invert opacity-50"
+				className="translate-x-[-50%] translate-y-[-50%] w-2 h-2 rounded-full backdrop-invert"
 			/>
 		</>
 	);
