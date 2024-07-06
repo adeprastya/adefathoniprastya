@@ -21,7 +21,7 @@ const text = [
 	"JavaScript, the superhero. Buckle up and prepare to witness its power!", // 5
 
 	// JS
-	"See that cursor? That's just a taste of JavaScript's magic in action", // 6
+	"See that cursor? That's just a taste of JavaScript's magic", // 6
 
 	// Framer Motion
 	"My hunger for knowledge is insatiable, and it fuels me to keep pushing forward", // 7
@@ -51,11 +51,11 @@ const sty = {
 
 	// text 6 - 9
 	style4:
-		"cursor-none overflow-hidden box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl     *:flex *:flex-wrap *:justify-center *:content-center *:items-center *:gap-2 *:animate-fade",
+		"cursor-none overflow-hidden box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 font-cormorant text-center text-4xl tracking-wider sm:text-5xl xl:text-6xl     *:flex *:flex-wrap *:justify-center *:content-center *:items-center *:gap-2 sm:*:gap-3 *:animate-fade",
 
 	// text 10
 	style5:
-		"cursor-none overflow-hidden box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl     *:flex *:flex-wrap *:justify-center *:content-center *:items-center *:gap-2     *:*:px-5 *:*:leading-relaxed *:*:text-transparent *:*:bg-clip-text *:*:bg-gradient-to-tl from-yellow-200 to-amber-400"
+		"cursor-none overflow-hidden box-border w-screen h-screen flex justify-center items-center p-10 sm:p-20 xl:p-40 bg-slate-950 text-slate-50 text-center tracking-wider text-6xl sm:text-7xl xl:text-8xl     *:flex *:flex-wrap *:justify-center *:content-center *:items-center *:gap-2 sm:*:gap-3     *:*:px-5 *:*:leading-relaxed *:*:text-transparent *:*:bg-clip-text *:*:bg-gradient-to-tl from-yellow-200 to-amber-400"
 };
 
 const fonts = [
@@ -160,7 +160,7 @@ export default function Intro() {
 		if (index === text.length - 1) {
 			setInterval(() => {
 				throttledRandomizeFont();
-			}, 2000);
+			}, 3000);
 
 			window.addEventListener("mousemove", () => throttledRandomizeFont());
 		}
@@ -178,7 +178,7 @@ export default function Intro() {
 	return (
 		<>
 			{/* Toast */}
-			<IntroToast key={index + "toast"} index={index} ref={(node) => hovers.current.push([node, "OUTLINE"])} />
+			<IntroToast key={index + "toast"} index={index} />
 
 			{/* Cursor */}
 			{index >= 6 && <Cursor key={index + "cursor"} hovers={hovers.current} />}
@@ -186,7 +186,12 @@ export default function Intro() {
 			{/* Main */}
 			{index <= 6 && (
 				<main key={index} className={style}>
-					<p ref={(node) => hovers.current.push([node, "OUTLINE"])} className={index == 4 ? sty.text3 : ""}>
+					<p
+						ref={(node) => {
+							if (index >= 6) hovers.current.push([node, "OUTLINE"]);
+						}}
+						className={index == 4 ? sty.text3 : ""}
+					>
 						{text[index]}
 					</p>
 				</main>
@@ -200,7 +205,11 @@ export default function Intro() {
 					initial="hidden"
 					animate="visible"
 				>
-					<div ref={(node) => hovers.current.push([node, "OUTLINE"])}>
+					<div
+						ref={(node) => {
+							if (index >= 6) hovers.current.push([node, "OUTLINE"]);
+						}}
+					>
 						{text[index].split(" ").map((char, i) => (
 							<motion.p key={i} variants={vars.child}>
 								{char}

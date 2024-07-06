@@ -18,8 +18,8 @@ const springConfig = {
 export default function Cursor({ hovers }) {
 	const { appState } = useContext(appStateContext);
 	const [mouse, setMouse] = useState(mouseInit);
-	const springX = useSpring(0, springConfig);
-	const springY = useSpring(0, springConfig);
+	const springX = useSpring(appState.width / 2, springConfig);
+	const springY = useSpring(appState.height / 2, springConfig);
 
 	// mousemove event
 	useEffect(() => {
