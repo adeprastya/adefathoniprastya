@@ -4,7 +4,7 @@ import "@/assets/css/index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ContextProvider from "@/context/ContextProvider";
 import Intro from "@/pages/intro";
-import Home from "@/pages/home";
+import App from "@/pages/app";
 
 const router = createBrowserRouter([
 	{
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/adefathoniprastya/home",
-		element: <Home />
+		element: <App />
 	}
 ]);
 

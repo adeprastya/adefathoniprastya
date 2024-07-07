@@ -1,0 +1,72 @@
+import { useEffect, useRef, useState } from "react";
+import {
+	motion,
+	useScroll,
+	useSpring,
+	useTransform,
+	useMotionValue,
+	useVelocity,
+	useAnimationFrame
+} from "framer-motion";
+import { wrap } from "@motionone/utils";
+
+export default function ParallaxText({ children, baseVelocity = 10, textStyle }) {
+	const baseX = useMotionValue(0);
+	const { scrollY } = useScroll();
+	const scrollVelocity = useVelocity(scrollY);
+	const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 500 });
+	const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false });
+
+	const containerRef = useRef(null);
+	const [childWidth, setChildWidth] = useState(0);
+	const [childMultiply, setChildMultiply] = useState(0);
+	// Calculate children to render, resize event
+	useEffect(() => {
+		const calculateChildMultiply = () => {
+			if (containerRef.current && containerRef.current.firstElementChild) {
+				const containerWidth = containerRef.current.offsetWidth;
+				const childWidth = containerRef.current.firstElementChild.offsetWidth;
+
+				setChildWidth(childWidth);
+				setChildMultiply(Math.ceil(containerWidth / childWidth));
+			}
+		};
+		calculateChildMultiply();
+
+		window.addEventListener("resize", calculateChildMultiply);
+
+		return () => {
+			window.removeEventListener("resize", calculateChildMultiply);
+		};
+	}, [children, childWidth]);
+
+	const directionFactor = useRef(1);
+	useAnimationFrame((t, delta) => {
+		let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
+
+		if (velocityFactor.get() < 0) {
+			directionFactor.current = -1;
+		} else if (velocityFactor.get() > 0) {
+			directionFactor.current = 1;
+		}
+
+		moveBy += directionFactor.current * moveBy * velocityFactor.get();
+
+		baseX.set(baseX.get() + moveBy);
+	});
+
+	const x = useTransform(baseX, (v) => `${wrap(-childWidth, 0, v)}px`);
+
+	return (
+		<div className="overflow-hidden">
+			<motion.div className="whitespace-nowrap" style={{ x }} ref={containerRef}>
+				<span className={textStyle}>{children + " "}</span>
+				{Array.from({ length: childMultiply }).map((_, i) => (
+					<span key={i} className={textStyle}>
+						{children + " "}
+					</span>
+				))}
+			</motion.div>
+		</div>
+	);
+}

@@ -1,8 +1,18 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
+
 export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			textShadow: {
+				sm: "0 1px 2px var(--tw-shadow-color, rgba(0, 0, 0, 0.05))",
+				default: "0 2px 4px var(--tw-shadow-color, rgba(0, 0, 0, 0.1))",
+				lg: "0 2px 8px var(--tw-shadow-color, rgba(0, 0, 0, 0.2))",
+				border:
+					"1px 1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), -1px 1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), 1px -1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), -1px -1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2))"
+			},
 			fontFamily: {
 				caesarDressing: ["Caesar Dressing", "system-ui", "sans"],
 				cormorant: ["Cormorant", "serif"],
@@ -29,5 +39,34 @@ export default {
 			}
 		}
 	},
-	plugins: []
+	variants: {
+		textShadow: ["responsive", "hover"]
+	},
+	plugins: [
+		plugin(function ({ addUtilities, theme, e }) {
+			const textShadowSizes = {
+				".text-shadow-sm": { textShadow: theme("textShadow.sm") },
+				".text-shadow-md": { textShadow: theme("textShadow.default") },
+				".text-shadow-lg": { textShadow: theme("textShadow.lg") },
+				".text-shadow-border": { textShadow: theme("textShadow.border") },
+				".text-shadow-none": { textShadow: "none" }
+			};
+
+			const colors = theme("colors");
+			const textShadowColors = Object.keys(colors).reduce((acc, color) => {
+				const shades = colors[color];
+				if (typeof shades === "string") {
+					acc[`.text-shadow-${color}`] = { "--tw-shadow-color": shades };
+				} else {
+					Object.keys(shades).forEach((shade) => {
+						acc[`.text-shadow-${color}-${shade}`] = { "--tw-shadow-color": shades[shade] };
+					});
+				}
+				return acc;
+			}, {});
+
+			addUtilities(textShadowSizes, ["responsive", "hover"]);
+			addUtilities(textShadowColors, ["responsive", "hover"]);
+		})
+	]
 };
