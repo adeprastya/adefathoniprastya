@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, isValidElement } from "react";
 import { appStateContext } from "@/context/AppStateContext";
 import { motion, AnimatePresence, useSpring } from "framer-motion";
 
-const mouseInit = {
+const MOUSE_INIT = {
 	x: 0,
 	y: 0,
 	inWindow: false,
@@ -10,16 +10,56 @@ const mouseInit = {
 	customEl: "DEFAULT"
 };
 
-const springConfig = {
+const SPRING_CONFIG = {
 	damping: 10,
 	stiffness: 50
 };
 
+const CURSOR_TYPES = {
+	DEFAULT: "DEFAULT",
+	HIDDEN: "HIDDEN",
+	OUTLINE: "OUTLINE"
+};
+
+const CursorHidden = () => <></>;
+
+const CursorDefault = () => (
+	<div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 rounded-full backdrop-invert"></div>
+);
+
+const CursorOutline = () => (
+	<div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 box-border rounded-full border-[1px] border-x-yellow-400 border-y-orange-300"></div>
+);
+
+const cursorComponents = {
+	[CURSOR_TYPES.DEFAULT]: CursorDefault,
+	[CURSOR_TYPES.HIDDEN]: CursorHidden,
+	[CURSOR_TYPES.OUTLINE]: CursorOutline
+};
+
+const addHoverListeners = (hovers, handleMouseEnter, handleMouseLeave) => {
+	hovers.forEach(([element, customEl]) => {
+		if (element) {
+			element.addEventListener("mouseenter", handleMouseEnter(customEl));
+			element.addEventListener("mouseleave", handleMouseLeave);
+		}
+	});
+};
+
+const removeHoverListeners = (hovers, handleMouseEnter, handleMouseLeave) => {
+	hovers.forEach(([element]) => {
+		if (element) {
+			element.removeEventListener("mouseenter", handleMouseEnter);
+			element.removeEventListener("mouseleave", handleMouseLeave);
+		}
+	});
+};
+
 export default function Cursor({ hovers }) {
 	const { appState } = useContext(appStateContext);
-	const [mouse, setMouse] = useState(mouseInit);
-	const springX = useSpring(appState.width / 2, springConfig);
-	const springY = useSpring(appState.height / 2, springConfig);
+	const [mouse, setMouse] = useState(MOUSE_INIT);
+	const springX = useSpring(appState.width / 2, SPRING_CONFIG);
+	const springY = useSpring(appState.height / 2, SPRING_CONFIG);
 
 	// mousemove event
 	useEffect(() => {
@@ -46,7 +86,7 @@ export default function Cursor({ hovers }) {
 		return () => {
 			window.removeEventListener("mousemove", handleMouseMove);
 		};
-	}, []);
+	}, [appState.isMobile, appState.width, appState.height, springX, springY]);
 
 	// mouseenter/mouseleave events
 	useEffect(() => {
@@ -64,43 +104,28 @@ export default function Cursor({ hovers }) {
 			setMouse((prev) => ({
 				...prev,
 				isHovering: false,
-				customEl: "DEFAULT"
+				customEl: CURSOR_TYPES.DEFAULT
 			}));
 		};
 
 		if (Array.isArray(hovers) && hovers.length > 0) {
-			hovers.forEach(([element, customEl]) => {
-				if (element) {
-					element.addEventListener("mouseenter", handleMouseEnter(customEl));
-					element.addEventListener("mouseleave", handleMouseLeave);
-				}
-			});
+			addHoverListeners(hovers, handleMouseEnter, handleMouseLeave);
 		}
 
 		return () => {
 			if (Array.isArray(hovers) && hovers.length > 0) {
-				hovers.forEach(([element, customEl]) => {
-					if (element) {
-						element.removeEventListener("mouseenter", handleMouseEnter(customEl));
-						element.removeEventListener("mouseleave", handleMouseLeave);
-					}
-				});
+				removeHoverListeners(hovers, handleMouseEnter, handleMouseLeave);
 			}
 		};
-	}, [hovers]);
+	}, [hovers, appState.isMobile]);
 
 	const renderElement = () => {
-		switch (mouse.customEl) {
-			case "DEFAULT":
-				return <CursorDefault />;
-			case "HIDDEN":
-				return <CursorHidden />;
-			case "OUTLINE":
-				return <CursorOutline />;
-			default:
-				if (isValidElement(mouse.customEl)) return mouse.customEl;
-				throw new Error("Invalid cursor element");
+		const CustomCursor = cursorComponents[mouse.customEl];
+		if (CustomCursor) {
+			return <CustomCursor />;
 		}
+		if (isValidElement(mouse.customEl)) return mouse.customEl;
+		throw new Error("Invalid cursor element");
 	};
 
 	const vars = {
@@ -151,19 +176,5 @@ export default function Cursor({ hovers }) {
 				className="translate-x-[-50%] translate-y-[-50%] w-2 h-2 rounded-full backdrop-invert"
 			/>
 		</>
-	);
-}
-
-function CursorHidden() {
-	return <></>;
-}
-
-function CursorDefault() {
-	return <div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 rounded-full backdrop-invert"></div>;
-}
-
-function CursorOutline() {
-	return (
-		<div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 box-border rounded-full border-[1px] border-x-yellow-400 border-y-orange-300"></div>
 	);
 }
