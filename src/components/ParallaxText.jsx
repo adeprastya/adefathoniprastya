@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { wrap } from "@motionone/utils";
 
-export default function ParallaxText({ children, baseVelocity = 10, textStyle }) {
+export default function ParallaxText({ children, baseVelocity = 10, containerStyle, textStyle }) {
 	const baseX = useMotionValue(0);
 	const { scrollY } = useScroll();
 	const scrollVelocity = useVelocity(scrollY);
@@ -21,12 +21,17 @@ export default function ParallaxText({ children, baseVelocity = 10, textStyle })
 	const childRef = useRef(null);
 	const [childMultiply, setChildMultiply] = useState(0);
 	const childWidth = useMotionValue(0);
-	// Calculate children to render, resize event
+
 	const calculateChildMultiply = useCallback(() => {
 		if (containerRef.current && childRef.current) {
-			setChildMultiply(Math.ceil(containerRef.current.offsetWidth / childRef.current.offsetWidth));
+			const contWidth = containerRef.current.offsetWidth;
+			const childWidth = childRef.current.offsetWidth;
+			const numChildren = Math.ceil(contWidth / childWidth);
+			setChildMultiply(numChildren);
 		}
 	}, []);
+
+	// Calculate children to render, resize event
 	useEffect(() => {
 		calculateChildMultiply();
 
@@ -35,7 +40,7 @@ export default function ParallaxText({ children, baseVelocity = 10, textStyle })
 		return () => {
 			window.removeEventListener("resize", calculateChildMultiply);
 		};
-	}, [containerRef.current, childRef.current]);
+	}, [containerRef.current, childRef.current, textStyle]);
 
 	const directionFactor = useRef(1);
 	useAnimationFrame((t, delta) => {
@@ -59,7 +64,7 @@ export default function ParallaxText({ children, baseVelocity = 10, textStyle })
 	const x = useTransform([baseX, childWidth], ([v, w]) => `${wrap(-w, 0, v)}px`);
 
 	return (
-		<div className="overflow-hidden">
+		<div className={containerStyle + " overflow-hidden w-full box-border"}>
 			<motion.div ref={containerRef} className="whitespace-nowrap" style={{ x }}>
 				<span ref={childRef} className={textStyle}>
 					{children + " "}
