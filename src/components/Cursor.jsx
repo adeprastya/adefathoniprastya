@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, isValidElement } from "react";
+import { useState, useEffect, useContext, useCallback, isValidElement } from "react";
 import { appStateContext } from "@/context/AppStateContext";
 import { motion, AnimatePresence, useSpring } from "framer-motion";
 
@@ -61,25 +61,53 @@ export default function Cursor({ hovers }) {
 	const springX = useSpring(appState.width / 2, SPRING_CONFIG);
 	const springY = useSpring(appState.height / 2, SPRING_CONFIG);
 
+	const handleMouseMove = useCallback((event) => {
+		setMouse((prev) => ({
+			...prev,
+			x: event.clientX,
+			y: event.clientY,
+			inWindow:
+				event.clientX > 20 &&
+				event.clientY > 20 &&
+				event.clientX < appState.width - 20 &&
+				event.clientY < appState.height - 20
+		}));
+
+		springX.set(event.clientX);
+		springY.set(event.clientY);
+	}, []);
+
+	const handleMouseEnter = useCallback(
+		(customEl) => () => {
+			setMouse((prev) => ({
+				...prev,
+				isHovering: true,
+				customEl: customEl
+			}));
+		},
+		[]
+	);
+
+	const handleMouseLeave = useCallback(() => {
+		setMouse((prev) => ({
+			...prev,
+			isHovering: false,
+			customEl: CURSOR_TYPES.DEFAULT
+		}));
+	}, []);
+
+	const renderElement = useCallback(() => {
+		const CustomCursor = cursorComponents[mouse.customEl];
+		if (CustomCursor) {
+			return <CustomCursor />;
+		}
+		if (isValidElement(mouse.customEl)) return mouse.customEl;
+		throw new Error("Invalid cursor element");
+	}, [mouse.customEl]);
+
 	// mousemove event
 	useEffect(() => {
 		if (appState.isMobile) return;
-
-		const handleMouseMove = (event) => {
-			setMouse((prev) => ({
-				...prev,
-				x: event.clientX,
-				y: event.clientY,
-				inWindow:
-					event.clientX > 20 &&
-					event.clientY > 20 &&
-					event.clientX < appState.width - 20 &&
-					event.clientY < appState.height - 20
-			}));
-
-			springX.set(event.clientX);
-			springY.set(event.clientY);
-		};
 
 		window.addEventListener("mousemove", handleMouseMove);
 
@@ -92,22 +120,6 @@ export default function Cursor({ hovers }) {
 	useEffect(() => {
 		if (appState.isMobile) return;
 
-		const handleMouseEnter = (customEl) => () => {
-			setMouse((prev) => ({
-				...prev,
-				isHovering: true,
-				customEl: customEl
-			}));
-		};
-
-		const handleMouseLeave = () => {
-			setMouse((prev) => ({
-				...prev,
-				isHovering: false,
-				customEl: CURSOR_TYPES.DEFAULT
-			}));
-		};
-
 		if (Array.isArray(hovers) && hovers.length > 0) {
 			addHoverListeners(hovers, handleMouseEnter, handleMouseLeave);
 		}
@@ -118,15 +130,6 @@ export default function Cursor({ hovers }) {
 			}
 		};
 	}, [hovers, appState.isMobile]);
-
-	const renderElement = () => {
-		const CustomCursor = cursorComponents[mouse.customEl];
-		if (CustomCursor) {
-			return <CustomCursor />;
-		}
-		if (isValidElement(mouse.customEl)) return mouse.customEl;
-		throw new Error("Invalid cursor element");
-	};
 
 	const vars = {
 		sty: {
