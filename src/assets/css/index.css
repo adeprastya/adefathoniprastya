@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Great+Vibes&family=Monsieur+La+Doulaise&family=Mystery+Quest&family=Tiny5&family=VT323&display=swap");
 
+@font-face {
+	font-family: "aveinatortia";
+	src: url("./../fonts/aveinatortia/Aveinatortia.ttf") format("truetype");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+	overflow-x: hidden;
+}

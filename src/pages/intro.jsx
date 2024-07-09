@@ -171,7 +171,7 @@ export default function Intro() {
 	// navigate to home
 	useEffect(() => {
 		if (index === 11) {
-			navigate("/adefathoniprastya/home");
+			navigate("/adefathoniprastya/app");
 		}
 	}, [index]);
 

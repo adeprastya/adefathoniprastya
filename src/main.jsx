@@ -12,7 +12,7 @@ const router = createBrowserRouter([
 		element: <Intro />
 	},
 	{
-		path: "/adefathoniprastya/home",
+		path: "/adefathoniprastya/app",
 		element: <App />
 	}
 ]);
