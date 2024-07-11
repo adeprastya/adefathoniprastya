@@ -1,11 +1,11 @@
-import ParallaxText from "@/components/ParallaxText";
-import AnimatedText from "@/components/AnimatedText";
+import ParallaxText from "@/components/molecules/ParallaxText";
+import AnimatedText from "@/components/molecules/AnimatedText";
 
 export default function Home({}) {
-	const arr = ["DEVELOPER", "FRONTEND", "STUDENT"];
+	const arr = ["DEVELOPER", "FRONTEND", "STUDENT", "DESIGNER", "FRIENDS"];
 
 	return (
-		<div className="relative overflow-hidden w-full min-h-screen flex justify-center items-center">
+		<section className="relative overflow-hidden w-full min-h-screen flex justify-center items-center">
 			<div className="z-10">
 				<p className="font-sans font-light text-xl sm:text-2xl lg:text-3xl text-slate-400">Someone to be</p>
 				<AnimatedText
@@ -57,6 +57,6 @@ export default function Home({}) {
 			>
 				ade fathoni prastya
 			</ParallaxText>
-		</div>
+		</section>
 	);
 }

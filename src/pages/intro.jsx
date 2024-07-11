@@ -1,5 +1,5 @@
-import Cursor from "@/components/Cursor";
-import IntroToast from "@/components/IntroToast";
+import Cursor from "@/components/molecules/Cursor";
+import IntroToast from "@/components/molecules/IntroToast";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import { throttle } from "lodash";
