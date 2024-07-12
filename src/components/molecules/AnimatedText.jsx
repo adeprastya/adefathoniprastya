@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function AnimatedText({ arr, textStyle }) {
-	const [texts] = useState(arr);
+export default function AnimatedText({ textArray, textStyle }) {
+	const [texts] = useState(textArray);
 	const [textLength, setTextLength] = useState(0);
 	const [text, setText] = useState("");
 	const index = useRef(0);

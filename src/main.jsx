@@ -9,11 +9,11 @@ import App from "@/pages/app";
 const router = createBrowserRouter([
 	{
 		path: "/adefathoniprastya",
-		element: <Intro />
+		element: <App />
 	},
 	{
-		path: "/adefathoniprastya/app",
-		element: <App />
+		path: "/adefathoniprastya/intro",
+		element: <Intro />
 	}
 ]);
 

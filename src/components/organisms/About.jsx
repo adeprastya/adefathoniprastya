@@ -1,29 +1,42 @@
 import Carousel from "@/components/molecules/Carousel";
+import SocialMediaIcons from "@/components/molecules/SocialMediaIcons";
+import photo from "@/assets/image/photo.png";
 
-const imageSources = [
-	"https://images.unsplash.com/photo-1719583112932-d2426a3196ae?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-	"https://images.unsplash.com/photo-1718638485305-c9513e99eb19?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-];
+const imageSources = [photo, photo, photo];
+
+const sty = {
+	container: "relative overflow-hidden w-full h-screen grid grid-cols-6 grid-rows-12",
+	iconWrapper:
+		"z-10 absolute bottom-[4%] left-[50%] translate-x-[-50%] flex gap-2 rounded-md backdrop-blur-lg backdrop-brightness-50 px-2 py-1     *:w-5 *:h-5 *:fill-slate-300 *:cursor-pointer",
+	title: "font-cormorant text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-slate-200",
+	paragraph: "font-sans font-light text-base sm:text-lg lg:text-xl text-slate-400"
+};
 
 export default function About() {
 	return (
-		<section className="relative overflow-hidden w-full h-screen grid grid-cols-6 grid-rows-12">
+		<section className={sty.container}>
 			<div className="col-span-6 row-span-4 sm:col-span-6 sm:row-span-5 md:col-span-2 md:row-span-12">
-				<Carousel sources={imageSources} />
+				<Carousel sources={imageSources}>
+					<SocialMediaIcons className={sty.iconWrapper} />
+				</Carousel>
 			</div>
 
-			<div className="col-span-6 row-span-2 sm:col-span-6 sm:row-span-2 md:col-span-4 md:row-span-4 font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-slate-100 flex items-center justify-center">
-				ABOUT ME
+			<div className="col-span-6 row-span-2 sm:col-span-6 sm:row-span-2 md:col-span-4 md:row-span-4 flex items-center justify-center">
+				<h1 className={sty.title}>ABOUT ME</h1>
 			</div>
 
-			<div className="col-span-6 row-span-3 sm:col-span-3 sm:row-span-5 md:col-span-2 md:row-span-8 font-sans font-light text-base sm:text-lg lg:text-xl text-slate-300 flex items-start justify-center px-20 sm:p-10 lg:p-16">
-				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi nobis eveniet quae. Animi distinctio tempore
-				minima voluptates error eveniet quaerat vero. Assumenda omnis totam magni
+			<div className="col-span-6 row-span-3 sm:col-span-3 sm:row-span-5 md:col-span-2 md:row-span-8 flex items-start justify-center px-20 sm:p-10 lg:p-16">
+				<p className={sty.paragraph}>
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi nobis eveniet quae. Animi distinctio
+					tempore minima voluptates error eveniet quaerat vero. Assumenda omnis totam magni
+				</p>
 			</div>
 
-			<div className="col-span-6 row-span-3 sm:col-span-3 sm:row-span-5 md:col-span-2 md:row-span-8 font-sans font-light text-base sm:text-lg lg:text-xl text-slate-300 flex items-start justify-center px-20 sm:p-10 lg:p-16">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore minima minus corporis, expedita inventore
-				quisquam. Similique, minima voluptate officia assumenda molestias?
+			<div className="col-span-6 row-span-3 sm:col-span-3 sm:row-span-5 md:col-span-2 md:row-span-8 flex items-start justify-center px-20 sm:p-10 lg:p-16">
+				<p className={sty.paragraph}>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore minima minus corporis, expedita inventore
+					quisquam. Similique, minima voluptate officia assumenda molestias?
+				</p>
 			</div>
 		</section>
 	);

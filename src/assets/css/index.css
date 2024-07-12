@@ -2,7 +2,7 @@
 
 @font-face {
 	font-family: "aveinatortia";
-	src: url("./../fonts/aveinatortia/Aveinatortia.ttf") format("truetype");
+	src: url("./../font/aveinatortia/Aveinatortia.ttf") format("truetype");
 }
 
 @tailwind base;
