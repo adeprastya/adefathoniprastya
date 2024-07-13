@@ -11,6 +11,8 @@ export default function App() {
 			<Home />
 
 			<About />
+
+			<Portfolio />
 		</main>
 	);
 }
