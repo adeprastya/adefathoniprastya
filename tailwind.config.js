@@ -14,14 +14,9 @@ export default {
 					"1px 1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), -1px 1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), 1px -1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), -1px -1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2))"
 			},
 			fontFamily: {
-				aveinatortia: ["aveinatortia", "system-ui", "sans"],
-				caesarDressing: ["Caesar Dressing", "system-ui", "sans"],
+				bebas: ["Bebas Neue", "system-ui", "sans"],
 				cormorant: ["Cormorant", "serif"],
-				greatVibes: ["Great Vibes", "cursive"],
-				monsieurLaDoulaise: ["Monsieur La Doulaise", "system-ui", "sans"],
-				mysteryQuest: ["Mystery Quest", "system-ui", "sans"],
-				tiny5: ["Tiny5", "system-ui", "sans"],
-				vt323: ["VT323", "system-ui", "sans"]
+				fira: ["Fira Sans", "system-ui", "sans"]
 			},
 			keyframes: {
 				fade: {

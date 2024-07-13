@@ -5,11 +5,11 @@ const texts = ["DEVELOPER", "DESIGNER", "ARTIST", "STUDENT", "FRIENDS"];
 
 const sty = {
 	container: "relative overflow-hidden w-full min-h-screen flex justify-center items-center",
-	paragraph: "font-sans font-light text-gl sm:text-2xl lg:text-3xl text-slate-400",
-	name: "font-cormorant font-semibold text-slate-400 bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent w-9 sm:w-16 lg:w-24 text-center",
+	paragraph: "font-fira font-light text-lg sm:text-2xl lg:text-3xl text-slate-400",
+	name: "text-slate-400 bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent text-center",
 	animatedText:
 		"font-cormorant font-bold text-5xl sm:text-7xl lg:text-9xl bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent w-9 sm:w-16 lg:w-24 text-center",
-	parallaxText: "font-aveinatortia from-black to-slate-800 bg-clip-text text-transparent"
+	parallaxText: "font-bebas from-black to-slate-800 bg-clip-text text-transparent"
 };
 
 export default function Home() {

@@ -99,7 +99,7 @@ export default function Carousel({ children, sources }) {
 				/>
 			</AnimatePresence>
 
-			<div className="z-10 absolute top-[50%] left-[2%] translate-y-[-50%] flex flex-col gap-4">
+			<div className="z-10 absolute top-[50%] left-[4%] translate-y-[-50%] flex flex-col gap-4">
 				{sources.map((src, i) => (
 					<div
 						key={i}

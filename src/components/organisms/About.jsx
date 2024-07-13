@@ -9,7 +9,7 @@ const sty = {
 	iconWrapper:
 		"z-10 absolute bottom-[4%] left-[50%] translate-x-[-50%] flex gap-2 rounded-md backdrop-blur-lg backdrop-brightness-50 px-2 py-1     *:w-5 *:h-5 *:fill-slate-300 *:cursor-pointer",
 	title: "font-cormorant text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-slate-200",
-	paragraph: "font-sans font-light text-base sm:text-lg lg:text-xl text-slate-400"
+	paragraph: "font-fira font-light text-base sm:text-lg lg:text-xl text-slate-400"
 };
 
 export default function About() {
@@ -22,7 +22,7 @@ export default function About() {
 			</div>
 
 			<div className="col-span-6 row-span-2 sm:col-span-6 sm:row-span-2 md:col-span-4 md:row-span-4 flex items-center justify-center">
-				<h1 className={sty.title}>ABOUT ME</h1>
+				<h1 className={sty.title}>About Me</h1>
 			</div>
 
 			<div className="col-span-6 row-span-3 sm:col-span-3 sm:row-span-5 md:col-span-2 md:row-span-8 flex items-start justify-center px-20 sm:p-10 lg:p-16">
