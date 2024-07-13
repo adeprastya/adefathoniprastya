@@ -1,6 +1,7 @@
 import Cursor from "@/components/molecules/Cursor";
-import Home from "@/components/organisms/Home";
-import About from "@/components/organisms/About";
+import Home from "@/components/template/Home";
+import About from "@/components/template/About";
+import Portfolio from "@/components/template/Portfolio";
 
 export default function App() {
 	return (
