@@ -2,6 +2,7 @@ import Cursor from "@/components/molecules/Cursor";
 import Home from "@/components/template/Home";
 import About from "@/components/template/About";
 import Portfolio from "@/components/template/Portfolio";
+import Contact from "@/components/template/Contact";
 
 export default function App() {
 	return (
@@ -13,6 +14,8 @@ export default function App() {
 			<About />
 
 			<Portfolio />
+
+			<Contact />
 		</main>
 	);
 }
