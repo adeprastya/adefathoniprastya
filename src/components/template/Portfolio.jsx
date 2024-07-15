@@ -2,10 +2,20 @@ import projectMovcult from "@/assets/image/projectMovcult.png";
 import projectPoof from "@/assets/image/projectPoof.png";
 import projectLogic from "@/assets/image/projectLogic.png";
 
-const projects = [
-	{ title: "Movcult", overview: "a movie search app created using React and API from TMDB", image: projectMovcult },
-	{ title: "Poof", overview: "a note app created using PHP and mySQL", image: projectPoof },
-	{ title: "Logic Prediction", overview: "a simple web based logic prediction", image: projectLogic }
+const data = [
+	{
+		title: "Movcult",
+		overview: "a movie search app created using React and API from TMDB",
+		link: "https://adeprastya.github.io/movcult/",
+		image: projectMovcult
+	},
+	{ title: "Poof", overview: "a note app created using PHP and mySQL", link: "http://poof.rf.gd", image: projectPoof },
+	{
+		title: "Logic Prediction",
+		overview: "a simple web based logic prediction",
+		link: "https://adeprastya.github.io/logic-prediction/",
+		image: projectLogic
+	}
 ];
 
 const sty = {
@@ -18,10 +28,15 @@ const sty = {
 	overview: "block w-32 sm:w-56 lg:w-96 font-fira font-light text-sm sm:text-base md:text-lg lg:text-xl text-slate-400",
 	image: "z-10 relative w-44 sm:w-52 md:w-64 lg:w-80 aspect-[9/12] rounded-md object-cover",
 	imageOverlay:
-		"absolute top-[10%] left-[10%] w-44 sm:w-52 md:w-64 lg:w-80 aspect-[9/12] rounded-md bg-gradient-to-bl from-amber-600 to-yellow-400"
+		"absolute top-[10%] left-[10%] w-44 sm:w-52 md:w-64 lg:w-80 aspect-[9/12] rounded-md bg-gradient-to-bl from-amber-600 to-yellow-400",
+	text: "block font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-blue-500"
 };
 
-export default function Portfolio() {
+function Text({ children }) {
+	return <p className={sty.text}>{children}</p>;
+}
+
+export default function Portfolio({ hovers }) {
 	return (
 		<section className={sty.container}>
 			<div className="col-span-1 flex justify-center items-center">
@@ -31,18 +46,24 @@ export default function Portfolio() {
 			</div>
 
 			<div className="col-span-11 py-32 sm:py-36 lg:py-40 flex flex-col justify-evenly items-center gap-32 sm:gap-36 lg:gap-40">
-				{projects.map((project, i) => (
-					<div key={i} className={sty.wrapper}>
+				{data.map((data, i) => (
+					<a
+						href={data.link}
+						target="_blank"
+						key={i}
+						ref={(node) => hovers.current.push([node, <Text>{data.title}</Text>])}
+						className={sty.wrapper}
+					>
 						<div>
-							<h2 className={sty.title}>{project.title}</h2>
-							<p className={sty.overview}>{project.overview}</p>
+							<h2 className={sty.title}>{data.title}</h2>
+							<p className={sty.overview}>{data.overview}</p>
 						</div>
 
 						<div className="relative">
 							<div className={sty.imageOverlay}></div>
-							<img src={project.image} alt={project.title} className={sty.image} />
+							<img src={data.image} alt={data.title} className={sty.image} />
 						</div>
-					</div>
+					</a>
 				))}
 			</div>
 		</section>

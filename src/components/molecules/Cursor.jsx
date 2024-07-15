@@ -61,21 +61,24 @@ export default function Cursor({ hovers }) {
 	const springX = useSpring(appState.width / 2, SPRING_CONFIG);
 	const springY = useSpring(appState.height / 2, SPRING_CONFIG);
 
-	const handleMouseMove = useCallback((event) => {
-		setMouse((prev) => ({
-			...prev,
-			x: event.clientX,
-			y: event.clientY,
-			inWindow:
-				event.clientX > 20 &&
-				event.clientY > 20 &&
-				event.clientX < appState.width - 20 &&
-				event.clientY < appState.height - 20
-		}));
+	const handleMouseMove = useCallback(
+		(event) => {
+			setMouse((prev) => ({
+				...prev,
+				x: event.clientX,
+				y: event.clientY,
+				inWindow:
+					event.clientX > 20 &&
+					event.clientY > 20 &&
+					event.clientX < appState.width - 20 &&
+					event.clientY < appState.height - 20
+			}));
 
-		springX.set(event.clientX);
-		springY.set(event.clientY);
-	}, []);
+			springX.set(event.clientX);
+			springY.set(event.clientY);
+		},
+		[appState]
+	);
 
 	const handleMouseEnter = useCallback(
 		(customEl) => () => {

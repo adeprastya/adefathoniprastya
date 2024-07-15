@@ -4,21 +4,24 @@ import About from "@/components/template/About";
 import Portfolio from "@/components/template/Portfolio";
 import Contact from "@/components/template/Contact";
 import Outro from "@/components/template/Outro";
+import { useRef } from "react";
 
 export default function App() {
+	const hovers = useRef([]);
+
 	return (
 		<main className="cursor-none bg-slate-950">
-			<Cursor hovers={[]} />
-
 			<Home />
 
-			<About />
+			<About hovers={hovers} />
 
-			<Portfolio />
+			<Portfolio hovers={hovers} />
 
 			<Contact />
 
 			<Outro />
+
+			<Cursor hovers={hovers.current} />
 		</main>
 	);
 }
