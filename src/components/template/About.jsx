@@ -1,6 +1,9 @@
 import Carousel from "@/components/molecules/Carousel";
 import photo1 from "@/assets/image/photo1.png";
 import photo2 from "@/assets/image/photo2.png";
+import { useState, useContext, useRef } from "react";
+import { appStateContext } from "@/context/AppStateContext";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 
 const imageSources = [photo1, photo2];
 
@@ -93,29 +96,107 @@ const sty = {
 		"font-cormorant italic tracking-wide text-3xl md:text-4xl lg:text-5xl text-slate-300 flex justify-center items-center"
 };
 
+const vars = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.5,
+			duration: 0.5
+		}
+	},
+	child: {
+		hidden: { opacity: 0 },
+		visible: {
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.3,
+				duration: 0.5
+			}
+		}
+	},
+	item: {
+		hidden: { y: 20, opacity: 0 },
+		visible: {
+			y: 0,
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.5,
+				delayChildren: 0.5,
+				duration: 0.5
+			}
+		}
+	}
+};
+
 export default function About({ hovers }) {
+	const { appState } = useContext(appStateContext);
+	const [el, setEl] = useState(null);
+	const containerRef = useRef(null);
+	const isInView = useInView(containerRef, { amount: 0.3 });
+
 	return (
-		<section className={sty.container}>
-			<div
+		<motion.section
+			ref={containerRef}
+			className={sty.container}
+			onClick={() => {
+				if (el) setEl(null);
+			}}
+			variants={vars}
+			initial="hidden"
+			animate={isInView ? "visible" : "hidden"}
+		>
+			<motion.div
 				ref={(node) => hovers.current.push([node, "HIDDEN"])}
 				className="col-span-6 row-span-4 sm:col-span-6 sm:row-span-5 md:col-span-2 md:row-span-12"
+				variants={vars.child}
 			>
 				<Carousel sources={imageSources}>
 					<SocialMediaIcons className={sty.iconWrapper} />
 				</Carousel>
-			</div>
+			</motion.div>
 
-			<div className="col-span-6 row-span-1 md:col-span-4 md:row-span-2 flex items-center justify-center">
+			<motion.div
+				className="col-span-6 row-span-1 md:col-span-4 md:row-span-2 flex items-center justify-center"
+				variants={vars.child}
+			>
 				<h1 className={sty.heading}>About Me</h1>
-			</div>
+			</motion.div>
 
-			<div className="col-span-6 row-span-7 md:col-span-4 md:row-span-10 flex flex-col justify-evenly items-center">
-				{data.map((data, i) => (
-					<h2 key={i} ref={(node) => hovers.current.push([node, data.el])} className={sty.title}>
-						{data.title}
-					</h2>
-				))}
-			</div>
-		</section>
+			<motion.div
+				className="col-span-6 row-span-7 md:col-span-4 md:row-span-10 flex flex-col justify-evenly items-center"
+				variants={vars.child}
+			>
+				{appState.isMobile
+					? data.map((data, i) => (
+							<motion.h2 key={i} onClick={() => setEl(data.el)} className={sty.title} variants={vars.item}>
+								{data.title}
+							</motion.h2>
+					  ))
+					: data.map((data, i) => (
+							<motion.h2
+								key={i}
+								ref={(node) => hovers.current.push([node, data.el])}
+								className={sty.title}
+								variants={vars.item}
+							>
+								{data.title}
+							</motion.h2>
+					  ))}
+			</motion.div>
+
+			<AnimatePresence>
+				{el && (
+					<motion.div
+						initial={{ x: "-50%", y: "-100%", opacity: 0, scale: 0.5 }}
+						animate={{ x: "-50%", y: "-50%", opacity: 1, scale: 1 }}
+						exit={{ x: "-50%", y: "0%", opacity: 0, scale: 0.5 }}
+						className="absolute z-20 top-[50%] left-[50%]"
+					>
+						{el}
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</motion.section>
 	);
 }

@@ -21,11 +21,12 @@ const data = [
 const sty = {
 	container: "overflow-hidden relative w-full min-h-screen",
 	heading:
-		"-z-10 absolute w-screen h-screen flex flex-col justify-evenly font-bebas font-bold tracking-widest leading-none text-[22rem] *:text-transparent *:bg-clip-text *:bg-gradient-to-b *:from-slate-700 *:to-slate-950",
-	wrapper: "w-full flex justify-evenly items-center",
+		"absolute w-screen h-screen flex flex-col justify-evenly font-bebas font-bold tracking-widest leading-none text-[22rem] *:text-transparent *:bg-clip-text *:bg-gradient-to-b *:from-slate-700 *:to-slate-950",
+	wrapper: "relative z-10 w-full flex justify-evenly items-center",
 	title:
 		"block w-32 sm:w-56 lg:w-96 font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-300",
-	overview: "block w-32 sm:w-56 lg:w-96 font-fira font-light text-sm sm:text-base md:text-lg lg:text-xl text-slate-400",
+	overview:
+		"block w-32 sm:w-56 lg:w-96 font-cormorant font-bold italic text-sm sm:text-base md:text-lg lg:text-xl text-slate-400",
 	image: "z-10 relative w-44 sm:w-52 md:w-64 lg:w-80 aspect-[9/12] rounded-md object-cover",
 	imageOverlay:
 		"absolute top-[10%] left-[10%] w-44 sm:w-52 md:w-64 lg:w-80 aspect-[9/12] rounded-md bg-gradient-to-bl from-amber-600 to-yellow-400",
