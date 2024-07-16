@@ -1,7 +1,7 @@
 const sty = {
-	container: "relative w-full min-h-screen grid grid-flow-row lg:grid-flow-col gap-10",
+	container: "overflow-hidden relative w-full min-h-screen grid grid-flow-row lg:grid-flow-col gap-6",
 	heading:
-		"font-cormorant font-bold tracking-wide text-[3.5rem] sm:text-[5rem] md:text-[6rem] xl:text-[6rem] text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300 flex flex-col px-10",
+		"font-cormorant font-bold tracking-wide text-[3.5rem] sm:text-[5rem] md:text-[6rem] xl:text-[6rem] text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300 flex flex-col lg:px-10",
 	item: "font-cormorant font-bold tracking-wide text-[5rem] sm:text-[6rem] md:text-[7rem] xl:text-[8rem] text-slate-200"
 };
 
@@ -15,7 +15,7 @@ export default function Contact() {
 				</h1>
 			</div>
 
-			<div className="flex flex-col justify-center items-center p-10">
+			<div className="flex flex-col justify-center items-center lg:px-10">
 				<a href="mailto:KwCZs@example.com" className={sty.item}>
 					Email
 				</a>

@@ -19,9 +19,9 @@ const data = [
 ];
 
 const sty = {
-	container: "relative w-full min-h-screen grid grid-cols-12",
+	container: "overflow-hidden relative w-full min-h-screen",
 	heading:
-		"font-cormorant font-bold tracking-tighter text-3xl sm:text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-300",
+		"-z-10 absolute w-screen h-screen flex flex-col justify-evenly font-bebas font-bold tracking-widest leading-none text-[22rem] *:text-transparent *:bg-clip-text *:bg-gradient-to-b *:from-slate-700 *:to-slate-950",
 	wrapper: "w-full flex justify-evenly items-center",
 	title:
 		"block w-32 sm:w-56 lg:w-96 font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-300",
@@ -39,13 +39,11 @@ function Text({ children }) {
 export default function Portfolio({ hovers }) {
 	return (
 		<section className={sty.container}>
-			<div className="col-span-1 flex justify-center items-center">
-				<h1 style={{ writingMode: "vertical-lr", textOrientation: "upright" }} className={sty.heading}>
-					Creations
-				</h1>
-			</div>
+			<h1 className={sty.heading}>
+				<span>SOME</span> <span>WORKS</span>
+			</h1>
 
-			<div className="col-span-11 py-32 sm:py-36 lg:py-40 flex flex-col justify-evenly items-center gap-32 sm:gap-36 lg:gap-40">
+			<div className="py-32 sm:py-36 lg:py-40 flex flex-col justify-evenly items-center gap-32 sm:gap-36 lg:gap-40">
 				{data.map((data, i) => (
 					<a
 						href={data.link}

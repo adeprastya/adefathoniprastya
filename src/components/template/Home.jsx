@@ -5,8 +5,8 @@ const texts = ["DEVELOPER", "DESIGNER", "ARTIST", "STUDENT", "FRIENDS"];
 
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
-	paragraph: "font-fira font-light text-lg sm:text-2xl lg:text-3xl text-slate-400 translate-y-[15%]",
-	name: "text-slate-400 bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent text-center",
+	paragraph: "font-cormorant font-bold italic text-3xl sm:text-4xl lg:text-5xl text-slate-400 translate-y-[15%]",
+	name: "bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent text-center",
 	animatedText:
 		"font-cormorant font-bold text-5xl sm:text-7xl lg:text-9xl bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent w-9 sm:w-16 lg:w-24 text-center",
 	parallaxText: "font-bebas from-black to-slate-700 bg-clip-text text-transparent"
