@@ -1,6 +1,8 @@
 import projectMovcult from "@/assets/image/projectMovcult.png";
 import projectPoof from "@/assets/image/projectPoof.png";
 import projectLogic from "@/assets/image/projectLogic.png";
+import { useScroll, useTransform, useMotionValue, useMotionValueEvent, motion } from "framer-motion";
+import { useRef } from "react";
 
 const data = [
 	{
@@ -21,7 +23,7 @@ const data = [
 const sty = {
 	container: "overflow-hidden relative w-full min-h-screen",
 	heading:
-		"absolute w-screen h-screen flex flex-col justify-evenly font-bebas font-bold tracking-widest leading-none text-[22rem] *:text-transparent *:bg-clip-text *:bg-gradient-to-b *:from-slate-700 *:to-slate-950",
+		"absolute -z-10 top-0 w-screen h-screen font-bebas font-bold tracking-widest leading-none text-[22rem] *:text-transparent *:bg-clip-text *:bg-gradient-to-b *:from-slate-700 *:to-slate-950 flex flex-col justify-evenly items-center",
 	wrapper: "relative z-10 w-full flex justify-evenly items-center",
 	title:
 		"block w-32 sm:w-56 lg:w-96 font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-300",
@@ -34,35 +36,63 @@ const sty = {
 };
 
 function Text({ children }) {
-	return <p className={sty.text}>{children}</p>;
+	return <p className={sty.text}>Go to {children}</p>;
+}
+
+function useParallax(value, distance) {
+	return useTransform(value, [0, 1], [-distance, distance]);
+}
+
+function Item({ data, hovers }) {
+	const ref = useRef(null);
+	const { scrollYProgress } = useScroll({ target: ref });
+	const y = useParallax(scrollYProgress, "5");
+
+	return (
+		<a
+			href={data.link}
+			target="_blank"
+			ref={(node) => {
+				hovers.current.push([node, <Text>{data.title}</Text>]);
+				ref.current = node;
+			}}
+			className={sty.wrapper}
+		>
+			<div className={sty.textWrapper}>
+				<h2 className={sty.title}>{data.title}</h2>
+				<p className={sty.overview}>{data.overview}</p>
+			</div>
+
+			<div className="relative">
+				<motion.div style={{ rotate: -y }} className={sty.imageOverlay}></motion.div>
+
+				<motion.img src={data.image} alt={data.title} style={{ rotate: y }} className={sty.image} />
+			</div>
+		</a>
+	);
 }
 
 export default function Portfolio({ hovers }) {
+	const ref = useRef(null);
+	const { scrollYProgress } = useScroll({
+		target: ref,
+		offset: ["start start", "end start"]
+	});
+	const position = useMotionValue("absolute");
+	useMotionValueEvent(scrollYProgress, "change", (latest) => {
+		position.set(latest > 0 && latest < 1 ? "fixed" : "absolute");
+	});
+
 	return (
-		<section className={sty.container}>
-			<h1 className={sty.heading}>
-				<span>SOME</span> <span>WORKS</span>
-			</h1>
+		<section ref={ref} className={sty.container}>
+			<motion.h1 style={{ position: position }} className={sty.heading}>
+				<span>SOME</span>
+				<span>WORKS</span>
+			</motion.h1>
 
 			<div className="py-32 sm:py-36 lg:py-40 flex flex-col justify-evenly items-center gap-32 sm:gap-36 lg:gap-40">
 				{data.map((data, i) => (
-					<a
-						href={data.link}
-						target="_blank"
-						key={i}
-						ref={(node) => hovers.current.push([node, <Text>{data.title}</Text>])}
-						className={sty.wrapper}
-					>
-						<div>
-							<h2 className={sty.title}>{data.title}</h2>
-							<p className={sty.overview}>{data.overview}</p>
-						</div>
-
-						<div className="relative">
-							<div className={sty.imageOverlay}></div>
-							<img src={data.image} alt={data.title} className={sty.image} />
-						</div>
-					</a>
+					<Item key={i} data={data} hovers={hovers} />
 				))}
 			</div>
 		</section>
