@@ -99,7 +99,13 @@ const data = [
 export default function Mark() {
 	return (
 		<section id="mark" className={sty.container}>
-			<a href="#home" className="block h-2/6 aspect-square">
+			<a
+				onClick={(e) => {
+					e.preventDefault();
+					window.scrollTo(0, 0);
+				}}
+				className="block h-2/6 aspect-square"
+			>
 				<Logo className="w-full h-full fill-slate-100" />
 			</a>
 

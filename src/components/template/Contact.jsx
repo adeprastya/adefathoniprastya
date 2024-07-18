@@ -4,11 +4,11 @@ import { useRef } from "react";
 const data = [
 	{
 		title: "Email",
-		link: "mailto:KwCZs@example.com"
+		link: "mailto:adefathoniprastya@gmail.com"
 	},
 	{
 		title: "Linkedin",
-		link: "www.linkedin.com/in/adefathoniprastya"
+		link: "https://www.linkedin.com/in/adefathoniprastya"
 	},
 	{
 		title: "Telegram",
@@ -44,7 +44,7 @@ export default function Contact() {
 
 			<div className="grid grid-flow-row justify-items-center">
 				{data.map((data, i) => (
-					<a key={i} href={data.link} className={sty.item}>
+					<a key={i} href={data.link} target="_blank" className={sty.item}>
 						{data.title}
 					</a>
 				))}
