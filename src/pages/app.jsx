@@ -10,7 +10,7 @@ export default function App() {
 	const hovers = useRef([]);
 
 	return (
-		<main className="relative z-[-999] bg-slate-950 cursor-none">
+		<main className="relative -z-0 bg-slate-950 cursor-none">
 			<Home />
 
 			<About hovers={hovers} />

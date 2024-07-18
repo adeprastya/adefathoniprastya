@@ -1,8 +1,16 @@
+import Logo from "@/assets/icon/Logo";
 import ParallaxText from "@/components/molecules/ParallaxText";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
-	mark: "font-bebas tracking-wider text-4xl lg:text-5xl text-slate-300"
+	markText: "font-bebas tracking-wider text-4xl lg:text-5xl text-slate-300",
+	formWrap: "z-10 absolute left-0 flex flex-row-reverse",
+	formLabel:
+		"block h-fit my-auto py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 font-cormorant font-black text-sm sm:text-base lg:text-lg",
+	formContent:
+		"aspect-square w-72 p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-slate-950 flex flex-col gap-2"
 };
 
 const data = [
@@ -91,43 +99,50 @@ const data = [
 export default function Info() {
 	return (
 		<section className={sty.container}>
-			<div className="border h-2/6 aspect-square">LOGO</div>
+			<a href="#home" className="block h-2/6 aspect-square">
+				<Logo className="w-full h-full fill-slate-100" />
+			</a>
 
-			<Form />
+			<MarkForm />
 
-			<ParallaxText baseVelocity={10} textStyle={sty.mark} containerStyle="absolute top-16">
+			<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute top-16">
 				{data.slice(0, 4).reduce((acc, cur) => acc + cur.content + " - ", "")}
 			</ParallaxText>
 
-			<ParallaxText baseVelocity={-10} textStyle={sty.mark} containerStyle="absolute top-32">
+			<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute top-32">
 				{data.slice(4, 8).reduce((acc, cur) => acc + cur.content + " - ", "")}
 			</ParallaxText>
 
-			<ParallaxText baseVelocity={10} textStyle={sty.mark} containerStyle="absolute bottom-32">
+			<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute bottom-32">
 				{data.slice(8, 12).reduce((acc, cur) => acc + cur.content + " - ", "")}
 			</ParallaxText>
 
-			<ParallaxText baseVelocity={-10} textStyle={sty.mark} containerStyle="absolute bottom-16">
+			<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute bottom-16">
 				{data.slice(12, 16).reduce((acc, cur) => acc + cur.content + " - ", "")}
 			</ParallaxText>
 		</section>
 	);
 }
 
-function Form() {
+function MarkForm() {
+	const ref = useRef(null);
+	const [isOpen, setIsOpen] = useState(true);
+
+	useEffect(() => {
+		setIsOpen(false);
+	}, []);
+
 	return (
-		<div className=" z-10 absolute left-0 top-[50%] translate-y-[-50%] flex flex-row-reverse">
-			<p
-				style={{ writingMode: "vertical-lr" }}
-				className="block h-fit my-auto py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 font-cormorant font-black text-sm sm:text-base lg:text-lg"
-			>
+		<motion.div
+			className={sty.formWrap}
+			animate={isOpen ? { x: 0 } : { x: -ref.current?.offsetWidth }}
+			transition={{ ease: "easeInOut" }}
+		>
+			<p style={{ writingMode: "vertical-lr" }} className={sty.formLabel} onClick={() => setIsOpen((n) => !n)}>
 				ADD YOUR MARK
 			</p>
 
-			<form
-				action=""
-				className="aspect-square px-4 py-2 rounded-r-md border-y-2 border-r-2 border-yellow-400 bg-slate-950 flex flex-col gap-2"
-			>
+			<form ref={ref} action="" className={sty.formContent}>
 				<textarea type="text" name="content" className="w-full h-full bg-slate-800" />
 
 				<div className="w-full flex items-center gap-2">
@@ -144,6 +159,6 @@ function Form() {
 					</button>
 				</div>
 			</form>
-		</div>
+		</motion.div>
 	);
 }

@@ -14,7 +14,7 @@ const sty = {
 
 export default function Home() {
 	return (
-		<section className={sty.container}>
+		<section id="home" className={sty.container}>
 			<div className="z-10 translate-y-[-10%]">
 				<p className={sty.paragraph}>
 					Im <span className={sty.name}>Ade</span>, Someone to be
