@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const sty = {
-	container: "relative w-full h-screen flex justify-center items-center",
+	container: "snap-start relative w-full h-screen flex justify-center items-center",
 	markText: "font-bebas tracking-wider text-4xl lg:text-5xl text-slate-300",
 	formWrap: "z-10 absolute left-0 flex flex-row-reverse",
 	formLabel:
@@ -96,9 +96,9 @@ const data = [
 	}
 ];
 
-export default function Info() {
+export default function Mark() {
 	return (
-		<section className={sty.container}>
+		<section id="mark" className={sty.container}>
 			<a href="#home" className="block h-2/6 aspect-square">
 				<Logo className="w-full h-full fill-slate-100" />
 			</a>

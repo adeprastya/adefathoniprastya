@@ -5,6 +5,7 @@
 @tailwind utilities;
 
 :root {
-	scroll-behavior: smooth;
 	overflow-x: hidden;
+	scroll-behavior: smooth;
+	scroll-snap-type: y mandatory;
 }

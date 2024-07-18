@@ -87,7 +87,7 @@ const data = [
 ];
 
 const sty = {
-	container: "relative w-full h-screen grid grid-cols-6 grid-rows-12",
+	container: "snap-start relative w-full h-screen grid grid-cols-6 grid-rows-12",
 	iconWrapper:
 		"z-10 absolute bottom-[4%] left-[50%] translate-x-[-50%] flex gap-2 rounded-md backdrop-blur-lg backdrop-brightness-50 px-2 py-1     *:w-5 *:h-5 *:fill-slate-300 *:cursor-pointer",
 	heading:
@@ -137,6 +137,7 @@ export default function About({ hovers }) {
 
 	return (
 		<motion.section
+			id="about"
 			ref={containerRef}
 			className={sty.container}
 			onClick={() => {

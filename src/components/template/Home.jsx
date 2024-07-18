@@ -4,7 +4,7 @@ import AnimatedText from "@/components/molecules/AnimatedText";
 const texts = ["DEVELOPER", "DESIGNER", "ARTIST", "STUDENT", "FRIENDS"];
 
 const sty = {
-	container: "relative w-full h-screen flex justify-center items-center",
+	container: "snap-start relative w-full h-screen flex justify-center items-center",
 	paragraph: "font-cormorant font-bold italic text-3xl sm:text-4xl lg:text-5xl text-slate-400 translate-y-[15%]",
 	name: "bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent text-center",
 	animatedText:

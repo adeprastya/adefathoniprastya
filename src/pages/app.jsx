@@ -3,14 +3,14 @@ import Home from "@/components/template/Home";
 import About from "@/components/template/About";
 import Portfolio from "@/components/template/Portfolio";
 import Contact from "@/components/template/Contact";
-import Outro from "@/components/template/Outro";
+import Mark from "@/components/template/Mark";
 import { useRef } from "react";
 
 export default function App() {
 	const hovers = useRef([]);
 
 	return (
-		<main className="relative -z-0 bg-slate-950 cursor-none">
+		<main className="cursor-none relative -z-0 bg-slate-950">
 			<Home />
 
 			<About hovers={hovers} />
@@ -19,7 +19,7 @@ export default function App() {
 
 			<Contact />
 
-			<Outro />
+			<Mark />
 
 			<Cursor hovers={hovers.current} />
 		</main>
