@@ -11,7 +11,7 @@ const sty = {
 	formLabel:
 		"block h-fit my-auto py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 font-cormorant font-black text-sm sm:text-base lg:text-lg",
 	formContent:
-		"aspect-square w-72 p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-slate-950 flex flex-col gap-2"
+		"h-[40vh] p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-slate-950 flex flex-col gap-2"
 };
 
 const data = [
@@ -104,11 +104,11 @@ export default function Mark() {
 				href="#home"
 				onClick={(e) => {
 					e.preventDefault();
-					document.querySelector("#home").scrollIntoView({ behavior: "smooth" });
+					window.scrollTo({ top: 0, behavior: "smooth" });
 				}}
-				className="block h-2/6 aspect-square"
+				className="z-10 relative block h-2/6 aspect-square fill-yellow-400"
 			>
-				<LogoIcon className="w-full h-full fill-slate-100" />
+				<LogoIcon className="w-full h-full" />
 			</a>
 
 			<MarkForm />
@@ -151,16 +151,21 @@ function MarkForm() {
 			</p>
 
 			<form ref={ref} action="" className={sty.formContent}>
-				<textarea type="text" name="content" className="w-full h-full bg-slate-800" />
+				<textarea
+					placeholder="Your Mark :)"
+					type="text"
+					name="content"
+					className="resize-none w-full h-full p-2 bg-slate-800"
+				/>
 
 				<div className="w-full flex items-center gap-2">
-					<label htmlFor="sender" className="font-cormorant text-lg sm:text-xl lg:text-2xl text-slate-300">
+					<label htmlFor="sender" className="font-cormorant text-base sm:text-lg lg:text-xl text-slate-300">
 						From:
 					</label>
 
-					<input type="text" name="sender" id="sender" className="h-8 bg-slate-800" />
+					<input placeholder="Anonymous" type="text" name="sender" id="sender" className="h-8 p-2 bg-slate-800" />
 
-					<button type="submit" className="w-8 sm:w-10 lg:w-12 text-slate-300 fill-yellow-400">
+					<button type="submit" className="h-10 aspect-square fill-yellow-400">
 						<SendIcon className="w-full h-full" />
 					</button>
 				</div>

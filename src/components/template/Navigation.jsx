@@ -35,7 +35,7 @@ const sty = {
 
 	navWrap: "pointer-events-none absolute right-0",
 	listWrap: "w-screen h-screen px-8 bg-slate-950/60 backdrop-blur-sm flex flex-col justify-around",
-	list: "pointer-events-auto relative font-cormorant font-bold tracking-widest leading-none text-slate-950 text-shadow-border text-shadow-slate-200     before:pointer-events-auto before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-20 before:w-4 before:aspect-square before:rounded-full before:border-2 before:border-slate-200     hover:text-shadow-yellow-400 hover:before:border-yellow-400"
+	list: "pointer-events-auto relative font-cormorant font-bold tracking-widest leading-none text-[4rem] sm:text-[5rem] lg:text-[6rem] text-slate-950 text-shadow-border text-shadow-slate-200     before:pointer-events-auto before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-20 before:w-4 before:aspect-square before:rounded-full before:border-2 before:border-slate-200     hover:text-shadow-yellow-400 hover:before:border-yellow-400"
 };
 
 export default function Navigation() {
@@ -77,6 +77,7 @@ export default function Navigation() {
 						onClick={handleMenu}
 						className={sty.logo + " z-[60]"}
 						animate={isNavOpen ? { rotate: 0 } : { rotate: 180 }}
+						transition={{ ease: "easeInOut" }}
 					>
 						<MenuIcon />
 					</motion.button>
@@ -85,8 +86,9 @@ export default function Navigation() {
 
 			<nav className={sty.navWrap}>
 				<motion.ul
-					animate={isNavOpen ? { x: 0 } : { x: "100%", paddingTop: "30vh", paddingBottom: "30vh" }}
 					className={sty.listWrap}
+					animate={isNavOpen ? { x: 0 } : { x: "100%", paddingTop: "30vh", paddingBottom: "30vh" }}
+					transition={{ ease: "easeInOut" }}
 				>
 					{list.map((list, i) => (
 						<a
@@ -99,8 +101,8 @@ export default function Navigation() {
 						>
 							<motion.li
 								className={`${sty.list} ${activeNav === i ? " before:border-yellow-400 text-shadow-yellow-400" : ""}`}
-								animate={isNavOpen ? { fontSize: "6rem" } : { fontSize: "1rem" }}
-								transition={{ ease: "linear" }}
+								animate={isNavOpen ? { fontSize: "5rem" } : { fontSize: "1rem" }}
+								transition={{ ease: "easeInOut" }}
 							>
 								{list.title}
 							</motion.li>
