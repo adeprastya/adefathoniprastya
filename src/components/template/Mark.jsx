@@ -100,6 +100,8 @@ const data = [
 export default function Mark() {
 	return (
 		<section id="mark" className={sty.container}>
+			<MarkForm />
+
 			<a
 				href="#home"
 				onClick={(e) => {
@@ -110,8 +112,6 @@ export default function Mark() {
 			>
 				<LogoIcon className="w-full h-full" />
 			</a>
-
-			<MarkForm />
 
 			<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute top-16">
 				{data.slice(0, 4).reduce((acc, cur) => acc + cur.content + " - ", "")}
@@ -146,9 +146,9 @@ function MarkForm() {
 			animate={isOpen ? { x: 0 } : { x: -ref.current?.offsetWidth }}
 			transition={{ ease: "easeInOut" }}
 		>
-			<p style={{ writingMode: "vertical-lr" }} className={sty.formLabel} onClick={() => setIsOpen((n) => !n)}>
+			<button style={{ writingMode: "vertical-lr" }} className={sty.formLabel} onClick={() => setIsOpen((n) => !n)}>
 				ADD YOUR MARK
-			</p>
+			</button>
 
 			<form ref={ref} action="" className={sty.formContent}>
 				<textarea

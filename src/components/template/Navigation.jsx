@@ -64,7 +64,13 @@ export default function Navigation() {
 	return (
 		<header className={sty.container}>
 			<div className={sty.headerWrap}>
-				<button className={sty.logo}>
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						window.location.reload();
+					}}
+					className={sty.logo}
+				>
 					<LogoIcon />
 				</button>
 
