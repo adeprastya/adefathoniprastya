@@ -4,6 +4,7 @@ import About from "@/components/template/About";
 import Portfolio from "@/components/template/Portfolio";
 import Contact from "@/components/template/Contact";
 import Mark from "@/components/template/Mark";
+import Navigation from "@/components/template/Navigation";
 import { useRef } from "react";
 
 export default function App() {
@@ -11,6 +12,8 @@ export default function App() {
 
 	return (
 		<main className="cursor-none relative -z-0 bg-slate-950">
+			<Navigation />
+
 			<Home />
 
 			<About hovers={hovers} />

@@ -1,4 +1,5 @@
-import Logo from "@/assets/icon/Logo";
+import LogoIcon from "@/assets/icon/LogoIcon";
+import SendIcon from "@/assets/icon/SendIcon";
 import ParallaxText from "@/components/molecules/ParallaxText";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -100,13 +101,14 @@ export default function Mark() {
 	return (
 		<section id="mark" className={sty.container}>
 			<a
+				href="#home"
 				onClick={(e) => {
 					e.preventDefault();
-					window.scrollTo(0, 0);
+					document.querySelector("#home").scrollIntoView({ behavior: "smooth" });
 				}}
 				className="block h-2/6 aspect-square"
 			>
-				<Logo className="w-full h-full fill-slate-100" />
+				<LogoIcon className="w-full h-full fill-slate-100" />
 			</a>
 
 			<MarkForm />
@@ -159,9 +161,7 @@ function MarkForm() {
 					<input type="text" name="sender" id="sender" className="h-8 bg-slate-800" />
 
 					<button type="submit" className="w-8 sm:w-10 lg:w-12 text-slate-300 fill-yellow-400">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="send">
-							<path d="M96 249.6l116.6 51.3L269.8 416 416 96 96 249.6zm132.1 46.9l155.7-166.2-114.6 248.9-41.1-82.7zm153.7-168.2l-165 157.1L134 249l247.8-120.7z"></path>
-						</svg>
+						<SendIcon className="w-full h-full" />
 					</button>
 				</div>
 			</form>
