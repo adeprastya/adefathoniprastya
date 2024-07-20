@@ -1,6 +1,7 @@
 import LogoIcon from "@/assets/icon/LogoIcon";
 import MenuIcon from "@/assets/icon/MenuIcon";
 import StarIcon from "@/assets/icon/StarIcon";
+import SendIcon from "@/assets/icon/SendIcon";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -31,19 +32,32 @@ const sty = {
 	container: "pointer-events-none z-50 fixed w-screen h-screen",
 
 	headerWrap: "pointer-events-auto absolute top-0 w-full p-2 pe-8 flex justify-between items-center",
-	logo: "w-10 sm:w-12 lg:w-14 aspect-square fill-slate-200 *:w-full *:h-full",
+	logo: "z-50 w-10 sm:w-12 lg:w-14 aspect-square fill-slate-200 *:w-full *:h-full",
 
 	navWrap: "pointer-events-none absolute right-0",
-	listWrap: "w-screen h-screen px-8 bg-slate-950/60 backdrop-blur-sm flex flex-col justify-around",
-	list: "pointer-events-auto relative font-cormorant font-bold tracking-widest leading-none text-[4rem] sm:text-[5rem] lg:text-[6rem] text-slate-950 text-shadow-border text-shadow-slate-200     before:pointer-events-auto before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-20 before:w-4 before:aspect-square before:rounded-full before:border-2 before:border-slate-200     hover:text-shadow-yellow-400 hover:before:border-yellow-400"
+	listWrap:
+		"pointer-events-auto w-screen min-h-screen p-12 bg-slate-950/60 backdrop-blur-sm flex flex-col justify-between gap-8",
+	list: "relative font-cormorant font-bold tracking-widest leading-none text-slate-950 text-shadow-border text-shadow-slate-200     before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-24 before:w-4 before:aspect-square before:rounded-full before:border-2 before:border-slate-200     hover:text-shadow-yellow-400 hover:before:border-yellow-400",
+
+	chatWrap:
+		"pointer-events-auto z-20 absolute right-0 w-screen sm:max-w-[48rem] h-screen p-8 pe-12 pt-14 backdrop-blur-sm bg-slate-950/60 flex flex-col",
+	chatBox: "overflow-y-auto h-full p-4 rounded-t-xl border-2 border-b-0 border-slate-700 flex flex-col gap-4",
+	chatText: "w-fit p-2 rounded-lg bg-slate-300 font-fira tracking-wide text-base text-slate-950",
+	chatForm: "overflow-hidden h-16 rounded-b-xl border-2 border-slate-700 flex",
+	chatInput: "size-full px-4 bg-transparent font-fira text-lg text-slate-300 placeholder:text-slate-500",
+	chatButton: "h-full aspect-square fill-slate-950 bg-gradient-to-br from-yellow-300 to-amber-500 *:size-full"
 };
 
 export default function Navigation() {
 	const [isNavOpen, setIsNavOpen] = useState(false);
+	const [isChatOpen, setIsChatOpen] = useState(false);
 	const [activeNav, setActiveNav] = useState(0);
 
 	const handleMenu = () => {
 		setIsNavOpen((n) => !n);
+	};
+	const handleChat = () => {
+		setIsChatOpen((n) => !n);
 	};
 
 	useEffect(() => {
@@ -75,15 +89,17 @@ export default function Navigation() {
 				</button>
 
 				<div className="flex gap-4">
-					<button className={sty.logo}>
+					<motion.button
+						onClick={handleChat}
+						className={sty.logo}
+						animate={isChatOpen ? { rotate: 135 } : { rotate: 0 }}
+					>
 						<StarIcon />
-					</button>
-
+					</motion.button>
 					<motion.button
 						onClick={handleMenu}
-						className={sty.logo + " z-[60]"}
-						animate={isNavOpen ? { rotate: 0 } : { rotate: 180 }}
-						transition={{ ease: "easeInOut" }}
+						className={sty.logo}
+						animate={isNavOpen ? { rotate: 180 } : { rotate: 0 }}
 					>
 						<MenuIcon />
 					</motion.button>
@@ -94,7 +110,6 @@ export default function Navigation() {
 				<motion.ul
 					className={sty.listWrap}
 					animate={isNavOpen ? { x: 0 } : { x: "100%", paddingTop: "30vh", paddingBottom: "30vh" }}
-					transition={{ ease: "easeInOut" }}
 				>
 					{list.map((list, i) => (
 						<a
@@ -108,7 +123,6 @@ export default function Navigation() {
 							<motion.li
 								className={`${sty.list} ${activeNav === i ? " before:border-yellow-400 text-shadow-yellow-400" : ""}`}
 								animate={isNavOpen ? { fontSize: "5rem" } : { fontSize: "1rem" }}
-								transition={{ ease: "easeInOut" }}
 							>
 								{list.title}
 							</motion.li>
@@ -116,6 +130,39 @@ export default function Navigation() {
 					))}
 				</motion.ul>
 			</nav>
+
+			<ChatBox open={isChatOpen} />
 		</header>
+	);
+}
+
+function ChatBox({ open }) {
+	const [chat, setChat] = useState(["abc", "cde", "fgh", "abc", "cde", "fgh", "abc", "cde", "fgh", "abc", "cde"]);
+
+	return (
+		<motion.div className={sty.chatWrap} animate={open ? { x: 0 } : { x: "100%" }}>
+			<div className={sty.chatBox}>
+				{chat.map((c, i) => (
+					<p
+						key={i}
+						className={`${sty.chatText} ${
+							i % 2 === 1
+								? "rounded-tr-none self-end"
+								: "rounded-tl-none bg-gradient-to-br from-yellow-300 to-amber-500"
+						}`}
+					>
+						{c}
+					</p>
+				))}
+			</div>
+
+			<form action="" className={sty.chatForm}>
+				<input type="text" name="prompt" placeholder="What is Ade full name?" className={sty.chatInput} />
+
+				<button type="submit" className={sty.chatButton}>
+					<SendIcon />
+				</button>
+			</form>
+		</motion.div>
 	);
 }

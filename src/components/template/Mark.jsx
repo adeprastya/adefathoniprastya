@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const sty = {
 	container: "snap-start relative w-full h-screen flex justify-center items-center",
 	markText: "font-bebas tracking-wider text-4xl lg:text-5xl text-slate-300",
-	formWrap: "z-10 absolute left-0 flex flex-row-reverse",
+	formWrap: "z-20 absolute left-0 flex flex-row-reverse",
 	formLabel:
 		"block h-fit my-auto py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 font-cormorant font-black text-sm sm:text-base lg:text-lg",
 	formContent:
