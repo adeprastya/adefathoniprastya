@@ -137,10 +137,21 @@ export default function Navigation() {
 }
 
 function ChatBox({ open }) {
-	const [chat, setChat] = useState(["abc", "cde", "fgh", "abc", "cde", "fgh", "abc", "cde", "fgh", "abc", "cde"]);
+	const [chat, setChat] = useState(["Ask about me!"]);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const prompt = e.target[0].value;
+		e.target[0].value = "";
+
+		setChat((prev) => [...prev, prompt]);
+
+		// TODO: fetching to model, add response to chat, disabable button until response is received
+		setChat((prev) => [...prev, "Sorry, out of service!"]);
+	};
 
 	return (
-		<motion.div className={sty.chatWrap} animate={open ? { x: 0 } : { x: "100%" }}>
+		<motion.div className={sty.chatWrap} animate={open ? { x: 0 } : { x: "100%" }} onSubmit={(e) => handleSubmit(e)}>
 			<div className={sty.chatBox}>
 				{chat.map((c, i) => (
 					<p
