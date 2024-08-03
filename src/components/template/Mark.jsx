@@ -3,6 +3,7 @@ import SendIcon from "@/assets/icon/SendIcon";
 import ParallaxText from "@/components/molecules/ParallaxText";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import useFetchMark from "@/hook/useFetchMark";
 
 const sty = {
 	container: "snap-start relative w-full h-screen flex justify-center items-center",
@@ -14,90 +15,9 @@ const sty = {
 		"h-[40vh] p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-slate-950 flex flex-col gap-2"
 };
 
-const data = [
-	{
-		id: "1",
-		content: "Hello, how are you?",
-		sender: "anonymousx"
-	},
-	{
-		id: "2",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "3",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "4",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "5",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "6",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "7",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "8",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "9",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "10",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "11",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "12",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "13",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "14",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "15",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	},
-	{
-		id: "16",
-		content: "Hello, how are you?",
-		sender: "anonymous"
-	}
-];
-
 export default function Mark() {
+	const { mark } = useFetchMark();
+
 	return (
 		<section id="mark" className={sty.container}>
 			<MarkForm />
@@ -113,21 +33,33 @@ export default function Mark() {
 				<LogoIcon className="w-full h-full" />
 			</a>
 
-			<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute top-16">
-				{data.slice(0, 4).reduce((acc, cur) => acc + cur.content + " - ", "")}
-			</ParallaxText>
+			{!mark.loading && Array.isArray(mark.data) && (
+				<>
+					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute top-16">
+						{mark.data
+							.slice(0, Math.ceil((mark.data.length / 4) * 1))
+							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+					</ParallaxText>
 
-			<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute top-32">
-				{data.slice(4, 8).reduce((acc, cur) => acc + cur.content + " - ", "")}
-			</ParallaxText>
+					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute top-32">
+						{mark.data
+							.slice(Math.ceil((mark.data.length / 4) * 1), Math.ceil((mark.data.length / 4) * 2))
+							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+					</ParallaxText>
 
-			<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute bottom-32">
-				{data.slice(8, 12).reduce((acc, cur) => acc + cur.content + " - ", "")}
-			</ParallaxText>
+					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute bottom-32">
+						{mark.data
+							.slice(Math.ceil((mark.data.length / 4) * 2), Math.ceil((mark.data.length / 4) * 3))
+							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+					</ParallaxText>
 
-			<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute bottom-16">
-				{data.slice(12, 16).reduce((acc, cur) => acc + cur.content + " - ", "")}
-			</ParallaxText>
+					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute bottom-16">
+						{mark.data
+							.slice(Math.ceil((mark.data.length / 4) * 3), Math.ceil((mark.data.length / 4) * 4))
+							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+					</ParallaxText>
+				</>
+			)}
 		</section>
 	);
 }
