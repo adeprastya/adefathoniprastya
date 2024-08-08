@@ -12,7 +12,7 @@ const sty = {
 	formLabel:
 		"block h-fit my-auto py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 font-cormorant font-black text-sm sm:text-base lg:text-lg",
 	formContent:
-		"h-[40vh] p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-slate-950 flex flex-col gap-2"
+		"h-[40vh] p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-slate-950 text-slate-200 flex flex-col gap-2"
 };
 
 export default function Mark() {
@@ -72,17 +72,24 @@ function MarkForm() {
 		setIsOpen(false);
 	}, []);
 
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setIsOpen(false);
+
+		alert("Sorry, out of service!");
+	};
+
 	return (
 		<motion.div
 			className={sty.formWrap}
-			animate={isOpen ? { x: 0 } : { x: -ref.current?.offsetWidth }}
+			animate={isOpen ? { x: 0 } : { x: -ref.current?.offsetWidth - 2 }}
 			transition={{ ease: "easeInOut" }}
 		>
 			<button style={{ writingMode: "vertical-lr" }} className={sty.formLabel} onClick={() => setIsOpen((n) => !n)}>
 				ADD YOUR MARK
 			</button>
 
-			<form ref={ref} action="" className={sty.formContent}>
+			<form ref={ref} onSubmit={(e) => handleSubmit(e)} className={sty.formContent}>
 				<textarea
 					placeholder="Your Mark :)"
 					type="text"
