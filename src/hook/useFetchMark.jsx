@@ -6,7 +6,7 @@ export default function useFetchMark() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch("http://localhost:5173/adefathoniprastya/mark.json", { method: "GET" });
+				const response = await fetch("/mark-dummy.json", { method: "GET" });
 
 				if (!response.ok) {
 					throw new Error(`HTTP error! Status: ${response.status}`);
