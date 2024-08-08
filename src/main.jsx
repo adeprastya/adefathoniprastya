@@ -7,7 +7,8 @@ import App from "@/pages/app";
 
 const router = createBrowserRouter([
 	{
-		path: "/adefathoniprastya",
+		// path: "/adefathoniprastya",
+		path: "/",
 		element: <App />
 	}
 ]);
