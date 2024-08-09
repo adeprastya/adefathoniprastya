@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-// eslint-disable-next-line no-undef
 const plugin = require("tailwindcss/plugin");
 
 export default {
@@ -12,7 +11,6 @@ export default {
 				cormorant: ["Cormorant", "serif"],
 				fira: ["Fira Sans", "system-ui", "sans"],
 				cinzel: ["Cinzel", "serif"],
-				lora: ["Lora", "serif"],
 				spectral: ["Spectral", "serif"]
 			},
 			textShadow: {

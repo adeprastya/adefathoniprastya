@@ -10,8 +10,8 @@ const sty = {
 		"w-[70vw] sm:w-[55vw] lg:w-[40vw] font-fira font-light text-base tracking-wider sm:text-lg lg:text-xl text-zinc-400 translate-y-[15%]",
 	name: "font-light bg-gradient-to-b from-amber-400 to-yellow-100 bg-clip-text text-transparent text-center",
 	animatedText:
-		"font-cinzel font-light text-6xl sm:text-8xl lg:text-9xl bg-gradient-to-bl from-amber-500 to-yellow-200 bg-clip-text text-transparent w-14 sm:w-24 lg:w-32 text-center",
-	parallaxText: "font-cinzel font-light from-black to-gray-700 bg-clip-text text-transparent"
+		"font-cinzel font-light text-6xl sm:text-8xl lg:text-9xl bg-gradient-to-bl from-amber-400 to-yellow-300 bg-clip-text text-transparent w-14 sm:w-24 lg:w-32 text-center",
+	parallaxText: "font-cinzel font-light tracking-tight from-black to-gray-700 bg-clip-text text-transparent"
 };
 
 export default function Home() {
