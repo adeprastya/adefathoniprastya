@@ -22,7 +22,9 @@ export default function Home() {
 					Im <span className={sty.name}>Ade</span>, Someone who love
 				</p>
 
-				<AnimatedText textArray={texts} textStyle={sty.animatedText} />
+				<h1>
+					<AnimatedText textArr={texts} textStyle={sty.animatedText} />
+				</h1>
 
 				<p className={sty.paragraph2}>
 					Building the digital world with a fusion of code and art is not just a profession, it is my calling, my
