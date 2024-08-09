@@ -33,14 +33,14 @@ export default function Home() {
 			</div>
 
 			<ParallaxText
-				baseVelocity={-10}
+				baseVelocity={-15}
 				containerStyle="absolute translate-y-[-100%]"
 				textStyle={`${sty.parallaxText} text-[9rem] bg-gradient-to-t`}
 			>
 				Hello - Namaste -
 			</ParallaxText>
 			<ParallaxText
-				baseVelocity={10}
+				baseVelocity={12}
 				containerStyle="absolute translate-y-[-70%]"
 				textStyle={`${sty.parallaxText} text-[8rem] bg-gradient-to-t`}
 			>
@@ -55,14 +55,14 @@ export default function Home() {
 			</ParallaxText>
 
 			<ParallaxText
-				baseVelocity={10}
+				baseVelocity={15}
 				containerStyle="absolute translate-y-[100%]"
 				textStyle={`${sty.parallaxText} text-[9rem] bg-gradient-to-b`}
 			>
 				Annyeonghaseyo - Halo -
 			</ParallaxText>
 			<ParallaxText
-				baseVelocity={-10}
+				baseVelocity={-12}
 				containerStyle="absolute translate-y-[70%]"
 				textStyle={`${sty.parallaxText} text-[8rem] bg-gradient-to-b`}
 			>

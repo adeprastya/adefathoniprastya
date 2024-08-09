@@ -6,44 +6,43 @@ import {
 	useTransform,
 	useMotionValue,
 	useVelocity,
-	useAnimationFrame
+	useAnimationFrame,
+	wrap
 } from "framer-motion";
-import { wrap } from "@motionone/utils";
 
 export default function ParallaxText({ children, baseVelocity = 10, containerStyle, textStyle }) {
-	const baseX = useMotionValue(0);
 	const { scrollY } = useScroll();
 	const scrollVelocity = useVelocity(scrollY);
 	const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 500 });
 	const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false });
+	const directionFactor = useRef(1);
+	const baseX = useMotionValue(0);
 
 	const containerRef = useRef(null);
 	const childRef = useRef(null);
 	const [childMultiply, setChildMultiply] = useState(0);
 	const childWidth = useMotionValue(0);
 
-	const calculateChildMultiply = useCallback(() => {
+	const calcChildMultiply = useCallback(() => {
 		if (containerRef.current && childRef.current) {
-			const contWidth = containerRef.current.offsetWidth;
-			const childWidth = childRef.current.offsetWidth;
-			const numChildren = Math.ceil(contWidth / childWidth);
+			const numChildren = Math.ceil(containerRef.current.offsetWidth / childRef.current.offsetWidth);
 			setChildMultiply(numChildren);
 		}
 	}, []);
 
-	// Calculate children to render, resize event
+	// Calculate number of children to render, resize event
 	useEffect(() => {
-		calculateChildMultiply();
+		calcChildMultiply();
 
-		window.addEventListener("resize", calculateChildMultiply);
+		window.addEventListener("resize", calcChildMultiply);
 
 		return () => {
-			window.removeEventListener("resize", calculateChildMultiply);
+			window.removeEventListener("resize", calcChildMultiply);
 		};
-	}, [containerRef.current, childRef.current, textStyle]);
+	}, [textStyle, containerStyle, calcChildMultiply]);
 
-	const directionFactor = useRef(1);
-	useAnimationFrame((t, delta) => {
+	// Calculate baseX and childWidth motion value
+	useAnimationFrame((_, delta) => {
 		let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
 		if (velocityFactor.get() < 0) {

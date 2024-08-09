@@ -10,7 +10,6 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@motionone/utils": "^10.18.0",
 		"framer-motion": "^11.2.10",
 		"lodash": "^4.17.21",
 		"popmotion": "^11.0.5",
