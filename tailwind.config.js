@@ -1,22 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 
+// eslint-disable-next-line no-undef
 const plugin = require("tailwindcss/plugin");
 
 export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				bebas: ["Bebas Neue", "system-ui", "sans"],
+				cormorant: ["Cormorant", "serif"],
+				fira: ["Fira Sans", "system-ui", "sans"],
+				cinzel: ["Cinzel", "serif"],
+				lora: ["Lora", "serif"],
+				spectral: ["Spectral", "serif"]
+			},
 			textShadow: {
 				sm: "0 1px 2px var(--tw-shadow-color, rgba(0, 0, 0, 0.05))",
 				default: "0 2px 4px var(--tw-shadow-color, rgba(0, 0, 0, 0.1))",
 				lg: "0 2px 8px var(--tw-shadow-color, rgba(0, 0, 0, 0.2))",
 				border:
 					"1px 1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), -1px 1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), 1px -1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2)), -1px -1px 0 var(--tw-shadow-color, rgba(0, 0, 0, 0.2))"
-			},
-			fontFamily: {
-				bebas: ["Bebas Neue", "system-ui", "sans"],
-				cormorant: ["Cormorant", "serif"],
-				fira: ["Fira Sans", "system-ui", "sans"]
 			},
 			keyframes: {
 				fade: {
@@ -39,7 +43,7 @@ export default {
 		textShadow: ["responsive", "hover"]
 	},
 	plugins: [
-		plugin(function ({ addUtilities, theme, e }) {
+		plugin(function ({ addUtilities, theme }) {
 			const textShadowSizes = {
 				".text-shadow-sm": { textShadow: theme("textShadow.sm") },
 				".text-shadow-md": { textShadow: theme("textShadow.default") },

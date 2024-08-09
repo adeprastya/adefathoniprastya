@@ -1,11 +1,12 @@
 import Carousel from "@/components/molecules/Carousel";
 import photo1 from "@/assets/image/photo1.png";
-import photo2 from "@/assets/image/photo2.png";
+import photo2 from "@/assets/image/photo2.jpg";
+import photo3 from "@/assets/image/photo3.jpg";
 import { useState, useContext, useRef } from "react";
 import { appStateContext } from "@/context/AppStateContext";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 
-const imageSources = [photo1, photo2];
+const imageSources = [photo1, photo2, photo3];
 
 function SocialMediaIcons({ className }) {
 	return (

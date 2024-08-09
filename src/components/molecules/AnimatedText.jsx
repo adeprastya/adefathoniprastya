@@ -7,6 +7,7 @@ export default function AnimatedText({ textArray, textStyle }) {
 	const [text, setText] = useState("");
 	const index = useRef(0);
 
+	// Get text length
 	useEffect(() => {
 		if (texts.length > 0) {
 			let maxLength = texts.reduce((max, text) => Math.max(max, text.length), 0);
@@ -15,6 +16,7 @@ export default function AnimatedText({ textArray, textStyle }) {
 		}
 	}, [texts]);
 
+	// Text index increment
 	useEffect(() => {
 		const interval = setInterval(() => {
 			index.current = (index.current + 1) % texts.length;
@@ -31,9 +33,9 @@ export default function AnimatedText({ textArray, textStyle }) {
 				<AnimatePresence mode="wait" key={i}>
 					<motion.div
 						key={i + text}
-						initial={{ top: "-50%", opacit: 0, rotateX: 90 }}
+						initial={{ top: "-40%", opacit: 0, rotateX: 90 }}
 						animate={{ top: 0, opacit: 1, rotateX: 0 }}
-						exit={{ top: "50%", opacit: 0, rotateX: 90 }}
+						exit={{ top: "40%", opacit: 0, rotateX: -90 }}
 						transition={{ delay: i * 0.2, duration: 0.5, ease: "easeInOut" }}
 						className={textStyle + " relative inline-block"}
 					>

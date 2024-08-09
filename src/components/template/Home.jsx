@@ -1,25 +1,33 @@
 import ParallaxText from "@/components/molecules/ParallaxText";
 import AnimatedText from "@/components/molecules/AnimatedText";
 
-const texts = ["DEVELOPER", "DESIGNER", "ARTIST", "STUDENT", "FRIENDS"];
+const texts = ["CODE", "ART", "MUSIC", "GAME"];
 
 const sty = {
 	container: "snap-start relative w-full h-screen flex justify-center items-center",
-	paragraph: "font-cormorant font-bold italic text-3xl sm:text-4xl lg:text-5xl text-slate-400 translate-y-[15%]",
-	name: "bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent text-center",
+	paragraph: "font-spectral font-extralight text-2xl sm:text-3xl lg:text-4xl text-zinc-300 translate-y-[-15%]",
+	paragraph2:
+		"w-[70vw] sm:w-[55vw] lg:w-[40vw] font-fira font-light text-base tracking-wider sm:text-lg lg:text-xl text-zinc-400 translate-y-[15%]",
+	name: "font-light bg-gradient-to-b from-amber-400 to-yellow-100 bg-clip-text text-transparent text-center",
 	animatedText:
-		"font-cormorant font-bold text-5xl sm:text-7xl lg:text-9xl bg-gradient-to-b from-amber-500 to-yellow-300 bg-clip-text text-transparent w-9 sm:w-16 lg:w-24 text-center",
-	parallaxText: "font-bebas from-black to-slate-700 bg-clip-text text-transparent"
+		"font-cinzel font-light text-6xl sm:text-8xl lg:text-9xl bg-gradient-to-bl from-amber-500 to-yellow-200 bg-clip-text text-transparent w-14 sm:w-24 lg:w-32 text-center",
+	parallaxText: "font-cinzel font-light from-black to-gray-700 bg-clip-text text-transparent"
 };
 
 export default function Home() {
 	return (
 		<section id="home" className={sty.container}>
-			<div className="z-10 translate-y-[-10%]">
+			<div className="z-10 translate-y-[10%]">
 				<p className={sty.paragraph}>
-					Im <span className={sty.name}>Ade</span>, Someone to be
+					Im <span className={sty.name}>Ade</span>, Someone who love
 				</p>
+
 				<AnimatedText textArray={texts} textStyle={sty.animatedText} />
+
+				<p className={sty.paragraph2}>
+					Building the digital world with a fusion of code and art is not just a profession, it is my calling, my
+					passion, and the way I express creativity.
+				</p>
 			</div>
 
 			<ParallaxText
