@@ -6,6 +6,7 @@ import Contact from "@/components/template/Contact";
 import Mark from "@/components/template/Mark";
 import Navigation from "@/components/template/Navigation";
 import { useRef } from "react";
+import { isMobile } from "@/helper/commonHelper";
 
 export default function App() {
 	const hovers = useRef([]);
@@ -24,7 +25,7 @@ export default function App() {
 
 			<Mark />
 
-			<Cursor hovers={hovers.current} />
+			{!isMobile() && <Cursor hovers={hovers.current} />}
 		</main>
 	);
 }

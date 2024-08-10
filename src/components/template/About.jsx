@@ -3,8 +3,8 @@ import photo1 from "@/assets/image/photo1.png";
 import photo2 from "@/assets/image/photo2.jpg";
 import photo3 from "@/assets/image/photo3.jpg";
 import { useState, useContext, useRef } from "react";
-import { appStateContext } from "@/context/AppStateContext";
 import { AnimatePresence, motion, useInView } from "framer-motion";
+import { isMobile } from "@/helper/commonHelper";
 
 const imageSources = [photo1, photo2, photo3];
 
@@ -131,7 +131,6 @@ const vars = {
 };
 
 export default function About({ hovers }) {
-	const { appState } = useContext(appStateContext);
 	const [el, setEl] = useState(null);
 	const containerRef = useRef(null);
 	const isInView = useInView(containerRef, { amount: 0.3 });
@@ -169,7 +168,7 @@ export default function About({ hovers }) {
 				className="col-span-6 row-span-7 md:col-span-4 md:row-span-10 flex flex-col justify-evenly items-center"
 				variants={vars.child}
 			>
-				{appState.isMobile
+				{isMobile()
 					? data.map((data, i) => (
 							<motion.h2 key={i} onClick={() => setEl(data.el)} className={sty.title} variants={vars.item}>
 								{data.title}
