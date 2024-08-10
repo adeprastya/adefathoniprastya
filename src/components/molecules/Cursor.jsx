@@ -148,13 +148,13 @@ export default function Cursor({ hovers = [] }) {
 			<AnimatePresence>
 				<motion.div
 					key={mouse.customEl}
-					style={{ top: springY, left: springX }}
+					style={{ translateY: springY, translateX: springX }}
 					variants={vars}
 					initial="hidden"
 					animate={mouse.inWindow ? "visible" : "hidden"}
 					exit="hidden"
 					transition={vars.transition}
-					className="pointer-events-none z-[999] fixed"
+					className="transform-gpu pointer-events-none z-[999] fixed top-0 left-0"
 				>
 					{renderElement()}
 				</motion.div>
@@ -162,12 +162,12 @@ export default function Cursor({ hovers = [] }) {
 
 			{/* Main cursor */}
 			<motion.div
-				style={{ top: y, left: x }}
+				style={{ translateY: y, translateX: x }}
 				variants={vars}
 				initial="hidden"
 				animate={mouse.inWindow ? "visible" : "hidden"}
 				transition={vars.transition}
-				className="pointer-events-none z-[999] fixed w-2 h-2 rounded-full backdrop-invert"
+				className="transform-gpu pointer-events-none z-[999] fixed top-0 left-0 w-2 h-2 rounded-full backdrop-invert"
 			/>
 		</>
 	);
