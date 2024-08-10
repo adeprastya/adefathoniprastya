@@ -1,10 +1,10 @@
 import Carousel from "@/components/molecules/Carousel";
-import photo1 from "@/assets/image/photo1.png";
-import photo2 from "@/assets/image/photo2.jpg";
-import photo3 from "@/assets/image/photo3.jpg";
-import { useState, useContext, useRef } from "react";
+import photo1 from "@/assets/images/photo1.png";
+import photo2 from "@/assets/images/photo2.jpg";
+import photo3 from "@/assets/images/photo3.jpg";
+import { useState, useRef } from "react";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import { isMobile } from "@/helper/commonHelper";
+import { isMobile } from "@/utils/commonHelper";
 
 const imageSources = [photo1, photo2, photo3];
 

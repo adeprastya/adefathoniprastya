@@ -1,6 +1,6 @@
-import projectMovcult from "@/assets/image/projectMovcult.png";
-import projectPoof from "@/assets/image/projectPoof.png";
-import projectLogic from "@/assets/image/projectLogic.png";
+import projectMovcult from "@/assets/images/projectMovcult.png";
+import projectPoof from "@/assets/images/projectPoof.png";
+import projectLogic from "@/assets/images/projectLogic.png";
 import { useScroll, useTransform, useMotionValue, useMotionValueEvent, motion } from "framer-motion";
 import { useRef } from "react";
 

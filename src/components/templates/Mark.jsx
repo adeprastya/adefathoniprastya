@@ -1,9 +1,9 @@
-import LogoIcon from "@/assets/icon/LogoIcon";
-import SendIcon from "@/assets/icon/SendIcon";
+import LogoIcon from "@/assets/icons/LogoIcon";
+import SendIcon from "@/assets/icons/SendIcon";
 import ParallaxText from "@/components/molecules/ParallaxText";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import useFetchMark from "@/hook/useFetchMark";
+import useFetchMark from "@/hooks/useFetchMark";
 
 const sty = {
 	container: "snap-start relative w-full h-screen flex justify-center items-center",

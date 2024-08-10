@@ -1,7 +1,7 @@
-import LogoIcon from "@/assets/icon/LogoIcon";
-import MenuIcon from "@/assets/icon/MenuIcon";
-import StarIcon from "@/assets/icon/StarIcon";
-import SendIcon from "@/assets/icon/SendIcon";
+import LogoIcon from "@/assets/icons/LogoIcon";
+import MenuIcon from "@/assets/icons/MenuIcon";
+import StarIcon from "@/assets/icons/StarIcon";
+import SendIcon from "@/assets/icons/SendIcon";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 

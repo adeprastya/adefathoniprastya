@@ -1,12 +1,12 @@
 import Cursor from "@/components/molecules/Cursor";
-import Home from "@/components/template/Home";
-import About from "@/components/template/About";
-import Portfolio from "@/components/template/Portfolio";
-import Contact from "@/components/template/Contact";
-import Mark from "@/components/template/Mark";
-import Navigation from "@/components/template/Navigation";
+import Home from "@/components/templates/Home";
+import About from "@/components/templates/About";
+import Portfolio from "@/components/templates/Portfolio";
+import Contact from "@/components/templates/Contact";
+import Mark from "@/components/templates/Mark";
+import Navigation from "@/components/templates/Navigation";
 import { useRef } from "react";
-import { isMobile } from "@/helper/commonHelper";
+import { isMobile } from "@/utils/commonHelper";
 
 export default function App() {
 	const hovers = useRef([]);

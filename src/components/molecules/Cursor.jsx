@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, isValidElement } from "react";
 import { motion, AnimatePresence, useSpring, useMotionValue } from "framer-motion";
-import { isMobile } from "@/helper/commonHelper";
+import { isMobile } from "@/utils/commonHelper";
 
 const MOUSE_INIT = {
 	inWindow: false,
