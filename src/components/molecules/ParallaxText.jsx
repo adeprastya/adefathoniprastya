@@ -64,7 +64,7 @@ export default function ParallaxText({ children, baseVelocity = 10, containerSty
 
 	return (
 		<div className={containerStyle + " overflow-hidden w-full box-border"}>
-			<motion.div ref={containerRef} className="whitespace-nowrap" style={{ x }}>
+			<motion.div ref={containerRef} className="transform-gpu whitespace-nowrap" style={{ x }}>
 				<span ref={childRef} className={textStyle}>
 					{children + " "}
 				</span>

@@ -44,7 +44,7 @@ export default function AnimatedText({ textArr, textStyle }) {
 						animate="visible"
 						exit="exit"
 						transition={vars.transition(i)}
-						className={textStyle + " relative"}
+						className={textStyle + " transform-gpu relative"}
 					>
 						{text[i] || ""}
 					</motion.span>

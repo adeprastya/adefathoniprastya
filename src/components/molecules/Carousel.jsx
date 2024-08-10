@@ -93,7 +93,7 @@ export default function Carousel({ children, sources }) {
 							paginate(-1);
 						}
 					}}
-					className={`relative w-full h-full object-cover object-center ${
+					className={`transform-gpu relative w-full h-full object-cover object-center ${
 						isDelayed ? "cursor-grabbing" : "cursor-grab"
 					}`}
 				/>
