@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import useFetchMark from "@/hooks/useFetchMark";
 
 const sty = {
-	container: "snap-start relative w-full h-screen flex justify-center items-center",
+	container: "relative w-full h-screen flex justify-center items-center",
 	markText: "font-bebas tracking-wider text-4xl lg:text-5xl text-slate-300",
 	formWrap: "z-20 absolute left-0 flex flex-row-reverse",
 	formLabel:

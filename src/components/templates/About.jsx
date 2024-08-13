@@ -8,7 +8,7 @@ import RevealAnimationText from "@/components/molecules/RevealAnimationText";
 const imageSources = [photo1, photo2, photo3];
 
 const sty = {
-	container: "snap-start w-full min-h-screen flex flex-col md:flex-row",
+	container: "w-full min-h-screen flex flex-col md:flex-row",
 
 	carouselWrap:
 		"z-10 sticky top-0 w-screen h-[35vh] sm:h-[40vh] md:h-screen md:w-[40vw] lg:w-[35vw] bg-zinc-950 shadow-xl shadow-zinc-950",

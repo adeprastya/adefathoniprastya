@@ -21,7 +21,7 @@ const data = [
 ];
 
 const sty = {
-	container: "snap-start overflow-hidden relative w-full min-h-screen",
+	container: "overflow-hidden relative w-full min-h-screen",
 	heading:
 		"absolute -z-10 top-0 w-screen h-screen font-bebas font-bold tracking-widest leading-none text-[22rem] *:text-transparent *:bg-clip-text *:bg-gradient-to-b *:from-slate-700 *:to-slate-950 flex flex-col justify-evenly items-center",
 	wrapper: "relative z-10 w-full flex justify-evenly items-center",

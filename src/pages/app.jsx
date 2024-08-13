@@ -12,7 +12,7 @@ export default function App() {
 	const hovers = useRef([]);
 
 	return (
-		<main className="cursor-none relative -z-0 bg-slate-950">
+		<main className="cursor-none relative -z-0 bg-zinc-950">
 			<Navigation />
 
 			<Home />
