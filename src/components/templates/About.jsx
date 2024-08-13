@@ -1,16 +1,40 @@
-import Carousel from "@/components/molecules/Carousel";
 import photo1 from "@/assets/images/photo1.png";
 import photo2 from "@/assets/images/photo2.jpg";
 import photo3 from "@/assets/images/photo3.jpg";
-import { useState, useRef } from "react";
-import { AnimatePresence, motion, useInView } from "framer-motion";
-import { isMobile } from "@/utils/commonHelper";
+import Carousel from "@/components/molecules/Carousel";
+import BlurAnimationText from "@/components/molecules/BlurAnimationText";
+import RevealAnimationText from "@/components/molecules/RevealAnimationText";
 
 const imageSources = [photo1, photo2, photo3];
 
-function SocialMediaIcons({ className }) {
+const sty = {
+	container: "snap-start w-full min-h-screen flex flex-col md:flex-row",
+
+	carouselWrap:
+		"z-10 sticky top-0 w-screen h-[35vh] sm:h-[40vh] md:h-screen md:w-[40vw] lg:w-[35vw] bg-zinc-950 shadow-xl shadow-zinc-950",
+	socmedIcons:
+		"z-10 absolute bottom-[4%] left-1/2 -translate-x-1/2 flex gap-2 rounded-md backdrop-blur-lg backdrop-brightness-50 px-2 py-1     *:w-5 *:h-5 *:fill-zinc-300 *:cursor-pointer",
+
+	contentWrap: "w-full py-40 flex flex-col items-center gap-40",
+
+	heading:
+		"w-10/12 lg:w-8/12 text-center font-cinzel text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300",
+
+	introduction: "font-spectral font-bold text-4xl text-zinc-300",
+
+	historyWrap: "w-10/12 lg:w-8/12 grid grid-cols-12 gap-2 gap-y-8",
+	historyYear: "font-spectral text-sm sm:text-base lg:text-lg text-zinc-400",
+	historyText: "font-spectral font-bold text-xl sm:text-2xl lg:text-3xl text-zinc-300",
+
+	skills: "overflow-hidden rounded-sm grid grid-cols-2",
+	skillsItem:
+		"text-zinc-800 bg-zinc-400 hover:bg-yellow-500 hover:text-zinc-950 transition-all duration-500 text-center",
+	skillsText: "px-8 py-4 font-spectral font-bold text-xl sm:text-2xl lg:text-3xl"
+};
+
+function SocmedIcons() {
 	return (
-		<div className={className}>
+		<div className={sty.socmedIcons}>
 			{/* Instagram */}
 			<a href="https://instagram.com/a_d_e_f_g_h_i_j_k_l_m_n_o_p_q_" target="_blank">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -35,169 +59,77 @@ function SocialMediaIcons({ className }) {
 	);
 }
 
-function Introduction() {
-	return (
-		<p className="block p-10 border border-slate-500 rounded-lg backdrop-blur-sm backdrop-brightness-75 font-fira text-xl md:text-2xl lg:text-3xl text-slate-300">
-			"Hi, my name is{" "}
-			<span className="text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300">
-				Ade Fathoni Prastya
-			</span>{" "}
-			and interested in web development and design"
-		</p>
-	);
-}
-
-function History() {
-	return (
-		<div className="p-10 border border-slate-500 rounded-lg backdrop-blur-sm backdrop-brightness-75 text-xl sm:text-2xl lg:text-3xl text-slate-300 flex flex-col gap-2">
-			<p>
-				SMA Negeri 3 Tuban <span className="text-base sm:text-lg lg:text-xl text-slate-400">2019 - 2021</span>
-			</p>
-			<p>
-				Universitas Pembangunan Nasional Veteran Jawa Timur{" "}
-				<span className="text-base sm:text-lg lg:text-xl text-slate-400">2022 - Now</span>
-			</p>
-		</div>
-	);
-}
-
-function Skills() {
-	return (
-		<div className="overflow-hidden border-slate-500 rounded-md backdrop-blur-sm backdrop-brightness-75 grid grid-cols-2 gap-1 font-fira text-center text-lg sm:text-xl lg:text-2xl text-slate-900 *:bg-slate-300 *:px-4 *:py-2">
-			<p>HTML</p>
-			<p>CSS</p>
-			<p>JavaScript</p>
-			<p>PHP</p>
-			<p>React</p>
-			<p>Tailwind</p>
-			<p>MySQL</p>
-			<p>Git</p>
-		</div>
-	);
-}
-
-function Achievement() {
-	return <p className="text-red-500 font-cormorant italic font-bold text-2xl sm:text:3xl lg:text-4xl">NULL</p>;
-}
-
-const data = [
-	{ title: "Introduction", el: <Introduction /> },
-	{ title: "History", el: <History /> },
-	{ title: "Skills", el: <Skills /> },
-	{ title: "Achievement", el: <Achievement /> }
-];
-
-const sty = {
-	container: "snap-start relative w-full h-screen grid grid-cols-6 grid-rows-12",
-	iconWrapper:
-		"z-10 absolute bottom-[4%] left-[50%] translate-x-[-50%] flex gap-2 rounded-md backdrop-blur-lg backdrop-brightness-50 px-2 py-1     *:w-5 *:h-5 *:fill-slate-300 *:cursor-pointer",
-	heading:
-		"font-cormorant font-bold text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-br from-amber-500 to-yellow-300 mt-10",
-	title:
-		"font-cormorant italic tracking-wide text-3xl md:text-4xl lg:text-5xl text-slate-300 flex justify-center items-center"
-};
-
-const vars = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: {
-			staggerChildren: 0.5,
-			duration: 0.5
-		}
-	},
-	child: {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.3,
-				duration: 0.5
-			}
-		}
-	},
-	item: {
-		hidden: { y: 20, opacity: 0 },
-		visible: {
-			y: 0,
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.5,
-				delayChildren: 0.5,
-				duration: 0.5
-			}
-		}
-	}
-};
-
 export default function About({ hovers }) {
-	const [el, setEl] = useState(null);
-	const containerRef = useRef(null);
-	const isInView = useInView(containerRef, { amount: 0.3 });
-
 	return (
-		<motion.section
-			id="about"
-			ref={containerRef}
-			className={sty.container}
-			onClick={() => {
-				if (el) setEl(null);
-			}}
-			variants={vars}
-			initial="hidden"
-			animate={isInView ? "visible" : "hidden"}
-		>
-			<motion.div
-				ref={(node) => hovers.current.push([node, "HIDDEN"])}
-				className="col-span-6 row-span-4 sm:col-span-6 sm:row-span-5 md:col-span-2 md:row-span-12"
-				variants={vars.child}
-			>
+		<section id="about" className={sty.container}>
+			<div ref={(node) => hovers.current.push([node, "HIDDEN"])} className={sty.carouselWrap}>
 				<Carousel sources={imageSources}>
-					<SocialMediaIcons className={sty.iconWrapper} />
+					<SocmedIcons />
 				</Carousel>
-			</motion.div>
+			</div>
 
-			<motion.div
-				className="col-span-6 row-span-1 md:col-span-4 md:row-span-2 flex items-center justify-center"
-				variants={vars.child}
-			>
-				<h1 className={sty.heading}>About Me</h1>
-			</motion.div>
+			<div className={sty.contentWrap}>
+				<h1>
+					<BlurAnimationText className={sty.heading}>Who Am I ?</BlurAnimationText>
+				</h1>
 
-			<motion.div
-				className="col-span-6 row-span-7 md:col-span-4 md:row-span-10 flex flex-col justify-evenly items-center"
-				variants={vars.child}
-			>
-				{isMobile()
-					? data.map((data, i) => (
-							<motion.h2 key={i} onClick={() => setEl(data.el)} className={sty.title} variants={vars.item}>
-								{data.title}
-							</motion.h2>
-					  ))
-					: data.map((data, i) => (
-							<motion.h2
-								key={i}
-								ref={(node) => hovers.current.push([node, data.el])}
-								className={sty.title}
-								variants={vars.item}
-							>
-								{data.title}
-							</motion.h2>
-					  ))}
-			</motion.div>
+				{/* Introduction */}
+				<p className="w-10/12 lg:w-8/12 text-center">
+					<RevealAnimationText className={sty.introduction}>
+						My name is Ade Fathoni Prastya , I am always eager to learn the latest technologies and always combine
+						visual with functionality
+					</RevealAnimationText>
+				</p>
 
-			<AnimatePresence>
-				{el && (
-					<motion.div
-						initial={{ x: "-50%", y: "-100%", opacity: 0, scale: 0.5 }}
-						animate={{ x: "-50%", y: "-50%", opacity: 1, scale: 1 }}
-						exit={{ x: "-50%", y: "0%", opacity: 0, scale: 0.5 }}
-						className="absolute z-20 top-[50%] left-[50%]"
-					>
-						{el}
-					</motion.div>
-				)}
-			</AnimatePresence>
-		</motion.section>
+				{/* History */}
+				<div className={sty.historyWrap}>
+					<p className="col-span-3">
+						<RevealAnimationText className={sty.historyYear}>2019 - 2021</RevealAnimationText>
+					</p>
+
+					<p className="col-span-9">
+						<RevealAnimationText className={sty.historyText}>SMA Negeri 3 Tuban</RevealAnimationText>
+					</p>
+
+					<p className="col-span-3">
+						<RevealAnimationText className={sty.historyYear}>2022 - Now</RevealAnimationText>
+					</p>
+
+					<p className="col-span-9">
+						<RevealAnimationText className={sty.historyText}>
+							Universitas Pembangunan Nasional Veteran Jawa Timur
+						</RevealAnimationText>
+					</p>
+				</div>
+
+				{/* Skills */}
+				<div className={sty.skills}>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>HTML</RevealAnimationText>
+					</p>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>CSS</RevealAnimationText>
+					</p>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>JavaScript</RevealAnimationText>
+					</p>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>PHP</RevealAnimationText>
+					</p>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>React</RevealAnimationText>
+					</p>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>Tailwind</RevealAnimationText>
+					</p>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>MySQL</RevealAnimationText>
+					</p>
+					<p className={sty.skillsItem}>
+						<RevealAnimationText className={sty.skillsText}>Git</RevealAnimationText>
+					</p>
+				</div>
+			</div>
+		</section>
 	);
 }

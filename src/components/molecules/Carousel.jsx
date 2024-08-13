@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { wrap } from "@/utils/commonHelper";
 
 const sty = {
-	container: "relative overflow-hidden w-full h-full cursor-default",
-	img: "transform-gpu w-full h-full object-cover object-center",
-	navigation: "z-10 absolute top-1/2 left-[4%] -translate-y-1/2 flex flex-col gap-4",
-	navItem: "w-3 h-3 rounded-full backdrop-invert cursor-pointer"
+	container: "relative overflow-hidden w-full h-full",
+	img: "w-full h-full object-cover object-center",
+	navigation: "cursor-none z-10 absolute top-1/2 left-[4%] -translate-y-1/2 flex flex-col gap-4 transform-gpu",
+	navItem: "cursor-pointer w-3 h-3 rounded-full backdrop-invert"
 };
 
 const vars = {
