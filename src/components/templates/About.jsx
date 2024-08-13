@@ -4,8 +4,19 @@ import photo3 from "@/assets/images/photo3.jpg";
 import Carousel from "@/components/molecules/Carousel";
 import BlurAnimationText from "@/components/molecules/BlurAnimationText";
 import RevealAnimationText from "@/components/molecules/RevealAnimationText";
+import { Fragment } from "react";
 
 const imageSources = [photo1, photo2, photo3];
+
+const skills = ["HTML", "CSS", "JavaScript", "PHP", "React", "Tailwind", "MySQL", "Git"];
+
+const introduction =
+	"My name is Ade Fathoni Prastya , I am always eager to learn the latest technologies and always combine visual with functionality";
+
+const histories = [
+	{ year: "2021 - 2021", content: "SMA Negeri 3 Tuban" },
+	{ year: "2022 - 2026", content: "Universitas Pembangunan Nasional Veteran Jawa Timur" }
+];
 
 const sty = {
 	container: "w-full min-h-screen flex flex-col md:flex-row",
@@ -62,6 +73,7 @@ function SocmedIcons() {
 export default function About({ hovers }) {
 	return (
 		<section id="about" className={sty.container}>
+			{/* Carousel */}
 			<div ref={(node) => hovers.current.push([node, "HIDDEN"])} className={sty.carouselWrap}>
 				<Carousel sources={imageSources}>
 					<SocmedIcons />
@@ -69,65 +81,38 @@ export default function About({ hovers }) {
 			</div>
 
 			<div className={sty.contentWrap}>
+				{/* Heading */}
 				<h1>
 					<BlurAnimationText className={sty.heading}>Who Am I ?</BlurAnimationText>
 				</h1>
 
 				{/* Introduction */}
 				<p className="w-10/12 lg:w-8/12 text-center">
-					<RevealAnimationText className={sty.introduction}>
-						My name is Ade Fathoni Prastya , I am always eager to learn the latest technologies and always combine
-						visual with functionality
-					</RevealAnimationText>
+					<RevealAnimationText className={sty.introduction}>{introduction}</RevealAnimationText>
 				</p>
 
 				{/* History */}
 				<div className={sty.historyWrap}>
-					<p className="col-span-3">
-						<RevealAnimationText className={sty.historyYear}>2019 - 2021</RevealAnimationText>
-					</p>
+					{histories.map((history, i) => (
+						<Fragment key={i}>
+							<p className="col-span-3">
+								<RevealAnimationText className={sty.historyYear}>{history.year}</RevealAnimationText>
+							</p>
 
-					<p className="col-span-9">
-						<RevealAnimationText className={sty.historyText}>SMA Negeri 3 Tuban</RevealAnimationText>
-					</p>
-
-					<p className="col-span-3">
-						<RevealAnimationText className={sty.historyYear}>2022 - Now</RevealAnimationText>
-					</p>
-
-					<p className="col-span-9">
-						<RevealAnimationText className={sty.historyText}>
-							Universitas Pembangunan Nasional Veteran Jawa Timur
-						</RevealAnimationText>
-					</p>
+							<p className="col-span-9">
+								<RevealAnimationText className={sty.historyText}>{history.content}</RevealAnimationText>
+							</p>
+						</Fragment>
+					))}
 				</div>
 
 				{/* Skills */}
 				<div className={sty.skills}>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>HTML</RevealAnimationText>
-					</p>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>CSS</RevealAnimationText>
-					</p>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>JavaScript</RevealAnimationText>
-					</p>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>PHP</RevealAnimationText>
-					</p>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>React</RevealAnimationText>
-					</p>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>Tailwind</RevealAnimationText>
-					</p>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>MySQL</RevealAnimationText>
-					</p>
-					<p className={sty.skillsItem}>
-						<RevealAnimationText className={sty.skillsText}>Git</RevealAnimationText>
-					</p>
+					{skills.map((skill, i) => (
+						<p key={i} className={sty.skillsItem}>
+							<RevealAnimationText className={sty.skillsText}>{skill}</RevealAnimationText>
+						</p>
+					))}
 				</div>
 			</div>
 		</section>
