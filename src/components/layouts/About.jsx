@@ -10,9 +10,6 @@ const imageSources = [photo1, photo2, photo3];
 
 const skills = ["HTML", "CSS", "JavaScript", "PHP", "React", "Tailwind", "MySQL", "Git"];
 
-const introduction =
-	"My name is Ade Fathoni Prastya , I am always eager to learn the latest technologies and always combine visual with functionality";
-
 const histories = [
 	{ year: "2021 - 2021", content: "SMA Negeri 3 Tuban" },
 	{ year: "2022 - 2026", content: "Universitas Pembangunan Nasional Veteran Jawa Timur" }
@@ -22,24 +19,23 @@ const sty = {
 	container: "w-full min-h-screen flex flex-col md:flex-row",
 
 	carouselWrap:
-		"z-10 sticky top-0 w-screen h-[35vh] sm:h-[40vh] md:h-screen md:w-[40vw] lg:w-[35vw] bg-zinc-950 shadow-xl shadow-zinc-950",
+		"z-10 sticky top-0 w-full h-[35vh] sm:h-[40vh] md:h-screen md:w-[70vw] lg:w-[45vw] px-12 pt-6 md:p-0 md:py-14 md:ps-6 bg-zinc-950 shadow-xl shadow-zinc-950",
 	socmedIcons:
 		"z-10 absolute bottom-[4%] left-1/2 -translate-x-1/2 flex gap-2 rounded-md backdrop-blur-lg backdrop-brightness-50 px-2 py-1     *:w-5 *:h-5 *:fill-zinc-300 *:cursor-pointer",
 
-	contentWrap: "w-full py-40 flex flex-col items-center gap-40",
+	contentWrap: "w-full py-[40vh] flex flex-col items-center gap-[40vh]",
 
 	heading:
-		"w-10/12 lg:w-8/12 text-center font-cinzel text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300",
+		"w-10/12 lg:w-8/12 text-center font-cormorant text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300",
 
-	introduction: "font-spectral font-bold text-4xl text-zinc-300",
+	introduction: "font-cormorant font-bold text-4xl md:text-5xl lg:text-6xl text-zinc-300",
 
 	historyWrap: "w-10/12 lg:w-8/12 grid grid-cols-12 gap-2 gap-y-8",
-	historyYear: "font-spectral text-sm sm:text-base lg:text-lg text-zinc-400",
-	historyText: "font-spectral font-bold text-xl sm:text-2xl lg:text-3xl text-zinc-300",
+	historyYear: "font-spectral text-base sm:text-lg lg:text-xl text-zinc-400",
+	historyText: "font-spectral font-bold text-2xl sm:text-3xl lg:text-4xl text-zinc-300",
 
-	skills: "overflow-hidden rounded-sm grid grid-cols-2",
-	skillsItem:
-		"text-zinc-800 bg-zinc-400 hover:bg-yellow-500 hover:text-zinc-950 transition-all duration-500 text-center",
+	skills: "overflow-hidden rounded-sm grid grid-cols-2 hover:*:*:text-zinc-950 hover:*:bg-zinc-200",
+	skillsItem: "transition-all duration-500 text-center text-zinc-200 bg-zinc-800",
 	skillsText: "px-8 py-4 font-spectral font-bold text-xl sm:text-2xl lg:text-3xl"
 };
 
@@ -88,7 +84,10 @@ export default function About({ hovers }) {
 
 				{/* Introduction */}
 				<p className="w-10/12 lg:w-8/12 text-center">
-					<RevealAnimationText className={sty.introduction}>{introduction}</RevealAnimationText>
+					<RevealAnimationText className={sty.introduction}>
+						My name is Ade Fathoni Prastya , I am always eager to learn the latest technologies and always combine
+						visual with functionality
+					</RevealAnimationText>
 				</p>
 
 				{/* History */}
