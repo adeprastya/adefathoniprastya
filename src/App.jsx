@@ -7,25 +7,28 @@ import Navigation from "@/components/shared/Navigation";
 import Cursor from "@/components/shared/Cursor";
 import { useRef } from "react";
 import { isMobile } from "@/utils/helper";
+import { ReactLenis } from "lenis/react";
 
 export default function App() {
 	const hovers = useRef([]);
 
 	return (
-		<main className="cursor-none relative -z-0 bg-zinc-950">
-			<Navigation />
+		<ReactLenis root>
+			<main className="cursor-none relative -z-0 bg-zinc-950">
+				<Navigation />
 
-			<Home />
+				<Home />
 
-			<About hovers={hovers} />
+				<About hovers={hovers} />
 
-			<Portfolio hovers={hovers} />
+				<Portfolio hovers={hovers} />
 
-			<Contact />
+				<Contact />
 
-			<Mark />
+				<Mark />
 
-			{!isMobile() && <Cursor hovers={hovers.current} />}
-		</main>
+				{!isMobile() && <Cursor hovers={hovers.current} />}
+			</main>
+		</ReactLenis>
 	);
 }
