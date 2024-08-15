@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { wrap } from "@/utils/commonHelper";
+import { wrap } from "@/utils/helper";
 
 const sty = {
 	container: "relative overflow-hidden w-full h-full",

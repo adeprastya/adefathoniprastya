@@ -1,5 +1,5 @@
-import ParallaxText from "@/components/molecules/ParallaxText";
-import AnimatedText from "@/components/molecules/AnimatedText";
+import ParallaxText from "@/components/shared/ParallaxText";
+import AnimatedText from "@/components/shared/AnimatedText";
 
 const texts = ["CODE", "ART", "MUSIC", "GAME"];
 

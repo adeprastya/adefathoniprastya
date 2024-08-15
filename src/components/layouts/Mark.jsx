@@ -1,6 +1,6 @@
 import LogoIcon from "@/assets/icons/LogoIcon";
 import SendIcon from "@/assets/icons/SendIcon";
-import ParallaxText from "@/components/molecules/ParallaxText";
+import ParallaxText from "@/components/shared/ParallaxText";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useFetchMark from "@/hooks/useFetchMark";

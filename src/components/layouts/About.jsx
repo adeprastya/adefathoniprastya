@@ -1,9 +1,9 @@
 import photo1 from "@/assets/images/photo1.png";
 import photo2 from "@/assets/images/photo2.jpg";
 import photo3 from "@/assets/images/photo3.jpg";
-import Carousel from "@/components/molecules/Carousel";
-import BlurAnimationText from "@/components/molecules/BlurAnimationText";
-import RevealAnimationText from "@/components/molecules/RevealAnimationText";
+import Carousel from "@/components/shared/Carousel";
+import BlurAnimationText from "@/components/shared/BlurAnimationText";
+import RevealAnimationText from "@/components/shared/RevealAnimationText";
 import { Fragment } from "react";
 
 const imageSources = [photo1, photo2, photo3];
