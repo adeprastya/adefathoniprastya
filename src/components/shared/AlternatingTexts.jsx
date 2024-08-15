@@ -24,9 +24,9 @@ const vars = {
 	})
 };
 
-export default function AnimatedText({ textArr, textStyle }) {
-	const [texts] = useState(() => textArr);
-	const [text, setText] = useState(() => texts[0]);
+export default function AlternatingTexts({ children, textStyle }) {
+	const [texts] = useState(children.split(","));
+	const [text, setText] = useState(texts[0]);
 	const index = useRef(0);
 
 	// Text index increment
