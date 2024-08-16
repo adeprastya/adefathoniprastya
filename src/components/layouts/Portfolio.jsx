@@ -21,7 +21,7 @@ const data = [
 ];
 
 const sty = {
-	container: "relative w-full h-[600vh]",
+	container: "relative overflow-clip max-w-screen h-[600vh]",
 
 	itemCont: "sticky top-0 grid grid-flow-col",
 	itemWrap: "w-screen h-screen flex justify-evenly items-center",
