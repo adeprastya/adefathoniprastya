@@ -1,9 +1,9 @@
 import projectMovcult from "@/assets/images/projectMovcult.png";
 import projectPoof from "@/assets/images/projectPoof.png";
 import projectLogic from "@/assets/images/projectLogic.png";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useScroll, useTransform, motion, useMotionTemplate } from "framer-motion";
 import { useRef } from "react";
-import useMousePosition from "@/hooks/useMousePosition";
+import useMousePositionValue from "@/contexts/useMousePositionValue";
 
 const data = [
 	{
@@ -42,10 +42,24 @@ function CustomHover({ children }) {
 	return <p className={sty.customHover}>Go to {children}</p>;
 }
 
-function Item({ data, hovers, mousePosition }) {
-	const x = mousePosition.x;
-	const y = mousePosition.y;
-	const center = 100 - ((Math.abs(x) + Math.abs(y)) / (window.innerHeight / 2 + window.innerWidth / 2)) * 100;
+function Item({ data, hovers }) {
+	const { mouseX, mouseY } = useMousePositionValue();
+
+	const rotateX = useTransform(mouseY, [0, window.innerHeight], [20, -20]);
+	const rotateY = useTransform(mouseX, [0, window.innerWidth], [-20, 20]);
+	const transform = useMotionTemplate`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+	// Need Refactor
+	const maxDistance = Math.sqrt(Math.pow(window.innerWidth / 2, 2) + Math.pow(window.innerHeight / 2, 2));
+	const brightness = useTransform(() => {
+		const distanceFromCenter = Math.sqrt(
+			Math.pow(mouseX.get() - window.innerWidth / 2, 2) + Math.pow(mouseY.get() - window.innerHeight / 2, 2)
+		);
+		return 80 - (distanceFromCenter / maxDistance) * 50;
+	}, [25, 80]);
+	// Need Refactor
+
+	const filter = useMotionTemplate`brightness(${brightness}%)`;
 
 	return (
 		<a
@@ -57,8 +71,8 @@ function Item({ data, hovers, mousePosition }) {
 			<div style={{ transformStyle: "preserve-3d" }}>
 				<motion.img
 					style={{
-						transform: `perspective(1000px) rotateX(${y / 50}deg) rotateY(${x / -50}deg)`,
-						filter: `brightness(${25 + (center / 100) * 25}%)`
+						transform,
+						filter
 					}}
 					src={data.image}
 					alt={data.title}
@@ -79,13 +93,12 @@ export default function Portfolio({ hovers }) {
 	const ref = useRef(null);
 	const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 	const y = useTransform(scrollYProgress, [0, 1], ["0%", "-240%"]);
-	const mousePosition = useMousePosition();
 
 	return (
 		<section ref={ref} id="portfolio" className={sty.container}>
 			<motion.div style={{ x: y }} className={sty.itemCont}>
 				{data.map((data, i) => (
-					<Item key={i} data={data} hovers={hovers} mousePosition={mousePosition} />
+					<Item key={i} data={data} hovers={hovers} />
 				))}
 			</motion.div>
 		</section>
