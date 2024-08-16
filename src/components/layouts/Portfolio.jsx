@@ -3,6 +3,7 @@ import projectPoof from "@/assets/images/projectPoof.png";
 import projectLogic from "@/assets/images/projectLogic.png";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
+import useMousePosition from "@/hooks/useMousePosition";
 
 const data = [
 	{
@@ -21,40 +22,54 @@ const data = [
 ];
 
 const sty = {
-	container: "relative overflow-clip max-w-screen h-[600vh]",
+	container: "relative overflow-clip max-w-screen h-[500vh]",
 
-	itemCont: "sticky top-0 grid grid-flow-col",
-	itemWrap: "w-screen h-screen flex justify-evenly items-center",
+	itemCont: "sticky top-0 grid gap-[20vw] grid-flow-col",
+	itemWrap: "relative w-screen h-screen flex justify-evenly items-center cursor-none",
+
+	textWrap: "absolute h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw]",
 	title:
-		"block w-32 sm:w-56 lg:w-96 font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-300",
+		"absolute top-1/4 -translate-y-1/2 w-1/2 font-cinzel text-5xl sm:text-6xl lg:text-7xl text-zinc-200 text-shadow-sm text-shadow-black",
 	overview:
-		"block w-32 sm:w-56 lg:w-96 font-cormorant font-bold italic text-sm sm:text-base md:text-lg lg:text-xl text-slate-400",
-	image: "z-10 w-44 sm:w-52 md:w-64 lg:w-80 aspect-[9/12] rounded-md object-cover",
-	imageOverlay:
-		"absolute top-[10%] left-[10%] w-44 sm:w-52 md:w-64 lg:w-80 aspect-[9/12] rounded-md bg-gradient-to-bl from-amber-600 to-yellow-400",
+		"absolute top-3/4 -translate-y-1/2 w-1/2 font-cormorant font-bold text-xl sm:text-2xl lg:text-3xl text-zinc-200 text-shadow-sm text-shadow-black",
 
-	text: "block font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-blue-500"
+	image: "h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw] object-cover",
+
+	customHover: "block font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-blue-500"
 };
 
-function Text({ children }) {
-	return <p className={sty.text}>Go to {children}</p>;
+function CustomHover({ children }) {
+	return <p className={sty.customHover}>Go to {children}</p>;
 }
 
-function Item({ data, hovers }) {
+function Item({ data, hovers, mousePosition }) {
+	const x = mousePosition.x;
+	const y = mousePosition.y;
+	const center = 100 - ((Math.abs(x) + Math.abs(y)) / (window.innerHeight / 2 + window.innerWidth / 2)) * 100;
+
 	return (
 		<a
 			href={data.link}
 			target="_blank"
-			ref={(node) => hovers.current.push([node, <Text>{data.title}</Text>])}
+			ref={(node) => hovers.current.push([node, <CustomHover>{data.title}</CustomHover>])}
 			className={sty.itemWrap}
 		>
-			<div className={sty.textWrapper}>
-				<h2 className={sty.title}>{data.title}</h2>
-				<p className={sty.overview}>{data.overview}</p>
+			<div style={{ transformStyle: "preserve-3d" }}>
+				<motion.img
+					style={{
+						transform: `perspective(1000px) rotateX(${y / 50}deg) rotateY(${x / -50}deg)`,
+						filter: `brightness(${25 + (center / 100) * 25}%)`
+					}}
+					src={data.image}
+					alt={data.title}
+					className={sty.image}
+				/>
 			</div>
 
-			<div>
-				<motion.img src={data.image} alt={data.title} className={sty.image} />
+			<div className={sty.textWrap}>
+				<h2 className={sty.title}>{data.title}</h2>
+
+				<p className={sty.overview}>{data.overview}</p>
 			</div>
 		</a>
 	);
@@ -63,13 +78,14 @@ function Item({ data, hovers }) {
 export default function Portfolio({ hovers }) {
 	const ref = useRef(null);
 	const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-	const y = useTransform(scrollYProgress, [0, 1], ["0%", "-203%"]);
+	const y = useTransform(scrollYProgress, [0, 1], ["0%", "-240%"]);
+	const mousePosition = useMousePosition();
 
 	return (
-		<section id="portfolio" ref={ref} className={sty.container}>
+		<section ref={ref} id="portfolio" className={sty.container}>
 			<motion.div style={{ x: y }} className={sty.itemCont}>
 				{data.map((data, i) => (
-					<Item key={i} data={data} hovers={hovers} />
+					<Item key={i} data={data} hovers={hovers} mousePosition={mousePosition} />
 				))}
 			</motion.div>
 		</section>
