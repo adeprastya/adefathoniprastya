@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect } from "react";
 import { useMotionValue } from "framer-motion";
 
-const MousePositionValue = createContext();
+const MouseMotionContext = createContext();
 
-export function MousePositionValueProvider({ children }) {
+export function MouseMotionProvider({ children }) {
 	const mouseX = useMotionValue(0);
 	const mouseY = useMotionValue(0);
 
@@ -20,9 +20,9 @@ export function MousePositionValueProvider({ children }) {
 		};
 	}, []);
 
-	return <MousePositionValue.Provider value={{ mouseX, mouseY }}>{children}</MousePositionValue.Provider>;
+	return <MouseMotionContext.Provider value={{ mouseX, mouseY }}>{children}</MouseMotionContext.Provider>;
 }
 
-export default function useMousePositionValue() {
-	return useContext(MousePositionValue);
+export default function useMouseMotion() {
+	return useContext(MouseMotionContext);
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, isValidElement } from "react";
-import { motion, AnimatePresence, useSpring, useMotionValue } from "framer-motion";
+import { motion, AnimatePresence, useSpring } from "framer-motion";
+import useMouseMotion from "@/contexts/useMouseMotion";
 import { isMobile } from "@/utils/helper";
 
 const MOUSE_INIT = {
@@ -54,24 +55,17 @@ const vars = {
 
 export default function Cursor({ hovers = [] }) {
 	const [mouse, setMouse] = useState(() => MOUSE_INIT);
-	const x = useMotionValue(window.innerWidth / 2);
-	const y = useMotionValue(window.innerHeight / 2);
-	const springX = useSpring(x, SPRING_CONFIG);
-	const springY = useSpring(y, SPRING_CONFIG);
+	const { mouseX, mouseY } = useMouseMotion();
+	const springX = useSpring(mouseX, SPRING_CONFIG);
+	const springY = useSpring(mouseY, SPRING_CONFIG);
 
-	const handleMouseMove = useCallback(
-		(e) => {
-			setMouse((prev) => ({
-				...prev,
-				inWindow:
-					e.clientX > 20 && e.clientY > 20 && e.clientX < window.innerWidth - 20 && e.clientY < window.innerHeight - 20
-			}));
-
-			x.set(e.clientX);
-			y.set(e.clientY);
-		},
-		[x, y]
-	);
+	const handleMouseMove = useCallback((e) => {
+		setMouse((prev) => ({
+			...prev,
+			inWindow:
+				e.clientX > 20 && e.clientY > 20 && e.clientX < window.innerWidth - 20 && e.clientY < window.innerHeight - 20
+		}));
+	}, []);
 
 	const handleMouseEnter = useCallback(
 		(customEl) => () => {
@@ -162,7 +156,7 @@ export default function Cursor({ hovers = [] }) {
 
 			{/* Main cursor */}
 			<motion.div
-				style={{ translateY: y, translateX: x }}
+				style={{ translateY: mouseY, translateX: mouseX }}
 				variants={vars}
 				initial="hidden"
 				animate={mouse.inWindow ? "visible" : "hidden"}

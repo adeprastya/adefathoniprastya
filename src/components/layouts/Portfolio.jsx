@@ -3,7 +3,8 @@ import projectPoof from "@/assets/images/projectPoof.png";
 import projectLogic from "@/assets/images/projectLogic.png";
 import { useScroll, useTransform, motion, useMotionTemplate } from "framer-motion";
 import { useRef } from "react";
-import useMousePositionValue from "@/contexts/useMousePositionValue";
+import useMouseMotion from "@/contexts/useMouseMotion";
+import { isMobile } from "@/utils/helper";
 
 const data = [
 	{
@@ -43,7 +44,7 @@ function CustomHover({ children }) {
 }
 
 function Item({ data, hovers }) {
-	const { mouseX, mouseY } = useMousePositionValue();
+	const { mouseX, mouseY } = useMouseMotion();
 
 	const rotateX = useTransform(mouseY, [0, window.innerHeight], [20, -20]);
 	const rotateY = useTransform(mouseX, [0, window.innerWidth], [-20, 20]);
@@ -70,10 +71,14 @@ function Item({ data, hovers }) {
 		>
 			<div style={{ transformStyle: "preserve-3d" }}>
 				<motion.img
-					style={{
-						transform,
-						filter
-					}}
+					style={
+						isMobile()
+							? {}
+							: {
+									transform,
+									filter
+							  }
+					}
 					src={data.image}
 					alt={data.title}
 					className={sty.image}

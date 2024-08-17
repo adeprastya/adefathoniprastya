@@ -1,5 +1,5 @@
-import { MousePositionValueProvider } from "@/contexts/useMousePositionValue";
+import { MouseMotionProvider } from "@/contexts/useMouseMotion";
 
 export default function ContextProvider({ children }) {
-	return <MousePositionValueProvider>{children}</MousePositionValueProvider>;
+	return <MouseMotionProvider>{children}</MouseMotionProvider>;
 }
