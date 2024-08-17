@@ -3,23 +3,6 @@ import { motion, AnimatePresence, useSpring } from "framer-motion";
 import useMouseMotion from "@/contexts/useMouseMotion";
 import { isMobile } from "@/utils/helper";
 
-const MOUSE_INIT = {
-	inWindow: false,
-	isHovering: false,
-	customEl: "DEFAULT"
-};
-
-const SPRING_CONFIG = {
-	damping: 10,
-	stiffness: 50
-};
-
-const CURSOR_TYPES = {
-	DEFAULT: "DEFAULT",
-	HIDDEN: "HIDDEN",
-	OUTLINE: "OUTLINE"
-};
-
 const CursorHidden = () => <></>;
 
 const CursorDefault = () => (
@@ -29,6 +12,12 @@ const CursorDefault = () => (
 const CursorOutline = () => (
 	<div className="w-28 h-28 sm:w-36 sm:h-36 xl:w-44 xl:h-44 box-border rounded-full border-[1px] border-x-yellow-400 border-y-orange-300"></div>
 );
+
+const CURSOR_TYPES = {
+	DEFAULT: "DEFAULT",
+	HIDDEN: "HIDDEN",
+	OUTLINE: "OUTLINE"
+};
 
 const cursorComponents = {
 	[CURSOR_TYPES.DEFAULT]: CursorDefault,
@@ -54,10 +43,10 @@ const vars = {
 };
 
 export default function Cursor({ hovers = [] }) {
-	const [mouse, setMouse] = useState(() => MOUSE_INIT);
+	const [mouse, setMouse] = useState({ inWindow: false, isHovering: false, customEl: "DEFAULT" });
 	const { mouseX, mouseY } = useMouseMotion();
-	const springX = useSpring(mouseX, SPRING_CONFIG);
-	const springY = useSpring(mouseY, SPRING_CONFIG);
+	const springX = useSpring(mouseX, { damping: 10, stiffness: 50 });
+	const springY = useSpring(mouseY, { damping: 10, stiffness: 50 });
 
 	const handleMouseMove = useCallback((e) => {
 		setMouse((prev) => ({
@@ -100,7 +89,7 @@ export default function Cursor({ hovers = [] }) {
 		throw new Error("Invalid cursor element");
 	}, [mouse.customEl]);
 
-	// Calculating mouse position and mouse is in window
+	// Calculating mouse is in window
 	useEffect(() => {
 		if (isMobile()) return;
 
