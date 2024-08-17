@@ -50,15 +50,14 @@ function Item({ data, hovers }) {
 	const rotateY = useTransform(mouseX, [0, window.innerWidth], [-20, 20]);
 	const transform = useMotionTemplate`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-	// Need Refactor
-	const maxDistance = Math.sqrt(Math.pow(window.innerWidth / 2, 2) + Math.pow(window.innerHeight / 2, 2));
-	const brightness = useTransform(() => {
-		const distanceFromCenter = Math.sqrt(
-			Math.pow(mouseX.get() - window.innerWidth / 2, 2) + Math.pow(mouseY.get() - window.innerHeight / 2, 2)
-		);
-		return 80 - (distanceFromCenter / maxDistance) * 50;
-	}, [25, 80]);
-	// Need Refactor
+	const brightness = useTransform(
+		[mouseX, mouseY],
+		([x, y]) => {
+			const distanceFromCenter = Math.hypot(x - window.innerWidth / 2, y - window.innerHeight / 2);
+			return 80 - (distanceFromCenter / Math.hypot(window.innerWidth / 2, window.innerHeight / 2)) * 50;
+		},
+		[25, 80]
+	);
 
 	const filter = useMotionTemplate`brightness(${brightness}%)`;
 
