@@ -1,30 +1,30 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 import { wrap } from "@/utils/helper";
 
 const sty = {
 	container: "relative overflow-hidden w-full h-full",
-	img: "w-full h-full object-cover object-center",
-	navigation: "cursor-none z-10 absolute top-1/2 left-[4%] -translate-y-1/2 flex flex-col gap-4 transform-gpu",
+	img: "w-full h-full object-cover object-center transform-gpu",
+	navigation: "cursor-none z-10 absolute top-1/2 left-[5%] -translate-y-1/2 flex flex-col gap-4",
 	navItem: "cursor-pointer w-3 h-3 rounded-full backdrop-invert"
 };
 
 const vars = {
-	enter: ([direction, height]) => ({
+	enter: (direction) => ({
 		opacity: 0,
-		y: direction > 0 ? height : -height
+		y: direction > 0 ? "100%" : "-100%"
 	}),
 	center: {
 		opacity: 1,
 		y: 0
 	},
-	exit: ([direction, height]) => ({
+	exit: (direction) => ({
 		opacity: 0,
-		y: direction < 0 ? height : -height
+		y: direction < 0 ? "100%" : "-100%"
 	}),
 	transition: {
 		ease: "easeInOut",
-		duration: 1.5
+		duration: 1
 	}
 };
 
@@ -34,14 +34,13 @@ const swipePower = (offset, velocity) => Math.abs(offset) * velocity;
 export default function Carousel({ children, sources = [] }) {
 	const [[page, direction], setPage] = useState([0, 0]);
 	const pageWrapper = wrap(0, sources.length);
-	const containerRef = useRef();
-	const [height, setHeight] = useState(0);
 	const intervalRef = useRef();
-	const [isDragging, setIsDragging] = useState(false);
+	const isDragging = useMotionValue(false);
+	const cursor = useTransform(isDragging, (dragging) => (dragging ? "grabbing" : "grab"));
 
 	const paginate = useCallback(
-		(newDirection) => {
-			setPage((prev) => [pageWrapper(prev[0] + newDirection), newDirection]);
+		(value) => {
+			setPage((prev) => [pageWrapper(prev[0] + value), value]);
 		},
 		[pageWrapper]
 	);
@@ -50,12 +49,13 @@ export default function Carousel({ children, sources = [] }) {
 
 	const resetAutoPaginate = useCallback(() => {
 		clearInterval(intervalRef.current);
+
 		intervalRef.current = setInterval(autoPaginate, 5000);
 	}, [autoPaginate]);
 
 	const handleDragStart = () => {
+		isDragging.set(true);
 		clearInterval(intervalRef.current);
-		setIsDragging(true);
 	};
 
 	const handleDragEnd = useCallback(
@@ -66,7 +66,7 @@ export default function Carousel({ children, sources = [] }) {
 				paginate(direction);
 			}
 
-			setIsDragging(false);
+			isDragging.set(false);
 			resetAutoPaginate();
 		},
 		[paginate, resetAutoPaginate]
@@ -89,20 +89,14 @@ export default function Carousel({ children, sources = [] }) {
 		};
 	}, [resetAutoPaginate]);
 
-	// Get container height
-	useEffect(() => {
-		if (containerRef.current) {
-			setHeight(containerRef.current.offsetHeight);
-		}
-	}, [page]);
-
 	return (
-		<div ref={containerRef} className={sty.container}>
-			<AnimatePresence initial={false} custom={[direction, height]} mode="popLayout">
+		<div className={sty.container}>
+			<AnimatePresence initial={false} custom={direction} mode="popLayout">
 				<motion.img
-					key={`${page}-${direction}`}
+					key={page}
 					src={sources[page]}
-					custom={[direction, height]}
+					alt={sources[page]}
+					custom={direction}
 					variants={vars}
 					initial="enter"
 					animate="center"
@@ -113,7 +107,8 @@ export default function Carousel({ children, sources = [] }) {
 					dragElastic={0.5}
 					onDragStart={handleDragStart}
 					onDragEnd={(e, { offset, velocity }) => handleDragEnd(offset, velocity)}
-					className={`${sty.img} ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+					className={sty.img}
+					style={{ cursor }}
 				/>
 			</AnimatePresence>
 
