@@ -17,20 +17,20 @@ const vars = {
 
 export default function RevealAnimationText({ children, className }) {
 	const texts = children.split(" ");
-	const ref = useRef();
-	const isInView = useInView(ref, { amount: "all" });
+	const ref = useRef(null);
+	const isInView = useInView(ref, { amount: 0.5 });
 
 	return (
 		<span ref={ref}>
-			{Array.from(texts).map((t, i) => (
-				<span key={i} className="inline-block overflow-hidden me-3">
+			{Array.from(texts).map((text, i) => (
+				<span key={i} className="inline-block overflow-clip me-4">
 					<motion.span
 						variants={vars}
 						animate={isInView ? "animate" : "initial"}
 						transition={vars.transition(i)}
 						className={`inline-block ${className}`}
 					>
-						{t}
+						{text}
 					</motion.span>
 				</span>
 			))}
