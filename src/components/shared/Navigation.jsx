@@ -36,7 +36,7 @@ const sty = {
 
 	navWrap: "pointer-events-none absolute right-0",
 	listWrap: "pointer-events-auto w-screen min-h-screen bg-zinc-950/70 backdrop-blur-sm flex flex-col justify-between",
-	list: "ps-8 sm:ps-20 lg:ps-32 relative font-cormorant font-bold tracking-widest leading-none text-zinc-950 text-shadow-border text-shadow-zinc-200 before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-16 sm:before:-translate-x-32 lg:before:-translate-x-44 before:w-4 before:aspect-square before:rounded-full before:border-2 before:border-zinc-200 hover:bg-yellow-400 hover:text-shadow-yellow-400 hover:before:border-yellow-400",
+	list: "ps-8 sm:ps-20 lg:ps-32 relative font-cormorant font-bold tracking-widest leading-none text-zinc-950 text-shadow-border before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-16 sm:before:-translate-x-32 lg:before:-translate-x-44 before:w-4 before:aspect-square before:rounded-full before:border-2 hover:bg-yellow-400 hover:text-shadow-yellow-400 hover:before:border-yellow-400",
 
 	chatWrap:
 		"pointer-events-auto z-20 absolute right-0 w-full sm:max-w-[48rem] h-screen p-8 pe-12 pt-14 backdrop-blur-sm bg-zinc-950/70 flex flex-col",
@@ -169,7 +169,11 @@ export default function Navigation() {
 							href={list.link}
 						>
 							<motion.li
-								className={`${sty.list} ${activeNav == i ? " before:border-amber-400 text-shadow-yellow-400" : ""}`}
+								className={`${sty.list} ${
+									activeNav == i
+										? "before:border-yellow-400 text-shadow-yellow-400"
+										: "before:border-zinc-300 text-shadow-zinc-300"
+								}`}
 								variants={vars.li}
 								initial="hidden"
 								animate={isNavOpen ? "visible" : "hidden"}
