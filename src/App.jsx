@@ -14,7 +14,7 @@ export default function App() {
 
 	return (
 		<ReactLenis root>
-			<main className="cursor-none -z-0 relative w-full overflow-x-hidden bg-zinc-950">
+			<main className="cursor-none -z-0 relative w-full overflow-x-clip bg-zinc-950">
 				<Navigation />
 
 				<Home />
