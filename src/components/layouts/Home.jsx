@@ -2,7 +2,7 @@ import ParallaxText from "@/components/shared/ParallaxText";
 import AlternatingTexts from "@/components/shared/AlternatingTexts";
 
 const sty = {
-	container: "relative w-screen h-screen flex justify-center items-center",
+	container: "relative w-full h-screen flex justify-center items-center",
 
 	textWrapper: "z-10 w-full flex flex-col justify-center items-center",
 	shortText: "font-cormorant text-2xl sm:text-3xl lg:text-4xl text-zinc-300",
@@ -11,7 +11,7 @@ const sty = {
 	longText:
 		"w-9/12 sm:w-7/12 lg:w-5/12 font-cormorant font-bold text-center tracking-wider text-base sm:text-lg lg:text-xl text-zinc-400",
 
-	parallaxWrapper: "-z-0 absolute h-screen w-full pt-20 pb-4 flex flex-col justify-around",
+	parallaxWrapper: "-z-0 absolute w-full h-screen pt-20 pb-4 flex flex-col justify-around",
 	parallaxText:
 		"font-cinzel font-light tracking-tight from-black to-zinc-700 bg-clip-text text-transparent leading-[0.1]"
 };
