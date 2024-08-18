@@ -45,7 +45,6 @@ function CustomHover({ children }) {
 
 function Item({ data, hovers }) {
 	const { mouseX, mouseY } = useMouseMotion();
-
 	const rotateX = useTransform(mouseY, [0, window.innerHeight], [20, -20]);
 	const rotateY = useTransform(mouseX, [0, window.innerWidth], [-20, 20]);
 	const transform = useMotionTemplate`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -58,7 +57,6 @@ function Item({ data, hovers }) {
 		},
 		[25, 80]
 	);
-
 	const filter = useMotionTemplate`brightness(${brightness}%)`;
 
 	return (
@@ -70,14 +68,7 @@ function Item({ data, hovers }) {
 		>
 			<div style={{ transformStyle: "preserve-3d" }}>
 				<motion.img
-					style={
-						isMobile()
-							? {}
-							: {
-									transform,
-									filter
-							  }
-					}
+					style={isMobile() ? {} : { transform, filter }}
 					src={data.image}
 					alt={data.title}
 					className={sty.image}
