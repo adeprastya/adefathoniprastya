@@ -4,7 +4,7 @@ import AlternatingTexts from "@/components/shared/AlternatingTexts";
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
 	shortText: "font-cormorant text-2xl sm:text-3xl lg:text-4xl text-zinc-300",
-	animatedText:
+	alterantingTexts:
 		"font-cinzel font-light text-7xl sm:text-8xl lg:text-9xl text-transparent bg-gradient-to-bl from-amber-500 to-yellow-300 bg-clip-text sm:tracking-widest",
 	longText:
 		"w-9/12 sm:w-7/12 lg:w-5/12 font-cormorant font-bold text-center tracking-wider text-base sm:text-lg lg:text-xl text-zinc-400",
@@ -18,7 +18,7 @@ export default function Home() {
 				<p className={sty.shortText}>Im Ade, and i love</p>
 
 				<h1>
-					<AlternatingTexts textStyle={sty.animatedText}>CODE, ART, MUSIC, GAME</AlternatingTexts>
+					<AlternatingTexts textStyle={sty.alterantingTexts}>CODE, ART, MUSIC, GAME</AlternatingTexts>
 				</h1>
 
 				<p className={sty.longText}>

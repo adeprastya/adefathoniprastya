@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { wrap } from "@/utils/helper";
 
 const vars = {
 	hidden: {
-		translateY: "-25%",
+		y: "-25%",
 		opacity: 0,
 		filter: "blur(20px)"
 	},
 	visible: {
-		translateY: 0,
+		y: 0,
 		opacity: 1,
 		filter: "blur(0)"
 	},
 	exit: {
-		translateY: "25%",
+		y: "25%",
 		opacity: 0,
 		filter: "blur(20px)"
 	},
@@ -25,24 +26,23 @@ const vars = {
 };
 
 export default function AlternatingTexts({ children, textStyle }) {
-	const [texts] = useState(children.split(","));
-	const [text, setText] = useState(texts[0]);
-	const index = useRef(0);
+	const texts = useRef(children.split(", "));
+	const [index, setIndex] = useState(0);
+	const indexWrapper = wrap(0, texts.current.length);
 
-	// Text index increment
+	// Index increment
 	useEffect(() => {
 		const interval = setInterval(() => {
-			index.current += 1;
-			setText(texts[index.current % texts.length]);
+			setIndex((prev) => indexWrapper(prev + 1));
 		}, 5000);
 
 		return () => clearInterval(interval);
-	}, [texts]);
+	}, []);
 
 	return (
 		<AnimatePresence mode="wait">
-			<span key={index.current}>
-				{Array.from(text).map((t, i) => (
+			<span key={index}>
+				{Array.from(texts.current[index]).map((t, i) => (
 					<motion.span
 						key={i}
 						variants={vars}
