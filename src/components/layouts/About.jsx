@@ -2,7 +2,6 @@ import photo1 from "@/assets/images/photo1.png";
 import photo2 from "@/assets/images/photo2.jpg";
 import photo3 from "@/assets/images/photo3.jpg";
 import Carousel from "@/components/shared/Carousel";
-import BlurAnimationText from "@/components/shared/BlurAnimationText";
 import RevealAnimationText from "@/components/shared/RevealAnimationText";
 import { Fragment } from "react";
 
@@ -25,14 +24,13 @@ const sty = {
 
 	contentWrap: "w-full py-[40vh] flex flex-col items-center gap-[40vh]",
 
-	heading:
-		"w-10/12 lg:w-8/12 text-center font-cormorant text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300",
+	heading: "w-10/12 lg:w-8/12 text-center font-cormorant text-7xl lg:text-8xl text-zinc-200",
 
-	introduction: "font-cormorant font-bold text-4xl md:text-5xl lg:text-6xl text-zinc-300",
+	introduction: "font-cormorant font-bold text-4xl md:text-5xl lg:text-6xl text-zinc-200",
 
 	historyWrap: "w-10/12 lg:w-8/12 grid grid-cols-12 gap-2 gap-y-8",
 	historyYear: "font-spectral text-base sm:text-lg lg:text-xl text-zinc-400",
-	historyText: "font-spectral font-bold text-2xl sm:text-3xl lg:text-4xl text-zinc-300",
+	historyText: "font-spectral font-bold text-2xl sm:text-3xl lg:text-4xl text-zinc-200",
 
 	skills: "overflow-hidden rounded-sm grid grid-cols-2 hover:*:*:text-zinc-950 hover:*:bg-zinc-200",
 	skillsItem: "transition-all duration-500 text-center text-zinc-200 bg-zinc-800",
@@ -79,7 +77,7 @@ export default function About({ hovers }) {
 			<div className={sty.contentWrap}>
 				{/* Heading */}
 				<h1>
-					<BlurAnimationText className={sty.heading}>Who Am I ?</BlurAnimationText>
+					<RevealAnimationText className={sty.heading}>Who Am I ?</RevealAnimationText>
 				</h1>
 
 				{/* Introduction */}
