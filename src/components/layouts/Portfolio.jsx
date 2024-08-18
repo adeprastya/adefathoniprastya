@@ -25,7 +25,7 @@ const data = [
 const sty = {
 	container: "relative overflow-clip max-w-screen h-[500vh]",
 
-	itemCont: "sticky top-0 grid gap-[20vw] grid-flow-col",
+	itemCont: "sticky top-0 grid gap-[20vw] grid-flow-col transform-gpu",
 	itemWrap: "relative w-screen h-screen flex justify-evenly items-center cursor-none",
 
 	textWrap: "absolute h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw]",
@@ -34,13 +34,13 @@ const sty = {
 	overview:
 		"absolute top-3/4 -translate-y-1/2 w-1/2 font-cormorant font-bold text-xl sm:text-2xl lg:text-3xl text-zinc-200 text-shadow-sm text-shadow-black",
 
-	image: "h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw] object-cover",
+	image: "h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw] object-cover transform-gpu",
 
-	customHover: "block font-cormorant font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-blue-500"
+	customHover: "block font-cormorant font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-yellow-400"
 };
 
 function CustomHover({ children }) {
-	return <p className={sty.customHover}>Go to {children}</p>;
+	return <p className={sty.customHover}>{children}</p>;
 }
 
 function Item({ data, hovers }) {
@@ -96,7 +96,7 @@ function Item({ data, hovers }) {
 export default function Portfolio({ hovers }) {
 	const ref = useRef(null);
 	const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-	const y = useTransform(scrollYProgress, [0, 1], ["0%", "-240%"]);
+	const y = useTransform(scrollYProgress, [0, 1], ["0vw", "-240vw"]);
 
 	return (
 		<section ref={ref} id="portfolio" className={sty.container}>
