@@ -21,11 +21,11 @@ const sty = {
 
 	contentWrapper: "sticky top-0 flex flex-col lg:flex-row",
 
-	textWrapper: "pt-20 w-full h-[50vh] lg:h-screen flex justify-center items-center",
+	textWrapper: "pt-20 lg:pt-0 w-full h-[50vh] lg:h-screen flex justify-center items-center",
 	heading:
 		"font-cormorant font-bold tracking-wide text-[4rem] sm:text-[5rem] md:text-[6rem] xl:text-[6rem] text-transparent bg-clip-text bg-gradient-to-bl from-amber-500 to-yellow-300     flex flex-col w-fit",
 
-	itemWrapper: "pb-20 w-full h-[50vh] lg:h-screen flex flex-col justify-center items-center",
+	itemWrapper: "pb-20 lg:pb-0 w-full h-[50vh] lg:h-screen flex flex-col justify-center items-center",
 	item: "absolute font-cormorant font-bold tracking-wide text-[5rem] sm:text-[6rem] md:text-[7rem] xl:text-[8rem] text-zinc-300 transform-gpu"
 };
 
