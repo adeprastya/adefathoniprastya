@@ -1,111 +1,128 @@
 import LogoIcon from "@/assets/icons/LogoIcon";
 import SendIcon from "@/assets/icons/SendIcon";
 import ParallaxText from "@/components/shared/ParallaxText";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import useFetchMark from "@/hooks/useFetchMark";
+import { slicer } from "@/utils/helper";
 
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
-	markText: "font-bebas tracking-wider text-4xl lg:text-5xl text-slate-300",
+
+	logo: "z-10 relative block h-2/6 aspect-square fill-yellow-400",
+
+	markWrapper: "absolute w-full h-screen",
+	markText: "font-cormorant font-bold tracking-wider text-4xl lg:text-5xl text-zinc-300",
+
 	formWrap: "z-20 absolute left-0 flex flex-row-reverse",
 	formLabel:
-		"block h-fit my-auto py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 font-cormorant font-black text-sm sm:text-base lg:text-lg",
+		"absolute top-1/2 -translate-y-1/2 translate-x-full h-fit py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 whitespace-nowrap font-cormorant font-bold text-sm sm:text-base lg:text-lg",
 	formContent:
-		"h-[40vh] p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-slate-950 text-slate-200 flex flex-col gap-2"
+		"h-[40vh] p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-zinc-950 text-zinc-300 flex flex-col gap-2",
+	formTextArea: "resize-none w-full h-full p-2 bg-zinc-800",
+	formInputLabel: "font-cormorant text-base sm:text-lg lg:text-xl text-zinc-300",
+	formInput: "h-8 p-2 bg-zinc-800",
+	formButton: "h-10 aspect-square fill-yellow-400"
+};
+
+const vars = {
+	hidden: {
+		x: "-100%"
+	},
+	visible: {
+		x: 0
+	},
+	transition: {
+		duration: 0.3,
+		ease: "easeInOut"
+	}
 };
 
 export default function Mark() {
 	const { mark } = useFetchMark();
+	const marks = slicer(mark.data, 4)?.map((item) => item.reduce((acc, cur) => acc + cur.content + " - ", ""));
 
 	return (
 		<section id="mark" className={sty.container}>
-			<MarkForm />
-
+			{/* Logo */}
 			<a
 				href="#home"
 				onClick={(e) => {
 					e.preventDefault();
 					window.scrollTo({ top: 0, behavior: "smooth" });
 				}}
-				className="z-10 relative block h-2/6 aspect-square fill-yellow-400"
+				className={sty.logo}
 			>
 				<LogoIcon className="w-full h-full" />
 			</a>
 
+			{/* Mark Form */}
+			<MarkForm />
+
+			{/* Mark Text */}
 			{!mark.loading && Array.isArray(mark.data) && (
-				<>
+				<div className={sty.markWrapper}>
 					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute top-16">
-						{mark.data
-							.slice(0, Math.ceil((mark.data.length / 4) * 1))
-							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+						{marks[0]}
 					</ParallaxText>
 
 					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute top-32">
-						{mark.data
-							.slice(Math.ceil((mark.data.length / 4) * 1), Math.ceil((mark.data.length / 4) * 2))
-							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+						{marks[1]}
 					</ParallaxText>
 
 					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute bottom-32">
-						{mark.data
-							.slice(Math.ceil((mark.data.length / 4) * 2), Math.ceil((mark.data.length / 4) * 3))
-							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+						{marks[2]}
 					</ParallaxText>
 
 					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute bottom-16">
-						{mark.data
-							.slice(Math.ceil((mark.data.length / 4) * 3), Math.ceil((mark.data.length / 4) * 4))
-							.reduce((acc, cur) => acc + cur.content + " - ", "")}
+						{marks[3]}
 					</ParallaxText>
-				</>
+				</div>
 			)}
 		</section>
 	);
 }
 
 function MarkForm() {
-	const ref = useRef(null);
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 
-	useEffect(() => {
-		setIsOpen(false);
-	}, []);
+	const handleClick = () => {
+		setIsOpen((n) => !n);
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setIsOpen(false);
 
+		// TODO: fetching to model, add response to chat, disabable button until response is received
 		alert("Sorry, out of service!");
+
+		setIsOpen(false);
 	};
 
 	return (
 		<motion.div
+			variants={vars}
+			initial="hidden"
+			animate={isOpen ? "visible" : "hidden"}
+			transition={vars.transition}
 			className={sty.formWrap}
-			animate={isOpen ? { x: 0 } : { x: -ref.current?.offsetWidth - 2 }}
-			transition={{ ease: "easeInOut" }}
 		>
-			<button style={{ writingMode: "vertical-lr" }} className={sty.formLabel} onClick={() => setIsOpen((n) => !n)}>
+			<button onClick={handleClick} style={{ writingMode: "vertical-lr" }} className={sty.formLabel}>
 				ADD YOUR MARK
 			</button>
 
-			<form ref={ref} onSubmit={(e) => handleSubmit(e)} className={sty.formContent}>
-				<textarea
-					placeholder="Your Mark :)"
-					type="text"
-					name="content"
-					className="resize-none w-full h-full p-2 bg-slate-800"
-				/>
+			<form onSubmit={(e) => handleSubmit(e)} className={sty.formContent}>
+				<textarea placeholder="Your Mark . . ." type="text" name="content" className={sty.formTextArea} />
 
 				<div className="w-full flex items-center gap-2">
-					<label htmlFor="sender" className="font-cormorant text-base sm:text-lg lg:text-xl text-slate-300">
+					<label htmlFor="sender" className={sty.formInputLabel}>
 						From:
 					</label>
 
-					<input placeholder="Anonymous" type="text" name="sender" id="sender" className="h-8 p-2 bg-slate-800" />
+					<input placeholder="Anonymous" type="text" name="sender" id="sender" className={sty.formInput} />
 
-					<button type="submit" className="h-10 aspect-square fill-yellow-400">
-						<SendIcon className="w-full h-full" />
+					<button type="submit" className={sty.formButton}>
+						<SendIcon className="size-full" />
 					</button>
 				</div>
 			</form>
