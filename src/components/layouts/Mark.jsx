@@ -39,7 +39,7 @@ const vars = {
 };
 
 export default function Mark() {
-	const { mark } = useFetchMark();
+	const { mark, insert } = useFetchMark();
 	const marks = slicer(mark.data, 4)?.map((item) => item.reduce((acc, cur) => acc + cur.content + " - ", ""));
 
 	return (
@@ -57,7 +57,7 @@ export default function Mark() {
 			</a>
 
 			{/* Mark Form */}
-			<MarkForm />
+			<MarkForm insert={insert} />
 
 			{/* Mark Text */}
 			{!mark.loading && Array.isArray(mark.data) && (
@@ -83,7 +83,7 @@ export default function Mark() {
 	);
 }
 
-function MarkForm() {
+function MarkForm({ insert }) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleClick = () => {
@@ -93,9 +93,10 @@ function MarkForm() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		// TODO: fetching to model, add response to chat, disabable button until response is received
-		alert("Sorry, out of service!");
+		insert.fn(e.target.content.value, e.target.sender.value);
 
+		e.target.content.value = "";
+		e.target.sender.value = "";
 		setIsOpen(false);
 	};
 
@@ -112,14 +113,29 @@ function MarkForm() {
 			</button>
 
 			<form onSubmit={(e) => handleSubmit(e)} className={sty.formContent}>
-				<textarea placeholder="Your Mark . . ." type="text" name="content" className={sty.formTextArea} />
+				<textarea
+					placeholder="Your Mark . . ."
+					type="text"
+					minLength={1}
+					maxLength={20}
+					name="content"
+					className={sty.formTextArea}
+				/>
 
 				<div className="w-full flex items-center gap-2">
 					<label htmlFor="sender" className={sty.formInputLabel}>
 						From:
 					</label>
 
-					<input placeholder="Anonymous" type="text" name="sender" id="sender" className={sty.formInput} />
+					<input
+						placeholder="Anonymous"
+						type="text"
+						minLength={1}
+						maxLength={10}
+						name="sender"
+						id="sender"
+						className={sty.formInput}
+					/>
 
 					<button type="submit" className={sty.formButton}>
 						<SendIcon className="size-full" />

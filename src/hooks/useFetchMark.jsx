@@ -1,105 +1,80 @@
 import { useEffect, useState } from "react";
 
-const marks = [
-	{
-		id: 1,
-		content: "Hello",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 2,
-		content: "Hai",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 3,
-		content: "Holla",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 4,
-		content: "Ola",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 5,
-		content: "Bonjour",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 6,
-		content: "Good Luck",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 7,
-		content: "Good Morning",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 8,
-		content: "Good Night",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 9,
-		content: "Good Afternoon",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 10,
-		content: "Good Evening",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 11,
-		content: "Happy Birthday",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
-	},
-	{
-		id: 12,
-		content: "Happy New Year",
-		sender: "anonymous",
-		timestamp: "2022-01-01T00:00:00.000Z"
+const URL = "api/app/data-glstzff/endpoint/data/v1/action";
+const API_KEY = "UCuYPrndwQD4muLlJZZXzctkWyLMtteAwdFCRQnGAiXrEFchkWoKyMfg28YiQLZw";
+
+async function fetchFromAPI(endpoint, method, body = null) {
+	const response = await fetch(endpoint, {
+		method,
+		headers: {
+			apiKey: API_KEY,
+			"Content-Type": "application/json",
+			Accept: "application/json"
+		},
+		body: body ? JSON.stringify(body) : null
+	});
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! Status: ${response.status}`);
 	}
-];
+
+	return response.json();
+}
 
 export default function useFetchMark() {
 	const [mark, setMark] = useState({ data: null, error: null, loading: true });
+	const [insert, setInsert] = useState({ fn: insertFn, response: null, loading: false });
+
+	async function findFn() {
+		setMark((prev) => ({ ...prev, loading: true }));
+
+		try {
+			const data = await fetchFromAPI(URL + "/find", "POST", {
+				dataSource: "Cluster0",
+				database: "personal-web",
+				collection: "mark",
+				sort: { date_created: -1 },
+				limit: 20
+			});
+
+			setMark((prev) => ({ ...prev, data: data.documents }));
+		} catch (error) {
+			setMark((prev) => ({ ...prev, error: error.message }));
+		} finally {
+			setMark((prev) => ({ ...prev, loading: false }));
+		}
+	}
+
+	async function insertFn(content, sender) {
+		setInsert((prev) => ({ ...prev, loading: true }));
+
+		try {
+			const data = await fetchFromAPI(URL + "/insertMany", "POST", {
+				dataSource: "Cluster0",
+				database: "personal-web",
+				collection: "mark",
+				documents: [
+					{
+						date_created: new Date(),
+						content,
+						sender
+					}
+				]
+			});
+
+			setInsert((prev) => ({ ...prev, response: data }));
+		} catch (error) {
+			setInsert((prev) => ({ ...prev, response: error.message }));
+		} finally {
+			setInsert((prev) => ({ ...prev, loading: false }));
+
+			findFn();
+		}
+	}
 
 	useEffect(() => {
-		const fetchData = async () => {
-			// try {
-			// 	const response = await fetch("/mark", { method: "GET" });
-
-			// 	if (!response.ok) {
-			// 		throw new Error(`HTTP error! Status: ${response.status}`);
-			// 	}
-
-			// 	const data = await response.json();
-
-			// 	setMark((prev) => ({ ...prev, data: data }));
-			// } catch (error) {
-			// 	setMark((prev) => ({ ...prev, error: error.message }));
-			// } finally {
-			// 	setMark((prev) => ({ ...prev, loading: false }));
-			// }
-			setMark((prev) => ({ ...prev, data: marks, loading: false }));
-		};
-
-		fetchData();
+		findFn();
 	}, []);
 
-	return { mark };
+	return { mark, insert };
 }
