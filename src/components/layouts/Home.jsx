@@ -11,7 +11,7 @@ const sty = {
 	longText:
 		"w-9/12 sm:w-7/12 lg:w-5/12 font-cormorant font-bold text-center tracking-wider text-base sm:text-lg lg:text-xl text-zinc-400",
 
-	parallaxWrapper: "-z-0 absolute w-full h-screen pt-20 pb-4 flex flex-col justify-around",
+	parallaxWrapper: "-z-0 absolute w-full h-screen pt-12 pb-2 flex flex-col justify-around",
 	parallaxText:
 		"font-cinzel font-light tracking-tight from-black to-zinc-700 bg-clip-text text-transparent leading-[0.1]"
 };
@@ -33,33 +33,33 @@ export default function Home() {
 			</div>
 
 			<div className={sty.parallaxWrapper}>
-				<ParallaxText baseVelocity={-25} textStyle={`${sty.parallaxText} text-[9rem] bg-gradient-to-t`}>
+				<ParallaxText baseVelocity={-25} textStyle={`${sty.parallaxText} text-[7rem] bg-gradient-to-t`}>
 					Hello - Namaste -
 				</ParallaxText>
-				<ParallaxText baseVelocity={15} textStyle={`${sty.parallaxText} text-[8rem] bg-gradient-to-t`}>
+				<ParallaxText baseVelocity={15} textStyle={`${sty.parallaxText} text-[5rem] bg-gradient-to-t`}>
 					Ciao Ola - Zdravstvuyte -
 				</ParallaxText>
-				<ParallaxText baseVelocity={-10} textStyle={`${sty.parallaxText} text-[7rem] bg-gradient-to-t`}>
+				<ParallaxText baseVelocity={-10} textStyle={`${sty.parallaxText} text-[3rem] bg-gradient-to-t`}>
 					Konnichiwa - Hola -
 				</ParallaxText>
 
-				<div className="h-1/6"></div>
+				<div className="h-3/6"></div>
 
 				<ParallaxText
 					baseVelocity={10}
 					containerStyle="z-20 relative"
-					textStyle={`${sty.parallaxText} text-[7rem] bg-gradient-to-b`}
+					textStyle={`${sty.parallaxText} text-[3rem] bg-gradient-to-b`}
 				>
 					Ni hao - Marhaba -
 				</ParallaxText>
 				<ParallaxText
 					baseVelocity={-15}
 					containerStyle="z-10 relative"
-					textStyle={`${sty.parallaxText} text-[8rem] bg-gradient-to-b`}
+					textStyle={`${sty.parallaxText} text-[5rem] bg-gradient-to-b`}
 				>
 					Konnichiwa - Bonjour -
 				</ParallaxText>
-				<ParallaxText baseVelocity={25} textStyle={`${sty.parallaxText} text-[9rem] bg-gradient-to-b`}>
+				<ParallaxText baseVelocity={25} textStyle={`${sty.parallaxText} text-[7rem] bg-gradient-to-b`}>
 					Annyeonghaseyo - Halo -
 				</ParallaxText>
 			</div>
