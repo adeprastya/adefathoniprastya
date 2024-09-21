@@ -1,17 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 
-const plugin = require("tailwindcss/plugin");
+import plugin from "tailwindcss/plugin";
 
 export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
 			fontFamily: {
-				bebas: ["Bebas Neue", "system-ui", "sans"],
-				cormorant: ["Cormorant", "serif"],
-				fira: ["Fira Sans", "system-ui", "sans"],
-				cinzel: ["Cinzel", "serif"],
-				spectral: ["Spectral", "serif"]
+				decor: ["Cinzel Decorative", "serif"],
+				serif: ["Bodoni Moda", "serif"],
+				sans: ["Raleway", "system-ui", "sans"]
 			},
 			textShadow: {
 				sm: "0 1px 2px var(--tw-shadow-color, rgba(0, 0, 0, 0.05))",

@@ -1,42 +1,58 @@
 import ParallaxText from "@/components/shared/ParallaxText";
-import AlternatingTexts from "@/components/shared/AlternatingTexts";
+import { motion } from "framer-motion";
 
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
 
 	textWrapper: "z-10 w-full flex flex-col justify-center items-center",
-	shortText: "font-cormorant text-2xl sm:text-3xl lg:text-4xl text-zinc-300",
-	alterantingTexts:
-		"font-cinzel font-light text-7xl sm:text-8xl lg:text-9xl text-transparent bg-gradient-to-bl from-amber-500 to-yellow-300 bg-clip-text sm:tracking-widest",
-	longText:
-		"w-9/12 sm:w-7/12 lg:w-5/12 font-cormorant font-bold text-center tracking-wider text-base sm:text-lg lg:text-xl text-zinc-400",
+	heroText: "overflow-clip font-serif text-5xl sm:text-6xl lg:text-7xl text-zinc-200 flex flex-col",
 
 	parallaxWrapper: "-z-0 absolute w-full h-screen pt-12 pb-2 flex flex-col justify-around",
-	parallaxText:
-		"font-cinzel font-light tracking-tight from-black to-zinc-700 bg-clip-text text-transparent leading-[0.1]"
+	parallaxText: "font-decor tracking-tight from-black to-zinc-700 bg-clip-text text-transparent leading-[0.1]"
+};
+
+const orcVar = {
+	hidden: {
+		opacity: 0
+	},
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 1
+		}
+	},
+	child: {
+		hidden: {
+			x: "-150%"
+		},
+		visible: {
+			x: 0,
+			transition: {
+				duration: 1.5,
+				ease: "easeInOut"
+			}
+		}
+	}
 };
 
 export default function Home() {
 	return (
 		<section id="home" className={sty.container}>
 			<div className={sty.textWrapper}>
-				<p className={sty.shortText}>Im Ade, and i love</p>
+				<motion.h1 variants={orcVar} initial="hidden" animate="visible" className={sty.heroText}>
+					<motion.span variants={orcVar.child}>ADE</motion.span>
 
-				<h1>
-					<AlternatingTexts textStyle={sty.alterantingTexts}>CODE, ART, MUSIC, GAME</AlternatingTexts>
-				</h1>
+					<motion.span variants={orcVar.child}>FATHONI</motion.span>
 
-				<p className={sty.longText}>
-					Building the digital world with a fusion of code and art is not just a profession, it is my calling, my
-					passion, and the way I express creativity.
-				</p>
+					<motion.span variants={orcVar.child}>PRASTYA</motion.span>
+				</motion.h1>
 			</div>
 
 			<div className={sty.parallaxWrapper}>
-				<ParallaxText baseVelocity={-25} textStyle={`${sty.parallaxText} text-[7rem] bg-gradient-to-t`}>
+				<ParallaxText baseVelocity={-25} textStyle={`${sty.parallaxText} text-[6rem] bg-gradient-to-t`}>
 					Hello - Namaste -
 				</ParallaxText>
-				<ParallaxText baseVelocity={15} textStyle={`${sty.parallaxText} text-[5rem] bg-gradient-to-t`}>
+				<ParallaxText baseVelocity={15} textStyle={`${sty.parallaxText} text-[4.5rem] bg-gradient-to-t`}>
 					Ciao Ola - Zdravstvuyte -
 				</ParallaxText>
 				<ParallaxText baseVelocity={-10} textStyle={`${sty.parallaxText} text-[3rem] bg-gradient-to-t`}>
@@ -55,11 +71,11 @@ export default function Home() {
 				<ParallaxText
 					baseVelocity={-15}
 					containerStyle="z-10 relative"
-					textStyle={`${sty.parallaxText} text-[5rem] bg-gradient-to-b`}
+					textStyle={`${sty.parallaxText} text-[4.5rem] bg-gradient-to-b`}
 				>
 					Konnichiwa - Bonjour -
 				</ParallaxText>
-				<ParallaxText baseVelocity={25} textStyle={`${sty.parallaxText} text-[7rem] bg-gradient-to-b`}>
+				<ParallaxText baseVelocity={25} textStyle={`${sty.parallaxText} text-[6rem] bg-gradient-to-b`}>
 					Annyeonghaseyo - Halo -
 				</ParallaxText>
 			</div>
