@@ -1,5 +1,5 @@
 import ParallaxText from "@/components/shared/ParallaxText";
-import { motion } from "framer-motion";
+import { SplitTextChar } from "@/components/shared/SplitText";
 
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
@@ -11,43 +11,36 @@ const sty = {
 	parallaxText: "font-decor tracking-tight from-black to-zinc-700 bg-clip-text text-transparent leading-[0.1]"
 };
 
-const orcVar = {
-	hidden: {
-		opacity: 0
-	},
-	visible: {
-		opacity: 1,
+const vars = {
+	visible: (i) => ({
+		y: ["-200%", "-100%", "0%"],
 		transition: {
-			staggerChildren: 1
+			delay: i * 0.2
 		}
-	},
-	child: {
-		hidden: {
-			x: "-150%"
-		},
-		visible: {
-			x: 0,
-			transition: {
-				duration: 1.5,
-				ease: "easeInOut"
-			}
-		}
-	}
+	})
 };
 
 export default function Home() {
 	return (
 		<section id="home" className={sty.container}>
+			{/* Hero Text */}
 			<div className={sty.textWrapper}>
-				<motion.h1 variants={orcVar} initial="hidden" animate="visible" className={sty.heroText}>
-					<motion.span variants={orcVar.child}>ADE</motion.span>
+				<h1 className={sty.heroText}>
+					<SplitTextChar wrap={true} variants={vars} initial="hidden" animate="visible">
+						ADE
+					</SplitTextChar>
 
-					<motion.span variants={orcVar.child}>FATHONI</motion.span>
+					<SplitTextChar wrap={true} variants={vars} initial="hidden" animate="visible">
+						FATHONI
+					</SplitTextChar>
 
-					<motion.span variants={orcVar.child}>PRASTYA</motion.span>
-				</motion.h1>
+					<SplitTextChar wrap={true} variants={vars} initial="hidden" animate="visible">
+						PRASTYA
+					</SplitTextChar>
+				</h1>
 			</div>
 
+			{/* Parallax Text / Background */}
 			<div className={sty.parallaxWrapper}>
 				<ParallaxText baseVelocity={-25} textStyle={`${sty.parallaxText} text-[6rem] bg-gradient-to-t`}>
 					Hello - Namaste -
