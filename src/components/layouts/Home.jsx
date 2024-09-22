@@ -1,5 +1,6 @@
 import ParallaxText from "@/components/shared/ParallaxText";
 import { SplitTextChar } from "@/components/shared/SplitText";
+import { motion } from "framer-motion";
 
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
@@ -8,14 +9,15 @@ const sty = {
 	heroText: "overflow-clip font-serif text-5xl sm:text-6xl lg:text-7xl text-zinc-200 flex flex-col",
 
 	parallaxWrapper: "-z-0 absolute w-full h-screen pt-12 pb-2 flex flex-col justify-around",
-	parallaxText: "font-decor tracking-tight from-black to-zinc-700 bg-clip-text text-transparent leading-[0.1]"
+	parallaxText: "font-decor tracking-tight from-black to-zinc-600 bg-clip-text text-transparent leading-[0.1]"
 };
 
 const vars = {
 	visible: (i) => ({
-		y: ["-200%", "-100%", "0%"],
+		y: ["-300%", "-200%", "-100%", "0%"],
 		transition: {
-			delay: i * 0.2
+			delay: i * 0.3,
+			duration: 1
 		}
 	})
 };
@@ -26,15 +28,30 @@ export default function Home() {
 			{/* Hero Text */}
 			<div className={sty.textWrapper}>
 				<h1 className={sty.heroText}>
-					<SplitTextChar wrap={true} variants={vars} initial="hidden" animate="visible">
+					<SplitTextChar
+						wrapper={<motion.span variants={vars} animate="visible" className="inline-block overflow-clip" />}
+						className="inline-block relative before:absolute before:top-full before:size-full before:content-[attr(data-content)]"
+						whileHover={{ y: "-100%" }}
+						transition={{ duration: 0.6 }}
+					>
 						ADE
 					</SplitTextChar>
 
-					<SplitTextChar wrap={true} variants={vars} initial="hidden" animate="visible">
+					<SplitTextChar
+						wrapper={<motion.span variants={vars} animate="visible" className="inline-block overflow-clip" />}
+						className="inline-block relative before:absolute before:top-full before:size-full before:content-[attr(data-content)]"
+						whileHover={{ y: "-100%" }}
+						transition={{ duration: 0.6 }}
+					>
 						FATHONI
 					</SplitTextChar>
 
-					<SplitTextChar wrap={true} variants={vars} initial="hidden" animate="visible">
+					<SplitTextChar
+						wrapper={<motion.span variants={vars} animate="visible" className="inline-block overflow-clip" />}
+						className="inline-block relative before:absolute before:top-full before:size-full before:content-[attr(data-content)]"
+						whileHover={{ y: "-100%" }}
+						transition={{ duration: 0.6 }}
+					>
 						PRASTYA
 					</SplitTextChar>
 				</h1>

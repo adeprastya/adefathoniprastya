@@ -1,25 +1,24 @@
+import { isValidElement, cloneElement } from "react";
 import { motion } from "framer-motion";
 
-export function SplitTextChar({ children, className, wrap = false, wrapClassName, ...props }) {
+export function SplitTextChar({ children, wrapper, ...props }) {
 	const texts = children.split("");
 
 	return (
 		<span>
-			{wrap &&
-				texts.map((text, i) => (
-					<motion.span key={i} className={"inline-block " + wrapClassName}>
-						<motion.span custom={i} className={"inline-block " + className} {...props}>
-							{text}
-						</motion.span>
-					</motion.span>
-				))}
-
-			{!wrap &&
-				texts.map((text, i) => (
-					<motion.span key={i} custom={i} className={"inline-block " + className} {...props}>
+			{texts.map((text, i) => {
+				const motionElement = (
+					<motion.span data-content={text} key={i} custom={i} {...props}>
 						{text}
 					</motion.span>
-				))}
+				);
+
+				const clonedWrapper = isValidElement(wrapper)
+					? cloneElement(wrapper, { key: i, custom: i }, motionElement)
+					: motionElement;
+
+				return clonedWrapper;
+			})}
 		</span>
 	);
 }
