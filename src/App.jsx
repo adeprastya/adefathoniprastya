@@ -17,7 +17,7 @@ export default function App() {
 			<main className="cursor-none -z-0 relative w-full overflow-x-clip bg-zinc-950">
 				<Navigation />
 
-				<Home />
+				<Home hovers={hovers} />
 
 				<About hovers={hovers} />
 

@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 const sty = {
 	container: "relative w-full h-screen flex justify-center items-center",
 
-	textWrapper: "z-10 w-full flex flex-col justify-center items-center",
-	heroText: "overflow-clip font-serif text-5xl sm:text-6xl lg:text-7xl text-zinc-200 flex flex-col",
+	textWrapper: "z-10 flex flex-col justify-center items-center",
+	heroText: "overflow-clip font-serif text-5xl sm:text-6xl lg:text-7xl text-zinc-200 flex flex-col transform-gpu",
+	heroTextInnerWrap: "inline-block overflow-clip",
+	heroTextInner:
+		"inline-block relative before:absolute before:top-full before:size-full before:content-[attr(data-content)]",
 
 	parallaxWrapper: "-z-0 absolute w-full h-screen pt-12 pb-2 flex flex-col justify-around",
 	parallaxText: "font-decor tracking-tight from-black to-zinc-600 bg-clip-text text-transparent leading-[0.1]"
@@ -22,15 +25,15 @@ const vars = {
 	})
 };
 
-export default function Home() {
+export default function Home({ hovers }) {
 	return (
 		<section id="home" className={sty.container}>
 			{/* Hero Text */}
-			<div className={sty.textWrapper}>
+			<div ref={(node) => hovers.current.push([node, "OUTLINE"])} className={sty.textWrapper}>
 				<h1 className={sty.heroText}>
 					<SplitTextChar
-						wrapper={<motion.span variants={vars} animate="visible" className="inline-block overflow-clip" />}
-						className="inline-block relative before:absolute before:top-full before:size-full before:content-[attr(data-content)]"
+						wrapper={<motion.span variants={vars} animate="visible" className={sty.heroTextInnerWrap} />}
+						className={sty.heroTextInner}
 						whileHover={{ y: "-100%" }}
 						transition={{ duration: 0.6 }}
 					>
@@ -38,8 +41,8 @@ export default function Home() {
 					</SplitTextChar>
 
 					<SplitTextChar
-						wrapper={<motion.span variants={vars} animate="visible" className="inline-block overflow-clip" />}
-						className="inline-block relative before:absolute before:top-full before:size-full before:content-[attr(data-content)]"
+						wrapper={<motion.span variants={vars} animate="visible" className={sty.heroTextInnerWrap} />}
+						className={sty.heroTextInner}
 						whileHover={{ y: "-100%" }}
 						transition={{ duration: 0.6 }}
 					>
@@ -47,8 +50,8 @@ export default function Home() {
 					</SplitTextChar>
 
 					<SplitTextChar
-						wrapper={<motion.span variants={vars} animate="visible" className="inline-block overflow-clip" />}
-						className="inline-block relative before:absolute before:top-full before:size-full before:content-[attr(data-content)]"
+						wrapper={<motion.span variants={vars} animate="visible" className={sty.heroTextInnerWrap} />}
+						className={sty.heroTextInner}
 						whileHover={{ y: "-100%" }}
 						transition={{ duration: 0.6 }}
 					>
