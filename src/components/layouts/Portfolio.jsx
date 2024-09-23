@@ -1,10 +1,9 @@
 import projectMovcult from "@/assets/images/projectMovcult.png";
 import projectPoof from "@/assets/images/projectPoof.png";
 import projectLogic from "@/assets/images/projectLogic.png";
-import { useScroll, useTransform, motion, useMotionTemplate } from "framer-motion";
+import { useScroll, useTransform, motion, useSpring } from "framer-motion";
 import { useRef } from "react";
 import useMouseMotion from "@/contexts/useMouseMotion";
-import { isMobile } from "@/utils/helper";
 
 const data = [
 	{
@@ -23,41 +22,45 @@ const data = [
 ];
 
 const sty = {
-	container: "relative overflow-clip max-w-screen h-[500vh]",
+	container: "w-full min-h-screen py-80 flex flex-col items-center gap-80",
 
-	itemCont: "sticky top-0 grid gap-[20vw] grid-flow-col transform-gpu",
-	itemWrap: "relative w-screen h-screen flex justify-evenly items-center cursor-none",
+	itemWrap: "relative w-fit flex justify-center items-center cursor-none",
 
-	textWrap: "absolute h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw]",
 	title:
-		"absolute top-1/4 -translate-y-1/2 w-1/2 font-cinzel text-5xl sm:text-6xl lg:text-7xl text-zinc-200 text-shadow-sm text-shadow-black",
+		"absolute left-0 top-1/4 font-decor text-5xl sm:text-6xl lg:text-7xl text-zinc-200 text-shadow-sm text-shadow-black",
 	overview:
-		"absolute top-3/4 -translate-y-1/2 w-1/2 font-cormorant font-bold text-xl sm:text-2xl lg:text-3xl text-zinc-200 text-shadow-sm text-shadow-black",
+		"absolute left-0 top-3/4 w-1/2 font-sans text-lg sm:text-xl lg:text-2xl text-zinc-200 text-shadow-sm text-shadow-black",
 
-	image: "h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw] object-cover transform-gpu",
+	image: "h-[60vh] w-[80vw] sm:w-[70vw] lg:w-[60vw] object-cover object-center transform-gpu",
 
-	customHover: "block font-cormorant font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-yellow-400"
+	customHover:
+		"w-40 p-4 aspect-square rounded-full backdrop-blur-sm backdrop-brightness-90 font-sans text-center tracking-wider text-base sm:text-lg lg:text-xl text-yellow-500 flex items-center justify-center"
 };
 
 function CustomHover({ children }) {
-	return <p className={sty.customHover}>{children}</p>;
+	return (
+		<p className={sty.customHover}>
+			{"Visit "}
+			{children}
+		</p>
+	);
 }
 
 function Item({ data, hovers }) {
+	const imgRef = useRef(null);
+	const { scrollYProgress } = useScroll({ target: imgRef, offset: ["start end", "end start"] });
 	const { mouseX, mouseY } = useMouseMotion();
-	const rotateX = useTransform(mouseY, [0, window.innerHeight], [20, -20]);
-	const rotateY = useTransform(mouseX, [0, window.innerWidth], [-20, 20]);
-	const transform = useMotionTemplate`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-	const brightness = useTransform(
-		[mouseX, mouseY],
-		([x, y]) => {
-			const distanceFromCenter = Math.hypot(x - window.innerWidth / 2, y - window.innerHeight / 2);
-			return 80 - (distanceFromCenter / Math.hypot(window.innerWidth / 2, window.innerHeight / 2)) * 50;
-		},
-		[25, 80]
-	);
-	const filter = useMotionTemplate`brightness(${brightness}%)`;
+	const mouseYValue = useTransform(mouseY, [0, window.innerHeight], [0.05, -0.05]);
+	const mouseXValue = useTransform(mouseX, [0, window.innerWidth], [1, 0]);
+	const totalY = useTransform([scrollYProgress, mouseYValue], ([x, y]) => x + y);
+	const smoothY = useSpring(totalY, { mass: 0.5, damping: 20, stiffness: 100 });
+	const smoothX = useSpring(mouseXValue, { mass: 0.5, damping: 20, stiffness: 50 });
+	const y1 = useTransform(smoothY, [0, 0.5, 1], [100, 0, -100]);
+	const y2 = useTransform(smoothY, [0, 0.5, 1], [300, 0, -300]);
+	const y3 = useTransform(smoothY, [0, 0.5, 1], [500, 0, -500]);
+	const x1 = useTransform(smoothX, [0, 0.5, 1], [15, 0, -15]);
+	const x2 = useTransform(smoothX, [0, 0.5, 1], [30, 0, -30]);
+	const x3 = useTransform(smoothX, [0, 0.5, 1], [45, 0, -45]);
 
 	return (
 		<a
@@ -66,36 +69,25 @@ function Item({ data, hovers }) {
 			ref={(node) => hovers.current.push([node, <CustomHover>{data.title}</CustomHover>])}
 			className={sty.itemWrap}
 		>
-			<div style={{ transformStyle: "preserve-3d" }}>
-				<motion.img
-					style={isMobile() ? {} : { transform, filter }}
-					src={data.image}
-					alt={data.title}
-					className={sty.image}
-				/>
-			</div>
+			<motion.img src={data.image} alt={data.title} ref={imgRef} style={{ y: y1, x: x1 }} className={sty.image} />
 
-			<div className={sty.textWrap}>
-				<h2 className={sty.title}>{data.title}</h2>
+			<motion.h2 style={{ y: y2, x: x2 }} className={sty.title}>
+				{data.title}
+			</motion.h2>
 
-				<p className={sty.overview}>{data.overview}</p>
-			</div>
+			<motion.p style={{ y: y3, x: x3 }} className={sty.overview}>
+				{data.overview}
+			</motion.p>
 		</a>
 	);
 }
 
 export default function Portfolio({ hovers }) {
-	const ref = useRef(null);
-	const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-	const y = useTransform(scrollYProgress, [0, 1], ["0vw", "-240vw"]);
-
 	return (
-		<section ref={ref} id="portfolio" className={sty.container}>
-			<motion.div style={{ x: y }} className={sty.itemCont}>
-				{data.map((data, i) => (
-					<Item key={i} data={data} hovers={hovers} />
-				))}
-			</motion.div>
+		<section id="portfolio" className={sty.container}>
+			{data.map((data, i) => (
+				<Item key={i} data={data} hovers={hovers} />
+			))}
 		</section>
 	);
 }
