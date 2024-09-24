@@ -15,7 +15,7 @@ export default function App() {
 	return (
 		<ReactLenis root>
 			<main className="cursor-none -z-0 relative w-full overflow-x-clip bg-zinc-950">
-				<Navigation />
+				<Navigation hovers={hovers} />
 
 				<Home hovers={hovers} />
 

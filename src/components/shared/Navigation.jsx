@@ -36,15 +36,14 @@ const sty = {
 
 	navWrap: "pointer-events-none absolute right-0",
 	listWrap: "pointer-events-auto w-screen min-h-screen bg-zinc-950/70 backdrop-blur-sm flex flex-col justify-between",
-	list: "ps-8 sm:ps-20 lg:ps-32 relative font-cormorant font-bold tracking-widest leading-none text-zinc-950 text-shadow-border before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-16 sm:before:-translate-x-32 lg:before:-translate-x-44 before:w-4 before:aspect-square before:rounded-full before:border-2 hover:bg-yellow-400 hover:text-shadow-yellow-400 hover:before:border-yellow-400",
+	list: "ps-8 sm:ps-20 lg:ps-32 relative font-decor tracking-widest leading-none text-zinc-950 text-shadow-border hover:bg-yellow-400/40 hover:text-shadow-yellow-400      before:absolute before:top-1/2 before:-left-16 sm:before:-left-32 lg:before:-left-12 before:-translate-y-1/2 before:-translate-x-1/2 before:w-4 before:aspect-square before:rounded-full before:border-2",
 
 	chatWrap:
 		"pointer-events-auto z-20 absolute right-0 w-full sm:max-w-[48rem] h-screen p-8 pe-12 pt-14 backdrop-blur-sm bg-zinc-950/70 flex flex-col",
 	chatBox: "overflow-y-auto h-full p-4 rounded-t-xl border-2 border-b-0 border-zinc-700 flex flex-col gap-4",
-	chatText: "w-fit p-2 rounded-lg bg-zinc-300 font-cormorant font-extrabold tracking-wide text-lg text-zinc-950",
+	chatText: "w-fit p-2 rounded-lg bg-zinc-300 font-sans font-semibold tracking-wide text-lg text-zinc-950",
 	chatForm: "overflow-hidden h-16 rounded-b-xl border-2 border-zinc-700 flex",
-	chatInput:
-		"size-full px-4 bg-transparent font-cormorant font-extrabold text-lg text-zinc-300 placeholder:text-zinc-500",
+	chatInput: "size-full px-4 bg-transparent font-sans font-bold text-lg text-zinc-300 placeholder:text-zinc-500",
 	chatButton: "h-full aspect-square fill-zinc-950 bg-gradient-to-br from-yellow-300 to-amber-500 *:size-full"
 };
 
@@ -83,7 +82,7 @@ const vars = {
 	}
 };
 
-export default function Navigation() {
+export default function Navigation({ hovers }) {
 	const [isNavOpen, setIsNavOpen] = useState(false);
 	const [isChatOpen, setIsChatOpen] = useState(false);
 	const [activeNav, setActiveNav] = useState(0);
@@ -151,7 +150,7 @@ export default function Navigation() {
 			</div>
 
 			{/* Navigation Menu */}
-			<nav className={sty.navWrap}>
+			<nav ref={(node) => hovers.current.push([node, "OUTLINE"])} className={sty.navWrap}>
 				<motion.ul
 					className={sty.listWrap}
 					variants={vars.ul}
