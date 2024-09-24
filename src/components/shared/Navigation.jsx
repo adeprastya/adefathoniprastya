@@ -36,7 +36,7 @@ const sty = {
 
 	navWrap: "pointer-events-none absolute right-0",
 	listWrap: "pointer-events-auto w-screen min-h-screen bg-zinc-950/70 backdrop-blur-sm flex flex-col justify-between",
-	list: "ps-8 sm:ps-20 lg:ps-32 relative font-decor tracking-widest leading-none text-zinc-950 text-shadow-border hover:bg-yellow-400/40 hover:text-shadow-yellow-400      before:absolute before:top-1/2 before:-left-16 sm:before:-left-32 lg:before:-left-12 before:-translate-y-1/2 before:-translate-x-1/2 before:w-4 before:aspect-square before:rounded-full before:border-2",
+	list: "ps-8 sm:ps-20 lg:ps-32 relative font-decor tracking-widest leading-none text-zinc-950 text-shadow-border hover:bg-yellow-400/40 hover:text-shadow-yellow-400      before:absolute before:top-1/2 before:-left-6 sm:before:-left-6 lg:before:-left-8 before:-translate-y-1/2 before:-translate-x-1/2 before:w-4 before:aspect-square before:rounded-full before:border-2",
 
 	chatWrap:
 		"pointer-events-auto z-20 absolute right-0 w-full sm:max-w-[48rem] h-screen p-8 pe-12 pt-14 backdrop-blur-sm bg-zinc-950/70 flex flex-col",
