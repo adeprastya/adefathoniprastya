@@ -12,16 +12,16 @@ const sty = {
 	logo: "z-10 relative block h-2/6 aspect-square fill-yellow-400",
 
 	markWrapper: "absolute w-full h-screen",
-	markText: "font-cormorant font-bold tracking-wider text-4xl lg:text-5xl text-zinc-300",
+	markText: "font-decor tracking-wider text-2xl sm:text-3xl lg:text-4xl text-zinc-500",
 
 	formWrap: "z-20 absolute left-0 flex flex-row-reverse",
 	formLabel:
-		"absolute top-1/2 -translate-y-1/2 translate-x-full h-fit py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 whitespace-nowrap font-cormorant font-bold text-sm sm:text-base lg:text-lg",
+		"absolute top-1/2 -translate-y-1/2 translate-x-full h-fit py-4 px-1 rounded-r bg-gradient-to-b from-yellow-300 to-amber-500 whitespace-nowrap font-serif font-bold text-sm sm:text-base lg:text-lg",
 	formContent:
 		"h-[40vh] p-2 box-border rounded-e-xl border-y-2 border-r-2 border-yellow-400 bg-zinc-950 text-zinc-300 flex flex-col gap-2",
-	formTextArea: "resize-none w-full h-full p-2 bg-zinc-800",
-	formInputLabel: "font-cormorant text-base sm:text-lg lg:text-xl text-zinc-300",
-	formInput: "h-8 p-2 bg-zinc-800",
+	formTextArea: "resize-none w-full h-full p-2 bg-zinc-800 font-serif",
+	formInputLabel: "font-serif text-xs sm:text-base lg:text-lg text-zinc-300",
+	formInput: "font-serif h-8 p-2 bg-zinc-800",
 	formButton: "h-10 aspect-square fill-yellow-400"
 };
 
@@ -62,19 +62,19 @@ export default function Mark() {
 			{/* Mark Text */}
 			{!mark.loading && Array.isArray(mark.data) && (
 				<div className={sty.markWrapper}>
-					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute top-16">
+					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute top-8">
 						{marks[0]}
 					</ParallaxText>
 
-					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute top-32">
+					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute top-20">
 						{marks[1]}
 					</ParallaxText>
 
-					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute bottom-32">
+					<ParallaxText baseVelocity={10} textStyle={sty.markText} containerStyle="absolute bottom-20">
 						{marks[2]}
 					</ParallaxText>
 
-					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute bottom-16">
+					<ParallaxText baseVelocity={-10} textStyle={sty.markText} containerStyle="absolute bottom-8">
 						{marks[3]}
 					</ParallaxText>
 				</div>
