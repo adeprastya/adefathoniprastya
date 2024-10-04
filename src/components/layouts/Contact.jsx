@@ -1,5 +1,6 @@
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { debounce } from "@/utils/helper";
 
 const data = [
 	{
@@ -60,6 +61,15 @@ function Item({ data }) {
 }
 
 export default function Contact() {
+	const [isResized, setIsResized] = useState(window.innerWidth);
+	const debouncedSetIsResized = debounce(() => setIsResized(window.innerWidth), 300);
+
+	useEffect(() => {
+		window.addEventListener("resize", () => {
+			debouncedSetIsResized();
+		});
+	});
+
 	return (
 		<section id="contact" className={sty.container}>
 			<div className={sty.textWrapper}>
@@ -69,7 +79,7 @@ export default function Contact() {
 				</h1>
 			</div>
 
-			<div className={sty.itemWrapper}>
+			<div key={isResized} className={sty.itemWrapper}>
 				{data.map((data, i) => (
 					<Item key={i} data={{ ...data, i }} />
 				))}

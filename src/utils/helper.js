@@ -23,3 +23,25 @@ export function slicer(arr, numResult) {
 
 	return result;
 }
+
+export const debounce = (fn, delay) => {
+	let timeoutId;
+	return (...args) => {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => {
+			fn(...args);
+		}, delay);
+	};
+};
+
+export const throttle = (fn, delay) => {
+	let timeoutId;
+	return (...args) => {
+		if (!timeoutId) {
+			fn(...args);
+			timeoutId = setTimeout(() => {
+				timeoutId = null;
+			}, delay);
+		}
+	};
+};
