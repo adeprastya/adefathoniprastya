@@ -1,14 +1,22 @@
 import projectMovcult from "@/assets/images/projectMovcult.png";
 import projectPoof from "@/assets/images/projectPoof.png";
 import projectLogic from "@/assets/images/projectLogic.png";
+import projectBambuPacet from "@/assets/images/projectBambuPacet.png";
 import { useScroll, useTransform, motion, useSpring } from "framer-motion";
 import { useRef } from "react";
 import useMouseMotion from "@/contexts/useMouseMotion";
 
 const data = [
 	{
+		title: "Bambu Pacet",
+		overview:
+			"a bamboo furniture company web profile created using React, Framer, Inertia, Laravel and MySQL as a database",
+		link: "https://bambu-pacet.com",
+		image: projectBambuPacet
+	},
+	{
 		title: "Movcult",
-		overview: "a movie search app created using React and API from TMDB",
+		overview: "a movie search app built using React and API from TMDB",
 		link: "https://adeprastya.github.io/movcult/",
 		image: projectMovcult
 	},
@@ -61,13 +69,15 @@ function Item({ data, hovers }) {
 	const x1 = useTransform(smoothX, [0, 0.5, 1], [15, 0, -15]);
 	const x2 = useTransform(smoothX, [0, 0.5, 1], [30, 0, -30]);
 	const x3 = useTransform(smoothX, [0, 0.5, 1], [45, 0, -45]);
+	const scale = useTransform(scrollYProgress, [0, 0.45, 0.55, 1], [0.9, 1, 1, 0.9]);
 
 	return (
-		<a
+		<motion.a
 			href={data.link}
 			target="_blank"
 			ref={(node) => hovers.current.push([node, <CustomHover>{data.title}</CustomHover>])}
 			className={sty.itemWrap}
+			style={{ scale }}
 		>
 			<motion.img src={data.image} alt={data.title} ref={imgRef} style={{ y: y1, x: x1 }} className={sty.image} />
 
@@ -78,7 +88,7 @@ function Item({ data, hovers }) {
 			<motion.p style={{ y: y3, x: x3 }} className={sty.overview}>
 				{data.overview}
 			</motion.p>
-		</a>
+		</motion.a>
 	);
 }
 
