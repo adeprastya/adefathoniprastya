@@ -8,9 +8,11 @@ import Cursor from "@/components/shared/Cursor";
 import { useRef } from "react";
 import { isMobile } from "@/utils/helper";
 import { ReactLenis } from "lenis/react";
+import useHashRouting from "./hooks/useHashRouting";
 
 export default function App() {
 	const hovers = useRef([]);
+	useHashRouting();
 
 	return (
 		<ReactLenis root>
