@@ -2,29 +2,56 @@ import projectMovcult from "@/assets/images/projectMovcult.png";
 import projectPoof from "@/assets/images/projectPoof.png";
 import projectLogic from "@/assets/images/projectLogic.png";
 import projectBambuPacet from "@/assets/images/projectBambuPacet.png";
-import { useScroll, useTransform, motion, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useScroll, useTransform, motion, useSpring, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
 import useMouseMotion from "@/contexts/useMouseMotion";
+import ProjectDetailModal from "../shared/ProjetctDetailModal";
 
 const data = [
 	{
 		title: "Bambu Pacet",
 		overview:
-			"a bamboo furniture company web profile created using React, Framer, Inertia, Laravel and MySQL as a database",
-		link: "https://bambu-pacet.com",
+			"A web profile for a bamboo furniture company, created using React, Inertia, Laravel, and MySQL as the database.",
+		description:
+			"This website was developed to promote bamboo furniture products for the company 'Bambu Pacet' focusing on international markets. It includes multi-language support, a product catalog, marketplace integration, and an admin product management system.",
+		features:
+			"Responsive landing page, multi-language integration, product categories with search and filtering options, CRUD product management for admins, and marketplace linking.",
+		technologies: ["React", "Framer Motion", "Inertia", "Laravel", "MySQL"],
+		siteUrl: "https://bambupacet.com",
 		image: projectBambuPacet
 	},
 	{
 		title: "Movcult",
-		overview: "a movie search app built using React and API from TMDB",
-		link: "https://adeprastya.github.io/movcult/",
+		overview: "A movie search application built using React and The Movie Database (TMDB) API.",
+		description:
+			"Movcult is a movie search app that allows users to browse and search for movie information from TMDB's extensive database. The interface is sleek and user-friendly, providing real-time movie data.",
+		features:
+			"Features include movie search functionality, detailed movie descriptions, dynamic rendering of search results, and real-time API integration.",
+		technologies: ["Typescript", "React", "Framer Motion", "Tailwind", "TMDB API"],
+		siteUrl: "https://adeprastya.github.io/movcult/",
+		codeUrl: "https://github.com/adeprastya/movcult",
 		image: projectMovcult
 	},
-	{ title: "Poof", overview: "a note app created using PHP and mySQL", link: "http://poof.rf.gd", image: projectPoof },
+	{
+		title: "Poof",
+		overview: "A simple note-taking application built with PHP and MySQL for data storage.",
+		description:
+			"Poof is a straightforward note-taking web app that allows users to create, edit, and manage personal notes. The application utilizes PHP for server-side functionality and MySQL for data persistence.",
+		features: "Note creation, editing, deletion, collaboration, and an intuitive user interface for note management.",
+		technologies: ["PHP", "MySQL"],
+		siteUrl: "http://poof.rf.gd",
+		codeUrl: "https://github.com/adeprastya/poof",
+		image: projectPoof
+	},
 	{
 		title: "Logic Prediction",
-		overview: "a simple web based logic prediction",
-		link: "https://adeprastya.github.io/logic-prediction/",
+		overview: "A simple web-based logic prediction tool built with React and Laravel.",
+		description:
+			"Logic Prediction is a small web tool designed to perform basic logical predictions based on model, training, and input data. It provides a clean interface for entering conditions and receiving results in real-time.",
+		features: "Model creation, Model training, and real-time prediction results",
+		technologies: ["React"],
+		siteUrl: "https://adeprastya.github.io/logic-prediction/",
+		codeUrl: "https://github.com/adeprastya/logic-prediction",
 		image: projectLogic
 	}
 ];
@@ -48,13 +75,13 @@ const sty = {
 function CustomHover({ children }) {
 	return (
 		<p className={sty.customHover}>
-			{"Visit "}
+			{"Expand "}
 			{children}
 		</p>
 	);
 }
 
-function Item({ data, hovers }) {
+function Item({ data, hovers, setModal }) {
 	const imgRef = useRef(null);
 	const { scrollYProgress } = useScroll({ target: imgRef, offset: ["start end", "end start"] });
 	const { mouseX, mouseY } = useMouseMotion();
@@ -72,12 +99,11 @@ function Item({ data, hovers }) {
 	const scale = useTransform(scrollYProgress, [0, 0.45, 0.55, 1], [0.9, 1, 1, 0.9]);
 
 	return (
-		<motion.a
-			href={data.link}
-			target="_blank"
+		<motion.div
 			ref={(node) => hovers.current.push([node, <CustomHover>{data.title}</CustomHover>])}
 			className={sty.itemWrap}
 			style={{ scale }}
+			onClick={() => setModal(data)}
 		>
 			<motion.img src={data.image} alt={data.title} ref={imgRef} style={{ y: y1, x: x1 }} className={sty.image} />
 
@@ -88,16 +114,20 @@ function Item({ data, hovers }) {
 			<motion.p style={{ y: y3, x: x3 }} className={sty.overview}>
 				{data.overview}
 			</motion.p>
-		</motion.a>
+		</motion.div>
 	);
 }
 
 export default function Portfolio({ hovers }) {
+	const [modal, setModal] = useState(false);
+
 	return (
 		<section id="portfolio" className={sty.container}>
 			{data.map((data, i) => (
-				<Item key={i} data={data} hovers={hovers} />
+				<Item key={i} data={data} hovers={hovers} setModal={setModal} />
 			))}
+
+			<AnimatePresence>{modal && <ProjectDetailModal data={modal} setModal={setModal} />}</AnimatePresence>
 		</section>
 	);
 }
