@@ -51,7 +51,8 @@ function Item({ data }) {
 	);
 	const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0]);
 	const rotate = useTransform(scrollYProgress, [0, 0.5, 1], [60, 0, 60]);
-	const transform = useMotionTemplate`translateY(${y}%) rotateX(${rotate}deg)`;
+	const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]);
+	const transform = useMotionTemplate`translateY(${y}%) rotateX(${rotate}deg) scale(${scale})`;
 
 	return (
 		<motion.a ref={ref} href={data.link} target="_blank" style={{ opacity, transform }} className={sty.item}>
